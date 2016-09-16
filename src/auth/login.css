@@ -1,0 +1,43 @@
+#loginComp {
+	background-color: rgba(255, 255, 255, 0);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 500px;
+	padding: 40px;
+	color: white;
+}
+
+#loginComp .mainTitle {
+	margin-bottom: 100px;
+}
+
+.otherOptions {
+	width: 100%;
+	margin-top: 15px;
+	display: inline-block;
+	text-align: center;
+}
+
+.register, .forgot {
+	display: inline-block;
+	font-size: 13px;
+	padding: 10px;
+	color: #A0A0A0;
+	transition: color .5s;
+}
+
+.register:hover, .forgot:hover {
+	color: white;
+}
+
+.register {
+	margin-left: 40px;
+	float: left;
+}
+
+.forgot {
+	margin-right: 40px;
+	float: right;
+}

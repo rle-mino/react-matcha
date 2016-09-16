@@ -1,0 +1,72 @@
+#loginForm input {
+	font-size: 16px;
+}
+
+#loginForm {
+	display: flex;
+	flex-direction: column;
+}
+
+.textInp {
+	background-color: rgba(255, 255, 255, .1);
+	display: block;
+	padding: 15px;
+	width: 94%;
+	font-size: 16px;
+	color: #f0f0f0;
+	transition: background-color .5s, color .5s;
+}
+
+.isFocused {
+	background-color: rgba(255, 255, 255, .6);
+	color: #000000;
+}
+
+.mainButton {
+	background-color: #26577F;
+	padding: 15px;
+	color: white;
+	transition: box-shadow 0.3s, background-color 0.3s;
+	margin-top: 30px;
+	text-align: center;
+	color: white;
+}
+
+input[value='WAIT'] {
+	background-color: grey;
+}
+
+input[value='SUCCESS'] {
+	background-color: green;
+}
+
+.mainButton:hover {
+	z-index: 1000;
+	box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
+}
+
+.label {
+	margin-bottom: 10px;
+	margin-top: 10px;
+	font-size: 14px;
+}
+
+.errorMessage {
+	margin-top: 10px;
+	width: 94%;
+	padding: 15px;
+	background-color: #8C0D14;
+	font-size: 13px;
+	text-align: center;
+	animation: pop .5s ease-in-out;
+	transform-origin: left top;
+}
+
+@keyframes pop {
+	0% {
+		transform: scale(0);
+	}
+	100% {
+		transform: scale(1);
+	}
+}

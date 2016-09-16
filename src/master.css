@@ -1,0 +1,32 @@
+@import 'https://fonts.googleapis.com/css?family=Montserrat';
+
+* {
+	outline: none;
+	border: none;
+	text-decoration: none;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	font-family: Montserrat;
+}
+
+.background {
+	width: 150%;
+	height: 150%;
+	margin-left: -50px;
+	margin-top: -50px;
+	position: fixed;
+	background-image: url('back.jpg');
+	background-size: cover;
+	border-radius: 5px;
+	filter: blur(30px);
+}
+
+.mainTitle {
+	font-size: 30px;
+	text-align: center;
+}
