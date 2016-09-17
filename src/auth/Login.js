@@ -2,6 +2,7 @@ import React					from 'react';
 import { Link }					from 'react-router';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
+// import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 
 import './login.css';
 import './loginForm.css';
@@ -59,6 +60,7 @@ class LoginForm extends React.Component {
 			if (response.data.status === false) {
 				this.setState({ isPending: false });
 				if (response.data.details === 'invalid request') {
+					this.setState({ serverResponse: null });
 					if (response.data.require.indexOf('password') !== -1) {
 						this.setState({ passReq: true });
 					} else this.setState({ passReq: false })
