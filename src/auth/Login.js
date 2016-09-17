@@ -16,6 +16,7 @@ class LoginForm extends React.Component {
 		focusStatus2: 'textInp',
 		passReq: false,
 		userReq: false,
+		mainErr: 'errorMessageMain',
 	};
 
 	focusedInput = (e) => {
@@ -34,7 +35,14 @@ class LoginForm extends React.Component {
 
 	login = async (e) => {
 		e.preventDefault();
-		this.setState({ isPending: true, buttonValue: 'WAIT', userReq: false, passReq: false });
+		this.setState({
+			isPending: true,
+			buttonValue: 'WAIT',
+			userReq: false,
+			passReq: false,
+			mainErr: 'errorMessageMain',
+			serverResponse: null,
+		});
 		const response = await axios({
 			method: 'put',
 			url: `${apiConnect}user/auth/login`,
@@ -56,8 +64,13 @@ class LoginForm extends React.Component {
 					} else this.setState({ passReq: false })
 					if (response.data.require.indexOf('username') !== -1) {
 						this.setState({ userReq: true });
-					} else this.setState({ userReq: false })
+					} else this.setState({ userReq: false });
+				} else {
+					this.setState({ mainErr: 'errorMessageMain isVisible' });
 				}
+			}
+			else {
+				this.setState({ serverResponse: null });
 			}
 		}, 1000);
 	};
@@ -71,19 +84,24 @@ class LoginForm extends React.Component {
 			focusStatus2,
 			passReq,
 			userReq,
+			mainErr
 		} = this.state;
 		return (
 			<div>
+				<div className={mainErr}>{serverResponse}</div>
 				<form id="loginForm" onSubmit={this.login}>
-					<div className="label">USERNAME OR MAIL</div>
+					<div className="beforeInput">
+						<div className="label">USERNAME OR MAIL</div>
+						{userReq === true && (<div className="errorMessage">USERNAME REQUIRED</div>)}
+					</div>
 					<input type="text" name="username" className={focusStatus1} onFocus={this.focusedInput} onBlur={this.bluredInput}/>
-					{userReq === true && (<div className="errorMessage">USERNAME REQUIRED</div>)}
-					<div className="label">PASSWORD</div>
+					<div className="beforeInput">
+						<div className="label">PASSWORD</div>
+						{passReq === true && (<div className="errorMessage">PASSWORD REQUIRED</div>)}
+					</div>
 					<input type="password" name="password" className={focusStatus2} onFocus={this.focusedInput} onBlur={this.bluredInput} />
-					{passReq === true && (<div className="errorMessage">PASSWORD REQUIRED</div>)}
 					<input className="mainButton" type="submit" name="button" value={buttonValue} disabled={isPending} />
 				</form>
-				{serverResponse !== 'invalid request' && serverResponse && (<div className="errorMessage">{serverResponse}</div>)}
 			</div>
 		);
 	}

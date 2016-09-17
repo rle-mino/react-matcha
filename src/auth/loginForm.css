@@ -3,8 +3,6 @@
 }
 
 #loginForm {
-	display: flex;
-	flex-direction: column;
 }
 
 .textInp {
@@ -24,6 +22,7 @@
 
 .mainButton {
 	background-color: #26577F;
+	width: 100%;
 	padding: 15px;
 	color: white;
 	transition: box-shadow 0.3s, background-color 0.3s;
@@ -42,31 +41,42 @@ input[value='SUCCESS'] {
 
 .mainButton:hover {
 	z-index: 1000;
-	box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
+	box-shadow: rgba(0, 0, 0, 0.3) 0 16px 16px 0;
 }
 
-.label {
+.beforeInput {
 	margin-bottom: 10px;
-	margin-top: 10px;
+	margin-top: 15px;
 	font-size: 14px;
 }
 
+.label {
+	float: left;
+	width: 150px;
+}
+
 .errorMessage {
-	margin-top: 10px;
-	width: 94%;
-	padding: 15px;
-	background-color: #8C0D14;
-	font-size: 13px;
+	float: right;
 	text-align: center;
-	animation: pop .5s ease-in-out;
-	transform-origin: left top;
+	transform-origin: right;
+	color: #D32F2F;
+	animation: pop .3s ease-in-out;
+}
+
+.errorMessageMain {
+	height: 20px;
+	text-align: center;
+	color: #D32F2F;
+}
+
+.isVisible {
+	animation: pop .3s ease-in-out;
 }
 
 @keyframes pop {
 	0% {
-		transform: scale(0);
-	}
-	100% {
-		transform: scale(1);
+		opacity: 0;
+	} 100% {
+		opacity: 1;
 	}
 }
