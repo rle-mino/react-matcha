@@ -62,26 +62,6 @@ html {
 	color: white;
 }
 
-.textInp {
-	background-color: rgba(255, 255, 255, .1);
-	display: block;
-	padding: 15px;
-	width: 94%;
-	font-size: 16px;
-	color: #f0f0f0;
-	transition: background-color .5s, color .5s;
-}
-
-.isFocused {
-	background-color: rgba(255, 255, 255, .6);
-	color: #000000;
-}
-
-.label {
-	float: left;
-	width: 150px;
-}
-
 .mainButton {
 	background-color: #26577F;
 	width: 100%;
@@ -96,9 +76,6 @@ html {
 .centered {
 	margin: 0;
 	padding: 0;
-	margin-left: 50%;
-	margin-right: 50%;
-	transform: translate(-50%, -50%);
 }
 
 .mainButton:hover {

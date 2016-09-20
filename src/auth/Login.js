@@ -1,8 +1,10 @@
 import React					from 'react';
 import { Link }					from 'react-router';
 import axios					from 'axios';
-import apiConnect				from '../apiConnect';
 import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
+import apiConnect				from '../apiConnect';
+import MatchInput				from '../components/MatchInput';
+import ErrorMessage				from '../components/ErrorMessage';
 
 import './login.css';
 import './loginForm.css';
@@ -13,26 +15,10 @@ class LoginForm extends React.Component {
 		displayResponse: false,
 		serverStatus: null,
 		buttonValue: 'SIGN IN',
-		focusStatus1: 'textInp',
-		focusStatus2: 'textInp',
 		passReq: false,
 		userReq: false,
 		mainErr: 'errorMessageMain',
 	};
-
-	focusedInput = (e) => {
-		if (e.target === document.querySelector('input[name=username]'))
-			this.setState({ focusStatus1: `${this.state.focusStatus1} isFocused` });
-		if (e.target === document.querySelector('input[name=password]'))
-			this.setState({ focusStatus2: `${this.state.focusStatus2} isFocused` });
-	}
-
-	bluredInput = (e) => {
-		if (e.target === document.querySelector('input[name=username]'))
-			this.setState({ focusStatus1: 'textInp' });
-		if (e.target === document.querySelector('input[name=password]'))
-			this.setState({ focusStatus2: 'textInp' });
-	}
 
 	login = async (e) => {
 		e.preventDefault();
@@ -82,8 +68,6 @@ class LoginForm extends React.Component {
 			isPending,
 			serverResponse,
 			buttonValue,
-			focusStatus1,
-			focusStatus2,
 			passReq,
 			userReq,
 			mainErr
@@ -92,16 +76,20 @@ class LoginForm extends React.Component {
 			<div>
 				<div className={mainErr}>{serverResponse}</div>
 				<form id="loginForm" onSubmit={this.login}>
-					<div className="beforeInput">
-						<div className="label">USERNAME OR MAIL</div>
-						{userReq === true && (<div className="errorMessage">USERNAME REQUIRED</div>)}
-					</div>
-					<input type="text" name="username" className={focusStatus1} onFocus={this.focusedInput} onBlur={this.bluredInput}/>
-					<div className="beforeInput">
-						<div className="label">PASSWORD</div>
-						{passReq === true && (<div className="errorMessage">PASSWORD REQUIRED</div>)}
-					</div>
-					<input type="password" name="password" className={focusStatus2} onFocus={this.focusedInput} onBlur={this.bluredInput} />
+					<MatchInput
+						label="USERNAME"
+						inputType="text"
+						inputName="username"
+					>
+						{!!userReq && (<ErrorMessage message="REQUIRED" />)}
+					</MatchInput>
+					<MatchInput
+						label="PASSWORD"
+						inputType="password"
+						inputName="password"
+					>
+						{!!passReq && (<ErrorMessage message="REQUIRED" />)}
+					</MatchInput>
 					<input className="mainButton" type="submit" name="button" value={buttonValue} disabled={isPending} />
 				</form>
 			</div>

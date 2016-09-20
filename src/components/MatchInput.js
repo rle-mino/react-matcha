@@ -1,5 +1,7 @@
 import React			from 'react';
 
+import './matchInput.css';
+
 export default class MatchInput extends React.Component {
 
 	state = {
@@ -15,15 +17,16 @@ export default class MatchInput extends React.Component {
 			<div className="matchInput">
 				<div className="beforeInput">
 					<div className="label">{this.props.label}</div>
-					{this.props.errorMessage}
+					{this.props.children}
 				</div>
 				<div>
 					<input
-					type={this.props.inputType}
-					name={this.props.inputName}
-					className={this.state.focusStatus}
-					onFocus={this.focusedInput}
-					onBlur={this.bluredInput}/>
+						type={this.props.inputType}
+						name={this.props.inputName}
+						className={this.state.focusStatus}
+						onFocus={this.focusedInput}
+						onBlur={this.bluredInput}
+					/>
 				</div>
 			</div>
 		)
