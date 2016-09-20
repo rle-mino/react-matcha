@@ -1,16 +1,21 @@
-import React			from 'react';
-import { Link }			from 'react-router';
+import React					from 'react';
+import { Link }					from 'react-router';
+import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
+import MatchInput				from '../customComponents/matchInput';
+
+import './register.css';
+import '../master.css';
 
 class FormRegister extends React.Component {
 	render() {
 		return (
-			<form className="RegisterForm">
-				<input type="text"/>
-				<input type="mail"/>
-				<input type="mail"/>
-				<input type="password"/>
-				<input type="password"/>
-				<input type="submit"/>
+			<form onSubmit={this.register}>
+				<MatchInput label="USERNAME" inputType="text" inputName="username"/>
+				<MatchInput label="MAIL" inputType="text" inputName="mail"/>
+				<MatchInput label="MAIL VERIFICATION" inputType="text" inputName="mailVerif" />
+				<MatchInput label="PASSWORD" inputType="password" inputName="password" />
+				<MatchInput label="PASSWORD VERIFICATION" inputType="password" inputName="passwordVerif" />
+				<input type="submit" name="register" value="REGISTER" className="mainButton"/>
 			</form>
 		);
 	}
@@ -19,10 +24,19 @@ class FormRegister extends React.Component {
 export default class Register extends React.Component {
 	render() {
 		return (
-			<div className="single">
+			<ReactCssTransitionGroup
+			component="div"
+			transitionName="route"
+			className="registerForm"
+			transitionAppear={true}
+			transitionEnterTimeout={500}
+			transitionAppearTimeout={500}
+			transitionLeaveTimeout={500}>
+				<div className="otherOptions">
+					<Link to="/"><div className="otherOption centered">ALREADY REGISTERED</div></Link>
+				</div>
 				<FormRegister />
-				<Link to="/">Already registered</Link>
-			</div>
+			</ReactCssTransitionGroup>
 		)
 	}
 }

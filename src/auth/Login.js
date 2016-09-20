@@ -2,7 +2,7 @@ import React					from 'react';
 import { Link }					from 'react-router';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
-// import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
+import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 
 import './login.css';
 import './loginForm.css';
@@ -112,14 +112,21 @@ class LoginForm extends React.Component {
 export default class Login extends React.Component {
 	render() {
 		return (
-			<div id="loginComp">
+			<ReactCssTransitionGroup
+			component="div"
+			transitionName="route"
+			className="loginComp"
+			transitionAppear={true}
+			transitionEnterTimeout={500}
+			transitionAppearTimeout={500}
+			transitionLeaveTimeout={500}>
 				<div className="mainTitle">LOGIN</div>
 				<LoginForm />
 				<div className="otherOptions">
 					<Link to="register"><div className="register otherOption">REGISTER</div></Link>
 					<Link to="forgot"><div className="forgot otherOption">FORGOT PASSWORD?</div></Link>
 				</div>
-			</div>
+			</ReactCssTransitionGroup>
 		);
 	}
 }
