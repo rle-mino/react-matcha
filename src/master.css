@@ -62,6 +62,12 @@ html {
 	color: white;
 }
 
+.errorMessageMain {
+	height: 20px;
+	text-align: center;
+	color: #D32F2F;
+}
+
 .mainButton {
 	background-color: #26577F;
 	width: 100%;
