@@ -1,6 +1,6 @@
 import React					from 'react';
 import axios					from 'axios';
-import { Link }					from 'react-router';
+import { Link, browserHistory }	from 'react-router';
 import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import MatchInput				from '../components/MatchInput';
 import ErrorMessage				from '../components/ErrorMessage';
@@ -97,6 +97,9 @@ class FormRegister extends React.Component {
 				} else if (response.data.status === true){
 					this.setState({ mainButtonValue: 'SUCCESS' });
 				}
+				if (response.data.status === true) {
+					setTimeout(() => browserHistory.push('confirm_mail'), 1000);
+				}
 			}, 1000);
 		}
 	};
@@ -120,7 +123,7 @@ class FormRegister extends React.Component {
 					inputName="password"
 				>
 					{(!!this.state.passReq && (<ErrorMessage message="REQUIRED" />)) ||
-					(!!this.state.passInval && (<ErrorMessage message="INVALID PASSWORD" />))}
+					(!!this.state.passInval && (<ErrorMessage message="UNSECURE PASSWORD" />))}
 				</MatchInput>
 				<MatchInput
 					label="VERIFY PASSWORD"

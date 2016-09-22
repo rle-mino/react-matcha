@@ -1,0 +1,99 @@
+import React						from 'react';
+import ReactCssTransitionGroup		from 'react-addons-css-transition-group';
+import axios						from 'axios';
+import { browserHistory, Link }		from 'react-router';
+import apiConnect					from '../apiConnect';
+
+import MatchInput					from '../components/MatchInput';
+import ErrorMessage					from '../components/ErrorMessage';
+
+import './confirmMail.css';
+
+class ConfirmMailForm extends React.Component {
+	state = {
+		mainButtonValue: 'CONFIRM',
+		serverResponse: false,
+		subDis: false,
+		userReq: false,
+		keyReq: false,
+	}
+
+	confirmMail = async (e) => {
+		e.preventDefault();
+		this.setState({
+			mainButtonValue: 'WAIT',
+			subDis: true,
+			serverResponse: false,
+			keyReq: false,
+			userReq: false,
+		});
+		const response = await axios({
+			method: 'put',
+			url: `${apiConnect}user/update/confirm_mail`,
+			data: {
+				username: e.target.username.value,
+				newMailKey: e.target.confirmationKey.value,
+			}
+		});
+		setTimeout(() => {
+			if (response.data.status === false) {
+				if (response.data.details !== 'invalid request') {
+					this.setState({
+						serverResponse: response.data.details,
+						mainButtonValue: 'CONFIRM',
+						subDis: false,
+					});
+				} else {
+					response.data.error.forEach((error) => {
+						if (error.path === 'username') this.setState({ userReq: true });
+						if (error.path === 'newMailKey') this.setState({ keyReq: true });
+						return false;
+					})
+					this.setState({ mainButtonValue: 'CONFIRM', subDis: false });
+				}
+			} else {
+				this.setState({ mainButtonValue: 'SUCCESS' });
+				setTimeout(() => browserHistory.push('add_details'), 1000);
+			}
+		}, 1000)
+	}
+
+	render() {
+		return (
+			<div className="confirmMailForm">
+				<div className="errorMessageMain">{this.state.serverResponse}</div>
+				<form onSubmit={this.confirmMail}>
+					<MatchInput label="USERNAME" inputType="text" inputName="username">
+						{!!this.state.userReq && (<ErrorMessage message="REQUIRED"/>)}
+					</MatchInput>
+					<MatchInput label="CONFIRMATION'S CODE" inputType="text" inputName="confirmationKey">
+						{!!this.state.keyReq && (<ErrorMessage message="REQUIRED"/>)}
+					</MatchInput>
+					<input type="submit" className="mainButton" value={this.state.mainButtonValue} disabled={this.state.subDis}/>
+				</form>
+			</div>
+		);
+	}
+}
+
+export default class ConfirmMail extends React.Component {
+	render() {
+		return (
+			<ReactCssTransitionGroup
+			component="div"
+			transitionName="route"
+			className="confirmMailComp"
+			transitionAppear={true}
+			transitionEnterTimeout={500}
+			transitionAppearTimeout={500}
+			transitionLeaveTimeout={500}>
+				<div className="mainTitle">CONFIRM YOUR MAIL</div>
+				<ConfirmMailForm />
+				<div className="otherOptions">
+					<Link to="/"><div className="forgot otherOption">SIGN IN</div></Link>
+					<Link to="register"><div className="register otherOption">NOT REGISTERED YET?</div></Link>
+				</div>
+			</ReactCssTransitionGroup>
+		)
+	}
+}

@@ -1,5 +1,5 @@
 import React					from 'react';
-import { Link }					from 'react-router';
+import { Link, browserHistory }	from 'react-router';
 import axios					from 'axios';
 import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import apiConnect				from '../apiConnect';
@@ -55,6 +55,9 @@ class LoginForm extends React.Component {
 					} else this.setState({ userReq: false });
 				} else {
 					this.setState({ mainErr: 'errorMessageMain isVisible' });
+				}
+				if (response.data.details.match(/not activated$/g)) {
+					setTimeout(() => browserHistory.push('confirm_mail'), 1000);
 				}
 			}
 			else {
