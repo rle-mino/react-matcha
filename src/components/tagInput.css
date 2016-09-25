@@ -1,0 +1,43 @@
+.tagSuggs {
+	opacity: 0;
+	height: 0px;
+	transition: height .3s ease-in-out, opacity .3s ease-in-out;
+	list-style: none;
+}
+
+.suggBlock {
+	opacity: 1;
+	height: 230px;
+}
+
+.sugg {
+	background-color: rgba(255, 255, 255, 0.6);
+	color: black;
+	transform-origin: top;
+	padding: 5px;
+	width: calc(100% - 10px);
+}
+
+.sugg-leave {
+	animation: suggOut .2s ease-out forwards;
+}
+
+.sugg-enter {
+	animation: suggIn .2s ease-out forwards;
+}
+
+@keyframes suggOut {
+	0% {
+		opacity: 1;
+	} 100% {
+		opacity: 0;
+	}
+}
+
+@keyframes suggIn {
+	0% {
+		opacity: 0;
+	} 100% {
+		opacity: 1;
+	}
+}

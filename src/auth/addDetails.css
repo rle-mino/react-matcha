@@ -8,3 +8,49 @@
 	padding: 40px;
 	color: white;
 }
+
+.addDetailsForm {
+}
+
+.genderSelector, .orientationSelector {
+	width: 101%;
+	display: inline-block;
+}
+
+.radioInps {
+	background-color: rgba(255, 255, 255, .1);
+	text-align: center;
+	width: 100%;
+}
+
+.radioInp {
+	padding: 10px 0;
+	background-color: rgba(255, 255, 255, .1);
+	color: #f0f0f0;
+	transition: background-color .5s, color .5s;
+	width: 33%;
+	float: left;
+}
+
+.isChecked {
+	background-color: red;
+}
+
+.radioInp:hover {
+	background-color: rgba(255, 255, 255, .6);
+	color: black;
+}
+
+input[type=radio] {
+	display: none;
+}
+
+.textarea {
+	width: 94%;
+	height: 80px;
+	resize: none;
+}
+
+.textarea::-webkit-scrollbar {
+	display: none;
+}
