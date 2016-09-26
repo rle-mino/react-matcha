@@ -1,6 +1,7 @@
 import React					from 'react';
 import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import axios					from 'axios';
+import Geosuggest				from 'react-geosuggest';
 import apiConnect				from '../apiConnect';
 
 import TagInput					from '../components/TagInput.js';
@@ -70,16 +71,46 @@ class BioInput extends React.Component {
 	}
 }
 
+class GeolocInput extends React.Component {
+	state = {
+		isFocused: '',
+	}
+
+	focus = () => this.setState({ isFocused: 'isFocused' });
+	blur = () => this.setState({ isFocused: '' });
+
+	render() {
+		return (
+			<div className="geolocInput">
+				<div className="beforeInput">
+					<div className="label">WHERE ARE YOU?</div>
+					{this.props.children}
+				</div><br/>
+				<Geosuggest
+					onFocus={this.focus}
+					onBlur={this.blur}
+					placeholder=""
+					className={this.state.isFocused}
+					inputClassName={`textInp ${this.state.isFocused}`} />
+			</div>
+		);
+	}
+}
+
 class AddDetailsForm extends React.Component {
 	state = {
 		serverResponse: null,
+	}
+
+	sendDetails = (e) => {
+		e.preventDefault();
 	}
 
 	render() {
 		return (
 			<div className="addDetailsForm">
 				<div className="errorMessageMain">{this.state.serverResponse}</div>
-				<form>
+				<form onSubmit={this.sendDetails}>
 					<ThreeSelector name="gender" label="GENDER"
 						value1="male" label1="MALE"
 						value2="other" label2="OTHER"
@@ -94,7 +125,7 @@ class AddDetailsForm extends React.Component {
 					/>
 					<BioInput />
 					<TagInput tags={this.props.tags}/>
-					{/* geoloc */}
+					<GeolocInput />
 					<input type="submit" value="ADD DETAILS" className="mainButton" />
 				</form>
 			</div>
