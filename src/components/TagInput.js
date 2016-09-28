@@ -15,17 +15,17 @@ export default class TagInput extends React.Component {
 	}
 
 	focus = (e) => this.setState({ isFocused: 'isFocused', suggBlock: 'suggBlock' });
-
 	blur = () => this.setState({ isFocused: '', suggBlock: '', tagSugg: [] });
 
 	handleEntry = (e) => {
-		if (e.target.value.slice(-1) === ' ') {
+		if (e.target.value.slice(-1) === ' ' && e.target.value.length > 1) {
 			const actualTags = this.state.validTag;
 			actualTags.push(e.target.value.substring(0, e.target.value.length - 1));
 			e.target.value = '';
 			this.setState({ validTag: actualTags });
 			return true;
 		}
+		if (e.target.value.length === 1 && e.target.value.slice(-1) === ' ') e.target.value = '';
 		if (e.target.value) {
 			const { tags } = this.props;
 			const results = fuzzy.filter(e.target.value, tags, {

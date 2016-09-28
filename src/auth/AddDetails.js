@@ -1,7 +1,6 @@
 import React					from 'react';
 import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import axios					from 'axios';
-import Geosuggest				from 'react-geosuggest';
 import apiConnect				from '../apiConnect';
 
 import TagInput					from '../components/TagInput.js';
@@ -63,7 +62,7 @@ class BioInput extends React.Component {
 					<div className="label">BIO</div>
 					{this.props.errorMessage}
 				</div>
-				<textarea className={`textInp textarea ${this.state.isFocused}`} onFocus={this.focus} onBlur={this.blur}></textarea>
+				<textarea name="bio" className={`textInp textarea ${this.state.isFocused}`} onFocus={this.focus} onBlur={this.blur}></textarea>
 			</div>
 		);
 	}
@@ -72,24 +71,55 @@ class BioInput extends React.Component {
 class GeolocInput extends React.Component {
 	state = {
 		isFocused: '',
+		localInval: null,
+		geolocButtonVal: 'LOCATE ME',
+		geolocButtonDis: false,
+		lat: null,
+		lng: null,
 	}
 
 	focus = () => this.setState({ isFocused: 'isFocused' });
 	blur = () => this.setState({ isFocused: '' });
 
+	geoLoc = async (e) => {
+		e.preventDefault();
+		this.setState({ geolocButtonVal: 'WAIT', geolocButtonDis: true });
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(async(position) => {
+				let lat = position.coords.latitude;
+				let lng = position.coords.longitude;
+				const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}`);
+				if (response.data.status === 'OK') {
+					this.setState({
+						geolocButtonVal: response.data.results[0].formatted_address.toUpperCase(),
+						lat,
+						lng,
+					});
+				} else {
+					this.setState({ geolocButtonVal: 'FAILED TO LOCATE YOU' });
+				}
+			}, (error) => {
+				this.setState({ geolocButtonVal: error.message.toUpperCase() });
+			});
+		}
+	}
+
 	render() {
+		const { geolocButtonVal, geolocButtonDis } = this.state;
 		return (
 			<div className="geolocInput">
 				<div className="beforeInput">
-					<div className="label">WHERE ARE YOU?</div>
+					<div className="label">LOCATION</div>
 					{this.props.children}
-				</div><br/>
-				<Geosuggest
-					onFocus={this.focus}
-					onBlur={this.blur}
-					placeholder=""
-					className={this.state.isFocused}
-					inputClassName={`textInp ${this.state.isFocused}`} />
+				</div>
+				<input
+					type="button"
+					className="geolocButton"
+					value={geolocButtonVal}
+					name="geoloc"
+					onClick={this.geoLoc}
+					disabled={geolocButtonDis}
+				/>
 			</div>
 		);
 	}
@@ -100,15 +130,30 @@ class AddDetailsForm extends React.Component {
 		serverResponse: null,
 	}
 
-	sendDetails = (e) => {
+	sendDetails = async (e) => {
 		e.preventDefault();
+		const { lat, lng } = this.refs.geolocInput.state;
+		const data = {
+			location: {
+				lat,
+				lng,
+				address: e.target.geoloc.value,
+			},
+			gender: e.target.gender.value,
+			orientation: e.target.orientation.value,
+			bio: e.target.bio.value,
+			tags: this.refs.tagInput.state.validTag,
+		}
+		console.log(data);
 	}
 
 	render() {
+		const { serverResponse } = this.state;
 		return (
 			<div className="addDetailsForm">
-				<div className="errorMessageMain">{this.state.serverResponse}</div>
+				<div className="errorMessageMain">{serverResponse}</div>
 				<form onSubmit={this.sendDetails}>
+					<GeolocInput ref="geolocInput"/>
 					<ThreeSelector name="gender" label="GENDER"
 						value1="male" label1="MALE"
 						value2="other" label2="OTHER"
@@ -122,8 +167,7 @@ class AddDetailsForm extends React.Component {
 						className="orientationSelector"
 					/>
 					<BioInput />
-					<TagInput tags={this.props.tags}/>
-					<GeolocInput />
+					<TagInput tags={this.props.tags} ref="tagInput"/>
 					<input type="submit" value="ADD DETAILS" className="mainButton" />
 				</form>
 			</div>
