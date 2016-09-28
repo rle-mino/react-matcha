@@ -1,6 +1,6 @@
 import React			from 'react';
 
-import './matchInput.css';
+import './matchInput.sass';
 
 export default class MatchInput extends React.Component {
 

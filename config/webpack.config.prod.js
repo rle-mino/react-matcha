@@ -93,6 +93,7 @@ module.exports = {
         loader: 'babel',
         query: require('./babel.prod')
       },
+	  // "sass" loader
       // The notation here is somewhat confusing.
       // "postcss" loader applies autoprefixer to our CSS.
       // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -105,6 +106,10 @@ module.exports = {
       // tags. If you use code splitting, however, any async bundles will still
       // use the "style" loader inside the async code so CSS from them won't be
       // in the main CSS file.
+	  {
+		  test: /\.sass$/,
+		  loaders: [ 'style', 'css', 'sass?indentedSyntax', 'autoprefixer' ]
+      },
       {
         test: /\.css$/,
         // "?-autoprefixer" disables autoprefixer in css-loader itself:

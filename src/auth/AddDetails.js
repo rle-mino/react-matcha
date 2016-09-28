@@ -5,11 +5,9 @@ import Geosuggest				from 'react-geosuggest';
 import apiConnect				from '../apiConnect';
 
 import TagInput					from '../components/TagInput.js';
-// import ErrorMessage				from '../components/ErrorMessage';
-// import MatchInput				from '../components/MatchInput';
 import _ from 'lodash';
 
-import './addDetails.css';
+import './css/addDetails.sass';
 
 class ThreeSelector extends React.Component {
 	state = {

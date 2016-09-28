@@ -6,8 +6,7 @@ import apiConnect				from '../apiConnect';
 import MatchInput				from '../components/MatchInput';
 import ErrorMessage				from '../components/ErrorMessage';
 
-import './login.css';
-import './loginForm.css';
+import './css/login.sass';
 
 class LoginForm extends React.Component {
 	state = {
@@ -15,8 +14,8 @@ class LoginForm extends React.Component {
 		displayResponse: false,
 		serverStatus: null,
 		buttonValue: 'SIGN IN',
-		passReq: false,
-		userReq: false,
+		username: null,
+		password: null,
 		mainErr: 'errorMessageMain',
 	};
 
@@ -25,8 +24,8 @@ class LoginForm extends React.Component {
 		this.setState({
 			isPending: true,
 			buttonValue: 'WAIT',
-			userReq: false,
-			passReq: false,
+			username: null,
+			password: null,
 			mainErr: 'errorMessageMain',
 			serverResponse: null,
 		});
@@ -47,12 +46,11 @@ class LoginForm extends React.Component {
 				this.setState({ isPending: false });
 				if (response.data.details === 'invalid request') {
 					this.setState({ serverResponse: null });
-					if (response.data.require.indexOf('password') !== -1) {
-						this.setState({ passReq: true });
-					} else this.setState({ passReq: false })
-					if (response.data.require.indexOf('username') !== -1) {
-						this.setState({ userReq: true });
-					} else this.setState({ userReq: false });
+					const error = {};
+					response.data.error.forEach((err) => {
+						error[err.path] = err.error.toUpperCase();
+					});
+					this.setState({ ...error });
 				} else {
 					this.setState({ mainErr: 'errorMessageMain isVisible' });
 				}
@@ -69,10 +67,10 @@ class LoginForm extends React.Component {
 	render() {
 		const {
 			isPending,
+			username,
+			password,
 			serverResponse,
 			buttonValue,
-			passReq,
-			userReq,
 			mainErr
 		} = this.state;
 		return (
@@ -84,14 +82,14 @@ class LoginForm extends React.Component {
 						inputType="text"
 						inputName="username"
 					>
-						{!!userReq && (<ErrorMessage message="REQUIRED" />)}
+						{!!username && (<ErrorMessage message={username} />)}
 					</MatchInput>
 					<MatchInput
 						label="PASSWORD"
 						inputType="password"
 						inputName="password"
 					>
-						{!!passReq && (<ErrorMessage message="REQUIRED" />)}
+						{!!password && (<ErrorMessage message={password} />)}
 					</MatchInput>
 					<input className="mainButton" type="submit" name="button" value={buttonValue} disabled={isPending} />
 				</form>

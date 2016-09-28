@@ -98,11 +98,16 @@ module.exports = {
         loader: 'babel',
         query: require('./babel.dev')
       },
+	  // "sass loader"
       // "postcss" loader applies autoprefixer to our CSS.
       // "css" loader resolves paths in CSS and adds assets as dependencies.
       // "style" loader turns CSS into JS modules that inject <style> tags.
       // In production, we use a plugin to extract that CSS to a file, but
       // in development "style" loader enables hot editing of CSS.
+	  {
+		  test: /\.sass$/,
+		  loaders: [ 'style', 'css', 'postcss', 'sass?indentedSyntax' ],
+      },
       {
         test: /\.css$/,
         loader: 'style!css!postcss'

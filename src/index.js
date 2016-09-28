@@ -8,7 +8,7 @@ import Login		from './auth/Login';
 import ConfirmMail	from './auth/ConfirmMail';
 import AddDetails	from './auth/AddDetails';
 
-import './master.css';
+import './master.sass';
 
 
 render((

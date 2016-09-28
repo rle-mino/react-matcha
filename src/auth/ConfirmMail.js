@@ -7,7 +7,7 @@ import apiConnect					from '../apiConnect';
 import MatchInput					from '../components/MatchInput';
 import ErrorMessage					from '../components/ErrorMessage';
 
-import './confirmMail.css';
+import './css/confirmMail.sass';
 
 class ConfirmMailForm extends React.Component {
 	state = {
@@ -29,7 +29,7 @@ class ConfirmMailForm extends React.Component {
 		});
 		const response = await axios({
 			method: 'put',
-			url: `${apiConnect}user/update/confirm_mail`,
+			url: `${apiConnect}user/confirm_mail`,
 			data: {
 				username: e.target.username.value,
 				newMailKey: e.target.confirmationKey.value,

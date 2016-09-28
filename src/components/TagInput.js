@@ -3,7 +3,7 @@ import fuzzy					from 'fuzzy';
 import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import ReactDOM					from 'react-dom';
 
-import './tagInput.css';
+import './tagInput.sass';
 
 export default class TagInput extends React.Component {
 	state = {

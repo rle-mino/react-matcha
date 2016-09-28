@@ -1,5 +1,5 @@
 import React				from 'react'
-import './dateInput.css';
+import './dateInput.sass';
 
 export default class DateInput extends React.Component {
 	render() {
