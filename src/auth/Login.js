@@ -31,12 +31,13 @@ class LoginForm extends React.Component {
 		});
 		const response = await axios({
 			method: 'put',
-			url: `${apiConnect}user/auth/login`,
+			url: `${apiConnect}user/login`,
 			data: {
 				username: e.target.username.value,
 				password: e.target.password.value,
 			},
 		});
+		localStorage.setItem('logToken', response.headers.logtoken);
 		setTimeout(() => {
 			this.setState({
 				buttonValue: response.data.status ? 'SUCCESS' : 'SIGN IN',
@@ -104,12 +105,12 @@ export default class Login extends React.Component {
 			<ReactCssTransitionGroup
 			component="div"
 			transitionName="route"
-			className="loginComp"
+			className="comp"
 			transitionAppear={true}
 			transitionEnterTimeout={500}
 			transitionAppearTimeout={500}
 			transitionLeaveTimeout={500}>
-				<div className="mainTitle">LOGIN</div>
+				<h1 className="mainTitle">LOGIN</h1>
 				<LoginForm />
 				<div className="otherOptions">
 					<Link to="register"><div className="register otherOption">REGISTER</div></Link>

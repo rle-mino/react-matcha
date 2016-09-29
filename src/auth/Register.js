@@ -170,12 +170,12 @@ export default class Register extends React.Component {
 			<ReactCssTransitionGroup
 			component="div"
 			transitionName="route"
-			className="registerForm"
+			className="comp"
 			transitionAppear={true}
 			transitionEnterTimeout={500}
 			transitionAppearTimeout={500}
 			transitionLeaveTimeout={500}>
-				<div className="mainTitle">REGISTER</div>
+				<h1 className="mainTitle">REGISTER</h1>
 				<FormRegister />
 				<div className="otherOptions">
 					<Link to="/"><div className="otherOption centered">ALREADY REGISTERED</div></Link>

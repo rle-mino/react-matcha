@@ -82,12 +82,12 @@ export default class ConfirmMail extends React.Component {
 			<ReactCssTransitionGroup
 			component="div"
 			transitionName="route"
-			className="confirmMailComp"
+			className="comp"
 			transitionAppear={true}
 			transitionEnterTimeout={500}
 			transitionAppearTimeout={500}
 			transitionLeaveTimeout={500}>
-				<div className="mainTitle">CONFIRM YOUR MAIL</div>
+				<h1 className="mainTitle">CONFIRM YOUR MAIL</h1>
 				<ConfirmMailForm />
 				<div className="otherOptions">
 					<Link to="/"><div className="forgot otherOption">SIGN IN</div></Link>

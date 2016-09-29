@@ -2,11 +2,13 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
-import App			from './App';
-import Register 	from './auth/Register';
-import Login		from './auth/Login';
-import ConfirmMail	from './auth/ConfirmMail';
-import AddDetails	from './auth/AddDetails';
+import App				from './App';
+import Register 		from './auth/Register';
+import Login			from './auth/Login';
+import ConfirmMail		from './auth/ConfirmMail';
+import AddDetails		from './auth/AddDetails';
+import ForgotPassword	from './auth/ForgotPassword';
+import ResetPassWithKey	from './auth/ResetPassWithKey';
 
 import './master.sass';
 
@@ -18,6 +20,8 @@ render((
 			<Route path="register" component={Register} />
 			<Route path="confirm_mail" component={ConfirmMail} />
 			<Route path="add_details" component={AddDetails} />
+			<Route path="forgot_password" component={ForgotPassword} />
+			<Route path="reset_pass_with_key" component={ResetPassWithKey} />
 		</Route>
 	</Router>
 ), document.getElementById('root'));

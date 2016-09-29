@@ -10,12 +10,11 @@ export default class TagInput extends React.Component {
 		tagsList: [],
 		tagSugg: [],
 		validTag: [],
-		isFocused: '',
 		suggBlock: '',
 	}
 
-	focus = (e) => this.setState({ isFocused: 'isFocused', suggBlock: 'suggBlock' });
-	blur = () => this.setState({ isFocused: '', suggBlock: '', tagSugg: [] });
+	focus = (e) => this.setState({ suggBlock: 'suggBlock' });
+	blur = () => this.setState({ suggBlock: '', tagSugg: [] });
 
 	handleEntry = (e) => {
 		if (e.target.value.slice(-1) === ' ' && e.target.value.length > 1) {
@@ -39,8 +38,9 @@ export default class TagInput extends React.Component {
 	removeTag = (e) => {
 		e.preventDefault();
 		const allTags = this.state.validTag;
-		const newTags = allTags.filter((tag) => tag !== e.target.innerHTML);
-		this.setState({ validTag: newTags });
+		const index = allTags.indexOf(e.target.innerHTML);
+		allTags.splice(index, 1);
+		this.setState({ validTag: allTags });
 	}
 
 	addTag = (e) => {
@@ -64,6 +64,7 @@ export default class TagInput extends React.Component {
 			<div className="tagInput">
 				<div className="beforeInput">
 					<div className="label">TAGS</div>
+					{this.props.children}
 				</div>
 				<br/>
 					<ReactCssTransitionGroup

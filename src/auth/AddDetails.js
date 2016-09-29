@@ -1,10 +1,12 @@
+import _						from 'lodash';
 import React					from 'react';
 import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
 
 import TagInput					from '../components/TagInput.js';
-import _ from 'lodash';
+import Unauthorized				from '../Unauthorized';
+import ErrorMessage				from '../components/ErrorMessage';
 
 import './css/addDetails.sass';
 
@@ -47,25 +49,16 @@ class ThreeSelector extends React.Component {
 	}
 }
 
-class BioInput extends React.Component {
-	state = {
-		isFocused: '',
-	}
-
-	focus = () => this.setState({ isFocused: 'isFocused' });
-	blur = () => this.setState({ isFocused: '' });
-
-	render() {
-		return (
-			<div className="bioInput">
-				<div className="beforeInput">
-					<div className="label">BIO</div>
-					{this.props.errorMessage}
-				</div>
-				<textarea name="bio" className={`textInp textarea ${this.state.isFocused}`} onFocus={this.focus} onBlur={this.blur}></textarea>
+const BioInput = ({children}) => {
+	return (
+		<div className="bioInput">
+			<div className="beforeInput">
+				<div className="label">BIO</div>
+				{children}
 			</div>
-		);
-	}
+			<textarea name="bio" className="textInp textarea" />
+		</div>
+	);
 }
 
 class GeolocInput extends React.Component {
@@ -77,9 +70,6 @@ class GeolocInput extends React.Component {
 		lat: null,
 		lng: null,
 	}
-
-	focus = () => this.setState({ isFocused: 'isFocused' });
-	blur = () => this.setState({ isFocused: '' });
 
 	geoLoc = async (e) => {
 		e.preventDefault();
@@ -128,10 +118,24 @@ class GeolocInput extends React.Component {
 class AddDetailsForm extends React.Component {
 	state = {
 		serverResponse: null,
+		subVal: 'ADD DETAILS',
+		bio: null,
+		location: null,
+		gender: null,
+		orientation: null,
+		tags: null,
 	}
 
 	sendDetails = async (e) => {
 		e.preventDefault();
+		this.setState({
+			subVal: 'WAIT',
+			location: null,
+			gender: null,
+			orientation: null,
+			bio: null,
+			tags: null,
+		});
 		const { lat, lng } = this.refs.geolocInput.state;
 		const data = {
 			location: {
@@ -144,31 +148,68 @@ class AddDetailsForm extends React.Component {
 			bio: e.target.bio.value,
 			tags: this.refs.tagInput.state.validTag,
 		}
-		console.log(data);
+		console.log('1');
+		const response = await axios({
+			method: 'put',
+			url: `${apiConnect}user/add_details`,
+			data: data,
+			headers: {
+				logToken: localStorage.getItem('logToken'),
+			},
+		});
+		setTimeout(() => {
+			if (response.data.status === false) {
+				if (response.data.details === 'invalid request') {
+					const error = {};
+					response.data.error.forEach((el) => {
+						error[el.path] = el.error;
+					})
+					this.setState({ ...error, subVal: 'ADD DETAILS' });
+				}
+			} else this.setState({ subVal: 'SUCCESS' });
+		}, 1000);
 	}
 
 	render() {
-		const { serverResponse } = this.state;
+		const {
+			serverResponse,
+			location,
+			bio,
+			gender,
+			orientation,
+			tags,
+			subVal,
+		} = this.state;
 		return (
 			<div className="addDetailsForm">
 				<div className="errorMessageMain">{serverResponse}</div>
 				<form onSubmit={this.sendDetails}>
-					<GeolocInput ref="geolocInput"/>
+					<GeolocInput ref="geolocInput">
+						{!!location && (<ErrorMessage message={location} />)}
+					</GeolocInput>
 					<ThreeSelector name="gender" label="GENDER"
 						value1="male" label1="MALE"
 						value2="other" label2="OTHER"
 						value3="female" label3="FEMALE"
 						className="genderSelector"
-					/>
+					>
+						{!!gender && (<ErrorMessage message={gender} />)}
+					</ThreeSelector>
 					<ThreeSelector name="orientation" label="ORIENTATION"
 						value1="gay" label1="GAY"
 						value2="bisexual" label2="BISEXUAL"
 						value3="straight" label3="STRAIGHT"
 						className="orientationSelector"
-					/>
-					<BioInput />
-					<TagInput tags={this.props.tags} ref="tagInput"/>
-					<input type="submit" value="ADD DETAILS" className="mainButton" />
+					>
+						{!!orientation && (<ErrorMessage message={orientation} />)}
+					</ThreeSelector>
+					<BioInput>
+						{!!bio && (<ErrorMessage message={bio}/>)}
+					</BioInput>
+					<TagInput tags={this.props.tags} ref="tagInput" >
+						{tags && (<ErrorMessage message={tags}/>)}
+					</TagInput>
+					<input type="submit" value={subVal} className="mainButton" />
 				</form>
 			</div>
 		);
@@ -177,10 +218,12 @@ class AddDetailsForm extends React.Component {
 
 export default class AddDetails extends React.Component {
 	state = {
+		auth: true,
 		tags: [],
 	};
 
 	componentWillMount() {
+		this.setState({ auth: !!localStorage.getItem('logToken') });
 		axios({
 			method: 'get',
 			url: `${apiConnect}tag/get/all`,
@@ -191,21 +234,21 @@ export default class AddDetails extends React.Component {
 	}
 
 	render() {
-		const { tags } = this.state;
-
+		const { auth, tags } = this.state;
+		if (!auth) return (<Unauthorized message="YOU HAVE TO BE LOGGED-IN" />);
 		return (
 			<div>
 				{!_.isEmpty(tags) && !_.isNil(tags) && (
 					<ReactCssTransitionGroup
 						component="div"
 						transitionName="route"
-						className="addDetailsComponent"
+						className="comp"
 						transitionAppear={true}
 						transitionEnterTimeout={500}
 						transitionAppearTimeout={500}
 						transitionLeaveTimeout={500}
 					>
-						<div className="mainTitle">ADD DETAILS TO YOUR PROFIL</div>
+						<h1 className="mainTitle">ADD DETAILS TO YOUR PROFIL</h1>
 						<AddDetailsForm tags={tags} />
 					</ReactCssTransitionGroup>
 				)}
