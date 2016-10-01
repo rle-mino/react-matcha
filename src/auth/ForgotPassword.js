@@ -35,7 +35,7 @@ class ForgotForm extends React.Component {
 			} else {
 				this.setState({ subVal: 'SUCCESS', serverResponse: response.data.details });
 				setTimeout(() => {
-					browserHistory.push('reset_pass_with_key');
+					browserHistory.push('reset_password');
 				}, 2000);
 			}
 		}, 1000);

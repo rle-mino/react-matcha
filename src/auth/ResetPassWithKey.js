@@ -2,6 +2,7 @@ import React					from 'react';
 import { browserHistory }		from 'react-router';
 import axios					from 'axios';
 import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
+import apiConnect				from '../apiConnect';
 
 import ErrorMessage				from '../components/ErrorMessage';
 import MatchInput				from '../components/MatchInput';
@@ -14,6 +15,48 @@ class ResetPassWithKeyForm extends React.Component {
 		password: null,
 		passVerif: null,
 		subVal: 'SET NEW PASSWORD',
+	}
+
+	resetPassWithKey = async (e) => {
+		e.preventDefault();
+		this.setState({
+			username: null,
+			resetKey: null,
+			password: null,
+			passVerif: null,
+			subVal: 'WAIT',
+			serverResponse: null,
+		});
+		if (e.target.password.value !== e.target.passVerif.value) {
+			this.setState({ passVerif: 'INVALID', subVal: 'SET NEW PASSWORD' });
+			return (false);
+		}
+		const response = await axios({
+			method: 'put',
+			url: `${apiConnect}user/reset_password`,
+			data: {
+				username: e.target.username.value,
+				resetKey: e.target.resetKey.value,
+				password: e.target.password.value,
+			},
+		});
+		setTimeout(() => {
+			if (response.data.status === false) {
+				if (response.data.details === 'invalid request') {
+					const error = {};
+					response.data.error.forEach((el) => {
+						error[el.path] = el.error.toUpperCase();
+					})
+					this.setState({ ...error, subVal: 'SET NEW PASSWORD' });
+				} else {
+					this.setState({ serverResponse: response.data.details, subVal: 'SET NEW PASSWORD' });
+				}
+			} else {
+				this.setState({ subVal: 'SUCCESS' });
+				setTimeout(() => browserHistory.push('/'), 1000);
+
+			}
+		}, 1000);
 	}
 
 	render() {

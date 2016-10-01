@@ -83,14 +83,14 @@ class LoginForm extends React.Component {
 						inputType="text"
 						inputName="username"
 					>
-						{!!username && (<ErrorMessage message={username} />)}
+						<ErrorMessage message={username} />
 					</MatchInput>
 					<MatchInput
 						label="PASSWORD"
 						inputType="password"
 						inputName="password"
 					>
-						{!!password && (<ErrorMessage message={password} />)}
+						<ErrorMessage message={password} />
 					</MatchInput>
 					<input className="mainButton" type="submit" name="button" value={buttonValue} disabled={isPending} />
 				</form>
@@ -103,18 +103,19 @@ export default class Login extends React.Component {
 	render() {
 		return (
 			<ReactCssTransitionGroup
-			component="div"
-			transitionName="route"
-			className="comp"
-			transitionAppear={true}
-			transitionEnterTimeout={500}
-			transitionAppearTimeout={500}
-			transitionLeaveTimeout={500}>
+				component="div"
+				transitionName="route"
+				className="comp"
+				transitionAppear={true}
+				transitionEnterTimeout={500}
+				transitionAppearTimeout={500}
+				transitionLeaveTimeout={500}
+			>
 				<h1 className="mainTitle">LOGIN</h1>
 				<LoginForm />
 				<div className="otherOptions">
 					<Link to="register"><div className="register otherOption">REGISTER</div></Link>
-					<Link to="forgot"><div className="forgot otherOption">FORGOT PASSWORD?</div></Link>
+					<Link to="forgot_password"><div className="forgot otherOption">FORGOT PASSWORD?</div></Link>
 				</div>
 			</ReactCssTransitionGroup>
 		);

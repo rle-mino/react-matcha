@@ -9,6 +9,7 @@ import ConfirmMail		from './auth/ConfirmMail';
 import AddDetails		from './auth/AddDetails';
 import ForgotPassword	from './auth/ForgotPassword';
 import ResetPassWithKey	from './auth/ResetPassWithKey';
+import AddPhotos		from './auth/AddPhotos';
 
 import './master.sass';
 
@@ -21,7 +22,8 @@ render((
 			<Route path="confirm_mail" component={ConfirmMail} />
 			<Route path="add_details" component={AddDetails} />
 			<Route path="forgot_password" component={ForgotPassword} />
-			<Route path="reset_pass_with_key" component={ResetPassWithKey} />
+			<Route path="reset_password" component={ResetPassWithKey} />
+			<Route path="add_photos" component={AddPhotos} />
 		</Route>
 	</Router>
 ), document.getElementById('root'));

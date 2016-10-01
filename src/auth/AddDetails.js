@@ -1,6 +1,7 @@
 import _						from 'lodash';
 import React					from 'react';
 import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
+import { browserHistory }		from 'react-router';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
 
@@ -166,7 +167,12 @@ class AddDetailsForm extends React.Component {
 					})
 					this.setState({ ...error, subVal: 'ADD DETAILS' });
 				}
-			} else this.setState({ subVal: 'SUCCESS' });
+			} else {
+				this.setState({ subVal: 'SUCCESS' });
+				setTimeout(() => {
+					browserHistory.push('add_photos');
+				});
+			}
 		}, 1000);
 	}
 
