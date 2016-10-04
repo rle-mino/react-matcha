@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import App				from './App';
+import AppHeader		from './AppHeader';
 import Register 		from './auth/Register';
 import Login			from './auth/Login';
 import ConfirmMail		from './auth/ConfirmMail';
@@ -24,6 +25,9 @@ render((
 			<Route path="forgot_password" component={ForgotPassword} />
 			<Route path="reset_password" component={ResetPassWithKey} />
 			<Route path="add_photos" component={AddPhotos} />
+		</Route>
+		<Route path="/matcha" component={AppHeader} >
+			<Route path="my_profile" component={Login} />
 		</Route>
 	</Router>
 ), document.getElementById('root'));

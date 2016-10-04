@@ -9,15 +9,16 @@ import ErrorMessage				from '../components/ErrorMessage';
 import './css/login.sass';
 
 class LoginForm extends React.Component {
-	state = {
-		isPending: false,
-		displayResponse: false,
-		serverStatus: null,
-		buttonValue: 'SIGN IN',
-		username: null,
-		password: null,
-		mainErr: 'errorMessageMain',
-	};
+
+	 	state = {
+			isPending: false,
+			displayResponse: false,
+			serverStatus: null,
+			buttonValue: 'SIGN IN',
+			username: null,
+			password: null,
+			mainErr: 'errorMessageMain',
+		};
 
 	login = async (e) => {
 		e.preventDefault();
@@ -37,7 +38,6 @@ class LoginForm extends React.Component {
 				password: e.target.password.value,
 			},
 		});
-		localStorage.setItem('logToken', response.headers.logtoken);
 		setTimeout(() => {
 			this.setState({
 				buttonValue: response.data.status ? 'SUCCESS' : 'SIGN IN',
@@ -60,6 +60,7 @@ class LoginForm extends React.Component {
 				}
 			}
 			else {
+				localStorage.setItem('logToken', response.headers.logtoken);
 				this.setState({ serverResponse: null });
 			}
 		}, 1000);

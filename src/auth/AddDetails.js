@@ -149,7 +149,6 @@ class AddDetailsForm extends React.Component {
 			bio: e.target.bio.value,
 			tags: this.refs.tagInput.state.validTag,
 		}
-		console.log('1');
 		const response = await axios({
 			method: 'put',
 			url: `${apiConnect}user/add_details`,

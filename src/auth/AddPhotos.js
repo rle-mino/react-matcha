@@ -1,53 +1,77 @@
 import React					from 'react';
 import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
+import axios					from 'axios'
+import { Link }					from 'react-router';
+import apiConnect				from './../apiConnect';
+
+import ThumbRemovable			from '../components/ThumbRemovable';
 
 import './css/addPhoto.sass';
 
-class AddPhotoInput extends React.Component {
+class AddPhotosForm extends React.Component {
 	state = {
 		photo: [],
 		dropStatus: 'SELECT A PHOTO OR DROP IT HERE',
 		isHover: 'addPhotoButton',
 		mainErr: null,
 		isValidIMG: false,
+		trashOver: false,
+		inpVal: '',
 	}
 
-	loaded = (e) => {
-		const photo = this.state.photo;
-
-		photo.push(e.target.result);
-		this.setState({ photo });
+	// called when the picture is converted
+	sendPic = async (file) => {
+		const data = new FormData()
+		data.append('image', file);
+		const response = await axios({
+			url: `${apiConnect}user/add_image`,
+			method: 'post',
+			data,
+			headers: {
+				'Content-type': 'multipart/form-data',
+				'logToken': localStorage.getItem('logToken'),
+			},
+		});
+		const newPhotos = this.state.photo;
+		newPhotos.push(`${apiConnect}user/get_img_src/${response.data.more}`)
+		this.setState({ photo: newPhotos });
 	}
 
+	// called on click
 	addByClick = (e) => {
+		this.setState({ inpVal: e.target.value });
 		const file = e.target.files[0];
-		const reader = new FileReader();
 		const _URL = window.URL || window.webkitURL;
 		const img = new Image();
 
+		if (this.state.photo.length > 4) {
+			this.setState({ mainErr: '5 PHOTOS MAX' });
+			return (false);
+		}
 		this.setState({ mainErr: null });
-		reader.onload = this.loaded;
 		img.onload = () => {
-			reader.readAsDataURL(file);
+			this.sendPic(file);
+			this.setState({ inpVal: '' });
 		}
-		img.onerror = () => {
-			this.setState({ mainErr: 'PNG OR JPG AUTHORIZED' });
-		}
+		img.onerror = () => this.setState({ mainErr: 'PNG OR JPG AUTHORIZED' });
 		img.src = _URL.createObjectURL(file);
 	}
 
-	addByDrop = async (e) => {
-		const files = e.dataTransfer.files;
-		const reader = new FileReader();
+	// called on drop
+	addByDrop = (e) => {
+		const file = e.dataTransfer.files[0];
 		const _URL = window.URL || window.webkitURL;
 		const img = new Image();
 
 		e.preventDefault();
     	e.stopPropagation();
+		if (this.state.photo.length > 4) {
+			this.setState({ mainErr: '5 PHOTOS MAX' });
+			return (false);
+		}
 		this.setState({ mainErr: null });
-		reader.onload = this.loaded;
-		img.onload = () => {
-			reader.readAsDataURL(files[0]);
+		img.onload = async () => {
+			this.sendPic(file);
 			this.setState({
 				dropStatus: 'SELECT A PHOTO OR DROP IT HERE',
 				isHover: 'addPhotoButton',
@@ -60,10 +84,7 @@ class AddPhotoInput extends React.Component {
 				isHover: 'addPhotoButton',
 			});
 		}
-		img.src = _URL.createObjectURL(files[0]);
-	}
-
-	removeImage = (e) => {
+		if(file) img.src = _URL.createObjectURL(file);
 	}
 
 	dragEnter = (e) => {
@@ -82,13 +103,42 @@ class AddPhotoInput extends React.Component {
 		});
 	}
 
+	removeImage = async (src) => {
+
+		const newPhotos = this.state.photo.filter((el) => el !== src);
+		this.setState({ photo: newPhotos });
+		axios({
+			method: 'put',
+			url: `${apiConnect}user/remove_image`,
+			data: {
+				imgID: src.split('/').pop(),
+			},
+			headers: {
+				logToken: localStorage.getItem('logToken'),
+			}
+		});
+	}
+
+	componentWillMount() {
+		axios({
+			url: `${apiConnect}user/get_images`,
+			method: 'get',
+			headers: { logToken: localStorage.getItem('logToken') },
+		}).then(({ data }) => {
+			if (data.more) {
+				const initPhoto = data.more.map((img) => `${apiConnect}user/get_img_src/min/${img}`);
+				this.setState({ photo: initPhoto });
+			}
+		});
+	}
+
 	render() {
-		const { photo, dropStatus, isHover, mainErr } = this.state;
-		const imgs = photo.map((el, key) =>
-				<div className="imgContainer" key={key}>
-					<div className="deleteButton" onClick={this.removeImage}></div>
-					<img src={el} alt="userIMG" className="userIMGS"/>
-				</div>
+		const { photo, dropStatus, isHover, mainErr, inpVal } = this.state;
+		const imgs = photo.map((src, key) =>
+			<ThumbRemovable
+				key={key + (Math.random() * (100 - 1) + 1)} src={src}
+				removeImage={(e) => this.removeImage(src)}
+			/>
 		);
 		return (
 			<div
@@ -99,27 +149,14 @@ class AddPhotoInput extends React.Component {
 				onDrop={this.addByDrop}
 			>
 				<div className="errorMessageMain">{mainErr}</div>
-				<input type="file" id="file" onChange={this.addByClick} />
+				<input type="file" id="file" onChange={this.addByClick} value={inpVal} />
 				<label htmlFor="file" className={isHover}>{dropStatus}</label>
-				<ReactCssTransitionGroup
-					transitionName="userIMGS"
-					className="imgBlock"
-					component="div"
-					transitionEnterTimeout={300}
-					transitionLeaveTimeout={300}
-				>
-					{imgs}
-				</ReactCssTransitionGroup>
+				<div className="imgList">{imgs}</div>
+				<Link to="/matcha/"><div className="mainButton isLNK">GO</div></Link>
 			</div>
 		)
 	}
 }
-
-const AddPhotosForm = () =>
-		<div>
-			<AddPhotoInput />
-		</div>
-
 
 export default () => {
 	return (
