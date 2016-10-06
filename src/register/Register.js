@@ -140,7 +140,7 @@ class FormRegister extends React.Component {
 				>
 					{(lastname && (<ErrorMessage message={lastname} />))}
 				</MatchInput>
-				<DateInput label="BIRTHDATE">
+				<DateInput label="BIRTHDAY">
 					{(birthdate && (<ErrorMessage message={birthdate} />))}
 				</DateInput>
 				<MatchInput

@@ -2,7 +2,7 @@ import React			from 'react';
 
 import './matchInput.sass';
 
-export default ({label, children, inputType, inputName}) => {
+export default ({label, children, inputType, inputName, value}) => {
 	return (
 		<div className="matchInput">
 			<div className="beforeInput">
@@ -14,6 +14,7 @@ export default ({label, children, inputType, inputName}) => {
 					type={inputType}
 					name={inputName}
 					className='textInp'
+					defaultValue={value}
 				/>
 			</div>
 		</div>

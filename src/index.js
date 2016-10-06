@@ -4,13 +4,14 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import App				from './App';
 import AppHeader		from './AppHeader';
-import Register 		from './auth/Register';
+import Register 		from './register/Register';
+import ConfirmMail		from './register/ConfirmMail';
+import AddDetails		from './register/AddDetails';
+import AddPhotos		from './register/AddPhotos';
 import Login			from './auth/Login';
-import ConfirmMail		from './auth/ConfirmMail';
-import AddDetails		from './auth/AddDetails';
 import ForgotPassword	from './auth/ForgotPassword';
 import ResetPassWithKey	from './auth/ResetPassWithKey';
-import AddPhotos		from './auth/AddPhotos';
+import MyProfile		from './profile/MyProfile';
 
 import './master.sass';
 
@@ -27,7 +28,7 @@ render((
 			<Route path="add_photos" component={AddPhotos} />
 		</Route>
 		<Route path="/matcha" component={AppHeader} >
-			<Route path="my_profile" component={Login} />
+			<Route path="my_profile" component={MyProfile} />
 		</Route>
 	</Router>
 ), document.getElementById('root'));

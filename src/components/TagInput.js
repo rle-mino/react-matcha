@@ -52,7 +52,7 @@ export default class TagInput extends React.Component {
 		this.setState({ validTag: newTags, tagSugg: [] });
 	}
 
-	componentWillReceiveProps = nextProps => {
+	componentWillReceiveProps = (nextProps) => {
 		this.setState({ tagsList: nextProps.tags });
 	}
 
