@@ -50,15 +50,18 @@
 	text-align: center
 	cursor: pointer
 	list-style: none
-	opacity: 0
 	overflow: hidden
-	transition: opacity .3s
+	transform: translateY(-250px)
+	transition: transform .3s, opacity .3s
+	transform-origin: top
+	height: 200px
 	color: white
+	opacity: 0
 	&.isVisible
+		transform: translateY(0px)
 		opacity: 1
-		overflow: auto
-		background-color: red
 		height: 200px
+		overflow: auto
 		background-color: rgba(255, 255, 255, 0.1)
 	&::-webkit-scrollbar
 		display: none
@@ -126,13 +129,13 @@
 		width: 100%
 
 	.header
-		position: relative
+		position: fixed
 		top: 0
 		left: 0
 		width: 100%
-		height: calc(100% - 52px)
+		height: 100%
 		transition: transform .3s ease-out, opacity .3s
-		transform: translateX(-400px)
+		transform: translateX(-100%)
 		background-color: rgba(0, 0, 0, 1)
 		opacity: 0
 		&.isVisible
@@ -140,6 +143,8 @@
 			opacity: 1
 
 	.headerToggler
+		z-index: 3
+		position: fixed
 		text-align: center
 		font-size: 30px
 		width: 30px
@@ -159,6 +164,7 @@
 
 	.links
 		flex-direction: column
+		margin-top: 52px
 
 	.showList
 		position: relative

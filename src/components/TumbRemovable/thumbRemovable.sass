@@ -4,8 +4,6 @@
 	cursor: pointer
 	text-align: center
 	font-size: 20px
-	vertical-align: middle
-	line-height: 30px
 	&:hover
 		background-color: rgba(255, 255, 255, .6)
 		color: black
@@ -16,12 +14,10 @@
 .imgContainer
 	display: flex
 	flex-direction: column
-	align-items: center
-	justify-content: center
+	align-self: flex-start
 	margin-top: 10px
 	margin-right: 5px
 	background-color: rgba(255, 255, 255, .2)
-	width: 96px
 	transition: width .3s ease-out, opacity .3s
 	&.leave
 		transform-origin: left

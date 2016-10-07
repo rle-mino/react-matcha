@@ -62,6 +62,7 @@ class LoginForm extends React.Component {
 			else {
 				localStorage.setItem('logToken', response.headers.logtoken);
 				this.setState({ serverResponse: null });
+				setTimeout(() => browserHistory.push('/matcha/my_profile'), 1000);
 			}
 		}, 1000);
 	};

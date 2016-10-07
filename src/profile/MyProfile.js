@@ -28,7 +28,7 @@ export default class MyProfile extends React.Component {
 		return (
 			<div>
 				<ReactCssTransitionGroup
-					className="comp matcha"
+					className="matcha"
 					transitionName="route"
 					transitionAppear={true}
 					transitionEnterTimeout={500}

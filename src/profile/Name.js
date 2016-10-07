@@ -1,10 +1,11 @@
 import React						from 'react';
 import axios						from 'axios';
 import apiConnect					from '../apiConnect';
+import ReactCssTransitionGroup		from 'react-addons-css-transition-group';
 
 import FontAwesome					from 'react-fontawesome';
-import MatchInput					from './MatchInput';
-import ErrorMessage					from './ErrorMessage';
+import MatchInput					from '../components/MatchInput';
+import ErrorMessage					from '../components/ErrorMessage';
 
 import './name.sass';
 
@@ -34,7 +35,7 @@ class NameEdit extends React.Component {
 		if (response.data.status === false) {
 			if (response.data.details === 'invalid request') {
 				const error = {}
-				response.data.more.forEach((el) => {
+				response.data.error.forEach((el) => {
 					error[el.path] = el.error;
 				});
 				this.setState({ ...error, subVal: 'SAVE' });
@@ -42,7 +43,7 @@ class NameEdit extends React.Component {
 		} else {
 			this.setState({ subVal: 'SUCCESS' });
 			setTimeout(() => {
-				this.props.next(e);
+				this.props.finish(e);
 			}, 1000);
 		}
 	}
@@ -50,7 +51,14 @@ class NameEdit extends React.Component {
 	render() {
 		const { firstname, lastname, subVal, serverResponse } = this.state
 		return (
-			<div className="nameEdit comp">
+			<ReactCssTransitionGroup
+				className="editComp comp"
+				transitionName="route"
+				transitionAppear={true}
+				transitionEnterTimeout={500}
+				transitionAppearTimeout={500}
+				transitionLeaveTimeout={500}
+			>
 				<div className="errorMessageMain">{serverResponse}</div>
 				<form onSubmit={this.sendNames}>
 					<MatchInput
@@ -70,9 +78,9 @@ class NameEdit extends React.Component {
 						{lastname && <ErrorMessage message={lastname} />}
 					</MatchInput>
 					<input type="submit" className="mainButton" value={subVal} />
-					<input name="exit" type="button" className="mainButton" value="CANCEL" onClick={this.props.next} />
+					<input name="exit" type="button" className="mainButton" value="CANCEL" onClick={this.props.finish} />
 				</form>
-			</div>
+			</ReactCssTransitionGroup>
 		);
 	}
 }
@@ -85,20 +93,33 @@ export default class NameInfo extends React.Component {
 	edit = (e) => {
 		const { firstname, lastname } = this.props;
 		if (e.target.className.includes('editSaveButton') && this.state.inEdit) return (false);
-		this.props.blur();
-		this.props.setEditComp(this.state.inEdit ?
-			null : <NameEdit next={this.edit} firstname={firstname} lastname={lastname} />);
-		this.setState({ inEdit: this.state.inEdit ? false : true });
+		this.props.setEditComp(<NameEdit finish={this.finish} firstname={firstname} lastname={lastname} />);
+		this.setState({ inEdit: true });
+	}
+
+	finish = (e) => {
+		this.props.setEditComp(null);
+		this.setState({ inEdit: false });
+	}
+
+	componentWillReceiveProps = (newProps) => {
+		const { firstname, lastname, username } = newProps;
+		this.setState({ firstname, lastname, username });
+	}
+
+	componentWillMont() {
+		const { firstname, lastname, username } = this.props;
+		this.setState({ firstname, lastname, username });
 	}
 
 	render() {
-		const { firstname, lastname, username } = this.props;
+		const { firstname, lastname, username } = this.state;
 		return (
 			<div className="nameInfo">
-				<span className="name">{firstname}</span>,
-				<span className="name">{username}</span>,
+				<span className="name">{firstname}</span>
+				<span className="name">{username}</span>
 				<span className="name">{lastname}</span>
-				{this.props.editable && <FontAwesome name='pencil' className="editSaveButton" onClick={this.edit} />}
+				{this.props.editable && <FontAwesome name='pencil' className="editNamesButton" onClick={this.edit} />}
 			</div>
 		);
 	}

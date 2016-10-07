@@ -132,6 +132,11 @@ class AddPhotosForm extends React.Component {
 		});
 	}
 
+	stopEdit = (e) => {
+		e.preventDefault();
+		this.props.setEditComp(null);
+	}
+
 	render() {
 		const { photo, dropStatus, isHover, mainErr, inpVal } = this.state;
 		const imgs = photo.map((src, key) =>
@@ -152,25 +157,26 @@ class AddPhotosForm extends React.Component {
 				<input type="file" id="file" onChange={this.addByClick} value={inpVal} />
 				<label htmlFor="file" className={isHover}>{dropStatus}</label>
 				<div className="imgList">{imgs}</div>
-				<Link to="/matcha/"><div className="mainButton isLNK">GO</div></Link>
+				{!this.props.isEditComp && (<Link to="/matcha/"><div className="mainButton isLNK">GO</div></Link>)}
+				{this.props.isEditComp && (<input type="button" className="mainButton" value="SAVE" onClick={this.stopEdit} />)}
 			</div>
 		)
 	}
 }
 
-export default () => {
+export default ({ isEditComp, updateImages, setEditComp }) => {
 	return (
 		<ReactCssTransitionGroup
 			component="div"
 			transitionName="route"
-			className="comp"
+			className={`comp ${isEditComp ? 'editComp' : '' }`}
 			transitionAppear={true}
 			transitionEnterTimeout={500}
 			transitionAppearTimeout={500}
 			transitionLeaveTimeout={500}
 		>
-			<h1 className="mainTitle">ADD PHOTOS</h1>
-			<AddPhotosForm />
+			{!isEditComp && <h1 className="mainTitle">ADD PHOTOS</h1>}
+			<AddPhotosForm isEditComp={isEditComp} updateImages={updateImages} setEditComp={setEditComp} />
 		</ReactCssTransitionGroup>
 	);
 }

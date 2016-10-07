@@ -32,8 +32,15 @@ html
 	width: 500px
 	padding: 40px
 	color: white
-	&.matcha
-		width: 70%
+
+.matcha
+	position: relative
+	display: block
+	width: 80%
+	left: 50%
+	top: 100px
+	transform: translate(-50%, 0)
+	color: white
 
 .mainTitle
 	font-size: 30px
@@ -79,6 +86,7 @@ html
 	text-align: center
 	color: white
 	font-size: 16px
+	cursor: pointer
 	&.isLNK > a
 		color: white
 	&.isLNK
@@ -95,6 +103,9 @@ html
 .label
 	float: left
 	width: 200px
+
+.editComp
+	margin-top: 150px
 
 input[value='WAIT']
 	background-color: grey
@@ -146,3 +157,5 @@ input[value='SUCCESS']
 		width: calc(100% - 80px)
 	.otherOption
 		margin: 0
+	.editComp
+		width: 100%
