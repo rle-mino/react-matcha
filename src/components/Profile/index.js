@@ -1,10 +1,10 @@
 import React						from 'react';
 import axios						from 'axios';
-import apiConnect					from '../apiConnect';
+import apiConnect					from '../../apiConnect';
 
-import NameProf						from './Name.js';
-import ImageProf					from './Image.js';
-import BioProf						from './Bio.js';
+import NameProf						from '../../profile/Name.js';
+import ImageProf					from '../../profile/Image.js';
+import BioProf						from '../../profile/Bio.js';
 
 import './profile.sass';
 

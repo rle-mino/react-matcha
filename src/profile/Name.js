@@ -7,7 +7,7 @@ import FontAwesome					from 'react-fontawesome';
 import MatchInput					from '../components/MatchInput';
 import ErrorMessage					from '../components/ErrorMessage';
 
-import './name.sass';
+import './css/name.sass';
 
 class NameEdit extends React.Component {
 	state = {

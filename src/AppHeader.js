@@ -38,17 +38,17 @@ class MatchHeader extends React.Component {
 	}
 
 	showHeader = (e) => {
-		if (this.state.headVis.includes('isVisible')) {
+		if (this.state.headVis.includes('showNotif')) {
 			this.setState({ headVis: 'header' });
 		} else {
-			this.setState({ headVis: 'header isVisible' });
+			this.setState({ headVis: 'header showNotif' });
 		}
 	}
 
 	seeList = (e) => {
 		this.setState({
-			notifBlock: this.state.notifBlock === 'notifBlock isVisible' ?
-				'notifBlock' : 'notifBlock isVisible'
+			notifBlock: this.state.notifBlock === 'notifBlock showNotif' ?
+				'notifBlock' : 'notifBlock showNotif'
 			});
 	}
 

@@ -74,7 +74,7 @@ class LoginForm extends React.Component {
 			password,
 			serverResponse,
 			buttonValue,
-			mainErr
+			mainErr,
 		} = this.state;
 		return (
 			<div>
@@ -94,7 +94,12 @@ class LoginForm extends React.Component {
 					>
 						<ErrorMessage message={password} />
 					</MatchInput>
-					<input className="mainButton" type="submit" name="button" value={buttonValue} disabled={isPending} />
+					<input
+						className="mainButton" type="submit"
+						name="button" value={buttonValue}
+						disabled={isPending}
+						onClick={this.ripple}
+					/>
 				</form>
 			</div>
 		);

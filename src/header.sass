@@ -45,24 +45,21 @@
 .notifBlock
 	position: absolute
 	top: 50px
-	left: calc(100% - 250px)
-	width: 250px
+	right: 0
 	text-align: center
 	cursor: pointer
 	list-style: none
 	overflow: hidden
-	transform: translateY(-250px)
-	transition: transform .3s, opacity .3s
-	transform-origin: top
-	height: 200px
+	width: 0
+	height: 0
+	transition: height .3s, width .3s
+	transform-origin: top right
 	color: white
-	opacity: 0
-	&.isVisible
-		transform: translateY(0px)
-		opacity: 1
-		height: 200px
+	background-color: rgba(255, 255, 255, 0.1)
+	&.showNotif
+		height: 220px
+		width: 250px
 		overflow: auto
-		background-color: rgba(255, 255, 255, 0.1)
 	&::-webkit-scrollbar
 		display: none
 

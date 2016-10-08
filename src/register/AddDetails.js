@@ -5,9 +5,10 @@ import { browserHistory }		from 'react-router';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
 
-import TagInput					from '../components/TagInput.js';
+import TagInput					from '../components/TagInput';
 import Unauthorized				from '../Unauthorized';
 import ErrorMessage				from '../components/ErrorMessage';
+import BioInput					from '../components/BioInput';
 
 import './css/addDetails.sass';
 
@@ -48,18 +49,6 @@ class ThreeSelector extends React.Component {
 			</div>
 		);
 	}
-}
-
-const BioInput = ({children}) => {
-	return (
-		<div className="bioInput">
-			<div className="beforeInput">
-				<div className="label">BIO</div>
-				{children}
-			</div>
-			<textarea name="bio" className="textInp textarea" />
-		</div>
-	);
 }
 
 class GeolocInput extends React.Component {

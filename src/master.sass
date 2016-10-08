@@ -76,8 +76,24 @@ html
 	text-align: center
 	color: #D32F2F
 
+.errorMessage
+	float: right
+	text-align: center
+	transform-origin: right
+	color: #B71C1C
+	animation: pop .3s ease-in-out
+
+.isVisible
+	animation: pop .3s ease-in-out
+
+@keyframes pop
+	0%
+		opacity: 0
+	100%
+		opacity: 1
+
 .mainButton
-	background-color: #26577F
+	background-color: #1565C0
 	width: 100%
 	padding: 15px
 	color: white
@@ -87,6 +103,7 @@ html
 	color: white
 	font-size: 16px
 	cursor: pointer
+	overflow: hidden
 	&.isLNK > a
 		color: white
 	&.isLNK
@@ -105,7 +122,7 @@ html
 	width: 200px
 
 .editComp
-	margin-top: 150px
+	padding: 0px
 
 input[value='WAIT']
 	background-color: grey
