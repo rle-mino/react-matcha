@@ -11,6 +11,7 @@ export default class ImageProf extends React.Component {
 		selectedImage: null,
 		availableImages: [],
 		inEdit: false,
+		marginLeft: 0,
 	}
 
 	edit = (e) => {
@@ -26,65 +27,44 @@ export default class ImageProf extends React.Component {
 	componentWillReceiveProps = (newProps) => {
 		let images = []
 		if (!newProps.imgs) {
-			for (let i; i < 5; i++) {
-				images[i] = 'undef.jpg';
-			}
+			images = ['undef.jpg'];
 		} else {
-			if (newProps.imgs.length < 5) {
-				images = [...newProps.imgs];
-				let i = images.length;
-				while (i < 5) {
-					images[i] = 'undef.jpg';
-					i++;
-				}
-			} else {
-				images = newProps.imgs
-			}
+			images = newProps.imgs
 		}
 		this.setState({
 			availableImages: images,
-			selectedImage: images[0],
 		});;
 	}
 
-	setImage = (e) => {
-		let image = e.target.style.backgroundImage;
-		image = image.split('/').pop();
-		image = image.substring(image.length - 2, 0);
-		if (!image.includes('undef.jpg')) {
-			this.setState({ selectedImage: image });
-		}
+	componentDidMount = () => {
+		setInterval(() => {;
+			const newMargin = (this.state.marginLeft + 300) % (this.state.availableImages.length * 300);
+			this.setState({ marginLeft: newMargin });
+		}, 4000);
 	}
 
 	render() {
-		const { selectedImage, availableImages } = this.state;
+		const { availableImages, marginLeft } = this.state;
 		const imgList = availableImages.map((img, key) => {
 			return (
 				<li key={key} className="img" onClick={this.setImage}>
-					<div className="imgSingle" style={{backgroundImage:`url('${apiConnect}user/get_img_src/min/${img}')`}}/>
+					<div className="imgSingle" style={{backgroundImage:`url('${apiConnect}user/get_img_src/${img}')`}}/>
 				</li>);
 		})
 		return (
 			<div className="imageProf">
-				<ul className="listIMG">
-					{imgList}
-				</ul>
-				{selectedImage && (
-					<div
-						className="selectedImage"
-						style={{backgroundImage:`url('${apiConnect}user/get_img_src/${selectedImage}')`}}
-						alt="user"
-					>
+				<div className="visibleImage">
 					{this.props.editable && (
 						<FontAwesome
-							name="pencil"
+							name="camera"
 							className="editImageButton"
 							onClick={this.edit}
 						/>
 					)}
-					</div>
-				)}
-
+					<ul className="listIMG" style={{marginLeft: `-${marginLeft}px`}}>
+						{imgList}
+					</ul>
+				</div>
 			</div>
 		);
 	}

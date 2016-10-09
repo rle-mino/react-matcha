@@ -86,8 +86,11 @@ export default class BioProf extends React.Component {
 	render() {
 		return (
 			<div className="bioProf">
+				<div className="beforeBio">
+					<h2 className="bioLabel">BIO</h2>
+					{this.props.editable && (<FontAwesome name="pencil" className="editBioButton" onClick={this.edit} />)}
+				</div>
 				<p className="bio">{this.props.bio}</p>
-				{this.props.editable && (<FontAwesome name="pencil" className="editBioButton" onClick={this.edit} />)}
 			</div>
 		);
 	}

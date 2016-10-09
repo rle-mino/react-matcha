@@ -6,13 +6,16 @@ import ReactCssTransitionGroup		from 'react-addons-css-transition-group';
 import FontAwesome					from 'react-fontawesome';
 import MatchInput					from '../components/MatchInput';
 import ErrorMessage					from '../components/ErrorMessage';
+import ThreeSelector				from '../components/ThreeSelector';
 
-import './css/name.sass';
+import './css/nameGenderOri.sass';
 
 class NameEdit extends React.Component {
 	state = {
 		firstname: null,
 		lastname: null,
+		gender: null,
+		orientation: null,
 		subVal: 'SAVE',
 		serverResponse: null,
 	}
@@ -49,7 +52,7 @@ class NameEdit extends React.Component {
 	}
 
 	render() {
-		const { firstname, lastname, subVal, serverResponse } = this.state
+		const { firstname, lastname, gender, orientation, subVal, serverResponse } = this.state
 		return (
 			<ReactCssTransitionGroup
 				className="editComp comp"
@@ -77,6 +80,24 @@ class NameEdit extends React.Component {
 					>
 						{lastname && <ErrorMessage message={lastname} />}
 					</MatchInput>
+					<ThreeSelector name="gender" label="GENDER"
+						value1="male" label1="MALE"
+						value2="other" label2="OTHER"
+						value3="female" label3="FEMALE"
+						checked={this.props.gender}
+						className="genderSelector"
+					>
+						{gender && (<ErrorMessage message={gender} />)}
+					</ThreeSelector>
+					<ThreeSelector name="orientation" label="ORIENTATION"
+						value1="gay" label1="GAY"
+						value2="bisexual" label2="BISEXUAL"
+						value3="straight" label3="STRAIGHT"
+						checked={this.props.orientation}
+						className="orientationSelector"
+					>
+						{!!orientation && (<ErrorMessage message={orientation} />)}
+					</ThreeSelector>
 					<input type="submit" className="mainButton" value={subVal} />
 					<input name="exit" type="button" className="mainButton" value="CANCEL" onClick={this.props.finish} />
 				</form>
@@ -91,9 +112,9 @@ export default class NameInfo extends React.Component {
 	}
 
 	edit = (e) => {
-		const { firstname, lastname } = this.props;
+		const { firstname, lastname, gender, orientation } = this.props;
 		if (e.target.className.includes('editSaveButton') && this.state.inEdit) return (false);
-		this.props.setEditComp(<NameEdit finish={this.finish} firstname={firstname} lastname={lastname} />);
+		this.props.setEditComp(<NameEdit finish={this.finish} firstname={firstname} lastname={lastname} gender={gender} orientation={orientation} />);
 		this.setState({ inEdit: true });
 	}
 
@@ -103,23 +124,24 @@ export default class NameInfo extends React.Component {
 	}
 
 	componentWillReceiveProps = (newProps) => {
-		const { firstname, lastname, username } = newProps;
-		this.setState({ firstname, lastname, username });
-	}
-
-	componentWillMont() {
-		const { firstname, lastname, username } = this.props;
-		this.setState({ firstname, lastname, username });
+		const { firstname, lastname, username, gender, orientation } = newProps;
+		this.setState({ firstname, lastname, username, gender, orientation });
 	}
 
 	render() {
-		const { firstname, lastname, username } = this.state;
+		const { firstname, lastname, username, gender, orientation } = this.state;
 		return (
-			<div className="nameInfo">
-				<span className="name">{firstname}</span>
-				<span className="name">{username}</span>
-				<span className="name">{lastname}</span>
-				{this.props.editable && <FontAwesome name='pencil' className="editNamesButton" onClick={this.edit} />}
+			<div className="nameGenderOriProf">
+			{this.props.editable && <FontAwesome name='pencil' className="editNamesButton" onClick={this.edit} />}
+				<div className="names">
+					<span className="name">{firstname}</span>
+					<span className="name">{lastname}</span>
+				</div>
+				<div className="userGendOri">
+					<span className="gender">{gender}</span>
+					<span className="username">{username}</span>
+					<span className="orientation">{orientation}</span>
+				</div>
 			</div>
 		);
 	}

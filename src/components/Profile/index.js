@@ -2,7 +2,7 @@ import React						from 'react';
 import axios						from 'axios';
 import apiConnect					from '../../apiConnect';
 
-import NameProf						from '../../profile/Name.js';
+import NameGenderOriProf			from '../../profile/NameGenderOri.js';
 import ImageProf					from '../../profile/Image.js';
 import BioProf						from '../../profile/Bio.js';
 
@@ -54,25 +54,24 @@ export default class Profile extends React.Component {
 			lastname,
 			images,
 			bio,
+			gender,
+			orientation
 		} = this.state.data;
 		const { editable, profileClass, editComp } = this.state;
 		return (
 			<div>
 				<div className={profileClass} onClick={this.resetEditComp}>
-					<div className="topBlock">
-						<ImageProf imgs={images} editable={editable}
-							setEditComp={this.setEditComp}
-							updateImages={this.updateImages}
-						/>
-						<NameProf
-							firstname={firstname} username={username}
-							lastname={lastname} editable={editable}
-							setEditComp={this.setEditComp}
-						/>
-					</div>
-					<div className="secondBlock">
-						<BioProf bio={bio} editable={editable} setEditComp={this.setEditComp} />
-					</div>
+					<ImageProf imgs={images} editable={editable}
+						setEditComp={this.setEditComp}
+						updateImages={this.updateImages}
+					/>
+					<NameGenderOriProf
+						firstname={firstname} username={username}
+						lastname={lastname} gender={gender}
+						orientation={orientation} editable={editable}
+						setEditComp={this.setEditComp}
+					/>
+					<BioProf bio={bio} editable={editable} setEditComp={this.setEditComp} />
 				</div>
 				{editComp}
 			</div>

@@ -9,47 +9,9 @@ import TagInput					from '../components/TagInput';
 import Unauthorized				from '../Unauthorized';
 import ErrorMessage				from '../components/ErrorMessage';
 import BioInput					from '../components/BioInput';
+import ThreeSelector			from '../components/ThreeSelector';
 
 import './css/addDetails.sass';
-
-class ThreeSelector extends React.Component {
-	state = {
-		firstC: '',
-		secondC: '',
-		thirdC: '',
-	}
-
-	activate = (e) => {
-		this.setState({ firstC: '', secondC: '', thirdC: '' });
-		if (e.target.id === this.props.value1) {
-			this.setState({ firstC: 'isChecked' });
-		} else if (e.target.id === this.props.value2) {
-			this.setState({ secondC: 'isChecked' });
-		} else {
-			this.setState({ thirdC: 'isChecked' });
-		}
-	}
-
-	render () {
-		const { firstC, secondC, thirdC } = this.state;
-		return (
-			<div className={this.props.className}>
-				<div className="beforeInput">
-					<div className="labelRadio">{this.props.label}</div>
-					{this.props.errorMessage}
-				</div>
-				<div className="radioInps">
-					<input id={this.props.value1} type="radio" name={this.props.name} value={this.props.value1} onClick={this.activate} />
-				    <label htmlFor={this.props.value1} className={`radioInp ${firstC}`}>{this.props.label1}</label>
-					<input id={this.props.value2} type="radio" name={this.props.name} value={this.props.value2} onClick={this.activate} />
-					<label htmlFor={this.props.value2} className={`radioInp ${secondC}`}>{this.props.label2}</label>
-				    <input id={this.props.value3} type="radio" name={this.props.name} value={this.props.value3} onClick={this.activate} />
-				    <label htmlFor={this.props.value3} className={`radioInp ${thirdC}`}>{this.props.label3}</label>
-				</div>
-			</div>
-		);
-	}
-}
 
 class GeolocInput extends React.Component {
 	state = {

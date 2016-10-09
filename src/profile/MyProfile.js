@@ -35,7 +35,7 @@ export default class MyProfile extends React.Component {
 					transitionLeaveTimeout={500}
 					transitionAppearTimeout={500}
 				>
-					<h1 className="mainTitle">MY PROFILE</h1>
+					<h1 className="mainTitle">PROFILE</h1>
 					<Profile editable={true} data={this.state.data} />
 				</ReactCssTransitionGroup>
 			</div>
