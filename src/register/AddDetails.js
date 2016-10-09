@@ -71,6 +71,7 @@ class AddDetailsForm extends React.Component {
 	state = {
 		serverResponse: null,
 		subVal: 'ADD DETAILS',
+		subDis: false,
 		bio: null,
 		location: null,
 		gender: null,
@@ -87,6 +88,8 @@ class AddDetailsForm extends React.Component {
 			orientation: null,
 			bio: null,
 			tags: null,
+			subDis: true,
+			serverResponse: null,
 		});
 		const { lat, lng } = this.refs.geolocInput.state;
 		const data = {
@@ -105,25 +108,23 @@ class AddDetailsForm extends React.Component {
 			url: `${apiConnect}user/add_details`,
 			data: data,
 			headers: {
-				logToken: localStorage.getItem('logToken'),
+				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
 			},
 		});
-		setTimeout(() => {
-			if (response.data.status === false) {
-				if (response.data.details === 'invalid request') {
-					const error = {};
-					response.data.error.forEach((el) => {
-						error[el.path] = el.error;
-					})
-					this.setState({ ...error, subVal: 'ADD DETAILS' });
-				}
-			} else {
-				this.setState({ subVal: 'SUCCESS' });
-				setTimeout(() => {
-					browserHistory.push('add_photos');
-				});
-			}
-		}, 1000);
+		if (response.data.status === false) {
+			if (response.data.details === 'invalid request') {
+				const error = {};
+				response.data.error.forEach((el) => {
+					error[el.path] = el.error;
+				})
+				this.setState({ ...error, subVal: 'ADD DETAILS', subDis: false });
+			} else this.setState({ serverResponse: response.data.details, subVal: 'ADD DETAILS', subDis: false });
+		} else {
+			this.setState({ subVal: 'SUCCESS' });
+			setTimeout(() => {
+				browserHistory.push('add_photos');
+			});
+		}
 	}
 
 	render() {
@@ -135,6 +136,7 @@ class AddDetailsForm extends React.Component {
 			orientation,
 			tags,
 			subVal,
+			subDis,
 		} = this.state;
 		return (
 			<div className="addDetailsForm">
@@ -165,7 +167,7 @@ class AddDetailsForm extends React.Component {
 					<TagInput tags={this.props.tags} ref="tagInput" >
 						{tags && (<ErrorMessage message={tags}/>)}
 					</TagInput>
-					<input type="submit" value={subVal} className="mainButton" />
+					<input type="submit" value={subVal} className="mainButton" disabled={subDis} />
 				</form>
 			</div>
 		);
@@ -182,7 +184,10 @@ export default class AddDetails extends React.Component {
 		this.setState({ auth: !!localStorage.getItem('logToken') });
 		axios({
 			method: 'get',
-			url: `${apiConnect}tag/get/all`,
+			url: `${apiConnect}tag/all`,
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
+			},
 		})
 		.then(({ data }) => {
 			this.setState({ tags: data });

@@ -11,13 +11,14 @@ import ErrorMessage				from '../components/ErrorMessage';
 class ForgotForm extends React.Component {
 	state = {
 		serverResponse: null,
+		subDis: false,
 		subVal: 'SEND ME AN EMAIL',
 		mail: null,
 	}
 
 	forgot = async (e) => {
 		e.preventDefault();
-		this.setState({ subVal: 'WAIT', mail: null });
+		this.setState({ subVal: 'WAIT', mail: null, serverResponse: null, subDis: true });
 		const response = await axios({
 			method: 'put',
 			url: `${apiConnect}user/forgot_password`,
@@ -25,24 +26,22 @@ class ForgotForm extends React.Component {
 				mail: e.target.mail.value,
 			}
 		});
-		setTimeout(() => {
-			if (response.data.status === false) {
-				if (response.data.details === 'invalid request') {
-					this.setState({ mail: response.data.error[0].error, subVal: 'SEND ME AN EMAIL' });
-				} else {
-					this.setState({ subVal: 'SEND ME AN EMAIL', serverResponse: response.data.details });
-				}
+		if (response.data.status === false) {
+			if (response.data.details === 'invalid request') {
+				this.setState({ mail: response.data.error[0].error, subVal: 'SEND ME AN EMAIL' });
 			} else {
-				this.setState({ subVal: 'SUCCESS', serverResponse: response.data.details });
-				setTimeout(() => {
-					browserHistory.push('reset_password');
-				}, 2000);
+				this.setState({ subVal: 'SEND ME AN EMAIL', serverResponse: response.data.details });
 			}
-		}, 1000);
+		} else {
+			this.setState({ subVal: 'SUCCESS', serverResponse: response.data.details });
+			setTimeout(() => {
+				browserHistory.push('reset_password');
+			}, 2000);
+		}
 	}
 
 	render() {
-		const { serverResponse, subVal, mail } = this.state
+		const { serverResponse, subVal, mail, subDis } = this.state
 		return (
 			<div>
 				<div className="errorMessageMain isVisible">{serverResponse}</div>
@@ -54,7 +53,7 @@ class ForgotForm extends React.Component {
 					>
 					{mail && (<ErrorMessage message={mail}/>)}
 					</MatchInput>
-					<input type="submit" className="mainButton" value={subVal}/>
+					<input type="submit" className="mainButton" value={subVal} disabled={subDis} />
 				</form>
 			</div>
 		);

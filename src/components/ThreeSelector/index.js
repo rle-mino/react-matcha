@@ -8,14 +8,14 @@ export default class ThreeSelector extends React.Component {
 	}
 
 	activate = (e) => {
-		const { value1, value2 } = this.props;
+		const { value1, value2, value3 } = this.props;
 		const checked = e ? e.target.id : this.props.checked;
 		this.setState({ firstC: '', secondC: '', thirdC: '' });
 		if (checked === value1) {
 			this.setState({ firstC: 'isChecked' });
 		} else if (checked === value2) {
 			this.setState({ secondC: 'isChecked' });
-		} else {
+		} else if (checked === value3) {
 			this.setState({ thirdC: 'isChecked' });
 		}
 	}

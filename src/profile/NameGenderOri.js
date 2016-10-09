@@ -18,21 +18,30 @@ class NameEdit extends React.Component {
 		orientation: null,
 		subVal: 'SAVE',
 		serverResponse: null,
+		subDis: false,
 	}
 
 	sendNames = async (e) => {
 		e.preventDefault();
 		e.persist()
-		this.setState({ subVal: 'WAIT', firstname: null, lastname: null, serverResponse: null });
+		this.setState({
+			subVal: 'WAIT',
+			firstname: null,
+			lastname: null,
+			serverResponse: null,
+			subDis: true,
+		});
 		const response = await axios({
 			method: 'put',
 			url: `${apiConnect}user/update_profile`,
 			data: {
 				firstname: e.target.firstname.value,
 				lastname: e.target.lastname.value,
+				gender: e.target.gender.value,
+				orientation: e.target.orientation.value,
 			},
 			headers: {
-				logToken: localStorage.getItem('logToken'),
+				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
 			},
 		});
 		if (response.data.status === false) {
@@ -41,8 +50,14 @@ class NameEdit extends React.Component {
 				response.data.error.forEach((el) => {
 					error[el.path] = el.error;
 				});
-				this.setState({ ...error, subVal: 'SAVE' });
-			} else this.setState({ serverResponse: response.data.details, subVal: 'SAVE' });
+				this.setState({ ...error, subVal: 'SAVE', subDis: false });
+			} else {
+				this.setState({
+					serverResponse: response.data.details,
+					subVal: 'SAVE',
+					subDis: false,
+				});
+			}
 		} else {
 			this.setState({ subVal: 'SUCCESS' });
 			setTimeout(() => {
@@ -52,7 +67,15 @@ class NameEdit extends React.Component {
 	}
 
 	render() {
-		const { firstname, lastname, gender, orientation, subVal, serverResponse } = this.state
+		const {
+			firstname,
+			lastname,
+			gender,
+			orientation,
+			subVal,
+			serverResponse,
+			subDis,
+		} = this.state
 		return (
 			<ReactCssTransitionGroup
 				className="editComp comp"
@@ -98,7 +121,7 @@ class NameEdit extends React.Component {
 					>
 						{!!orientation && (<ErrorMessage message={orientation} />)}
 					</ThreeSelector>
-					<input type="submit" className="mainButton" value={subVal} />
+					<input type="submit" className="mainButton" value={subVal} disabled={subDis}/>
 					<input name="exit" type="button" className="mainButton" value="CANCEL" onClick={this.props.finish} />
 				</form>
 			</ReactCssTransitionGroup>

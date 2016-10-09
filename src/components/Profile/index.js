@@ -31,7 +31,7 @@ export default class Profile extends React.Component {
 				method: 'get',
 				url: `${apiConnect}user/singular/all`,
 				headers: {
-					logToken: localStorage.getItem('logToken'),
+					Authorization: `Bearer ${localStorage.getItem('logToken')}`,
 				},
 			});
 			if (response.data.status === true) {

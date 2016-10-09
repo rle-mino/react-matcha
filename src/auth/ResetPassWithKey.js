@@ -15,6 +15,7 @@ class ResetPassWithKeyForm extends React.Component {
 		password: null,
 		passVerif: null,
 		subVal: 'SET NEW PASSWORD',
+		subDis: false,
 	}
 
 	resetPassWithKey = async (e) => {
@@ -26,6 +27,7 @@ class ResetPassWithKeyForm extends React.Component {
 			passVerif: null,
 			subVal: 'WAIT',
 			serverResponse: null,
+			subDis: true,
 		});
 		if (e.target.password.value !== e.target.passVerif.value) {
 			this.setState({ passVerif: 'INVALID', subVal: 'SET NEW PASSWORD' });
@@ -40,27 +42,33 @@ class ResetPassWithKeyForm extends React.Component {
 				password: e.target.password.value,
 			},
 		});
-		setTimeout(() => {
-			if (response.data.status === false) {
-				if (response.data.details === 'invalid request') {
-					const error = {};
-					response.data.error.forEach((el) => {
-						error[el.path] = el.error.toUpperCase();
-					})
-					this.setState({ ...error, subVal: 'SET NEW PASSWORD' });
-				} else {
-					this.setState({ serverResponse: response.data.details, subVal: 'SET NEW PASSWORD' });
-				}
+		if (response.data.status === false) {
+			if (response.data.details === 'invalid request') {
+				const error = {};
+				response.data.error.forEach((el) => {
+					error[el.path] = el.error.toUpperCase();
+				})
+				this.setState({ ...error, subVal: 'SET NEW PASSWORD', subDis: false, });
 			} else {
-				this.setState({ subVal: 'SUCCESS' });
-				setTimeout(() => browserHistory.push('/'), 1000);
-
+				this.setState({ serverResponse: response.data.details, subVal: 'SET NEW PASSWORD', subDis: false });
 			}
-		}, 1000);
+		} else {
+			this.setState({ subVal: 'SUCCESS' });
+			setTimeout(() => browserHistory.push('/'), 1000);
+
+		}
 	}
 
 	render() {
-		const { serverResponse, username, resetKey, password, passVerif, subVal } = this.state;
+		const {
+			serverResponse,
+			username,
+			resetKey,
+			password,
+			passVerif,
+			subVal,
+			subDis
+		} = this.state;
 		return (
 			<div>
 				<div className="errorMessageMain isVisible">{serverResponse}</div>
@@ -93,7 +101,7 @@ class ResetPassWithKeyForm extends React.Component {
 				>
 					{passVerif && (<ErrorMessage message={passVerif}/>)}
 				</MatchInput>
-				<input type="submit" value={subVal} className="mainButton"/>
+				<input type="submit" value={subVal} className="mainButton" disabled={subDis}/>
 				</form>
 			</div>
 		);

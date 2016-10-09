@@ -17,7 +17,7 @@ export default class MyProfile extends React.Component {
 		if (!logToken) browserHistory.push('/');
 		axios({
 			url: `${apiConnect}user/singular/all`,
-			headers: { logToken },
+			headers: { Authorization : `Bearer ${logToken}` },
 		}).then(({data}) => {
 			if (data.status === false) browserHistory.push('/');
 			else this.setState({ data: data.more });

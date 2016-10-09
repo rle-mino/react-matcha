@@ -104,10 +104,10 @@ export default class AppHeader extends React.Component {
 			browserHistory.push('/');
 		} else {
 			axios({
-				url: `${apiConnect}user/get_last_notif`,
+				url: `${apiConnect}user/notification/latest`,
 				method: 'get',
 				headers: {
-					logToken: localStorage.getItem('logToken'),
+					Authorization: `Bearer ${localStorage.getItem('logToken')}`,
 				},
 			}).then(({ data }) => {
 				if (data.status === true) this.setState({ notifications: data.more });

@@ -29,7 +29,7 @@ class AddPhotosForm extends React.Component {
 			data,
 			headers: {
 				'Content-type': 'multipart/form-data',
-				'logToken': localStorage.getItem('logToken'),
+				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
 			},
 		});
 		const newPhotos = this.state.photo;
@@ -114,7 +114,7 @@ class AddPhotosForm extends React.Component {
 				imgID: src.split('/').pop(),
 			},
 			headers: {
-				logToken: localStorage.getItem('logToken'),
+				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
 			}
 		});
 	}
@@ -123,7 +123,9 @@ class AddPhotosForm extends React.Component {
 		axios({
 			url: `${apiConnect}user/get_images`,
 			method: 'get',
-			headers: { logToken: localStorage.getItem('logToken') },
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
+			},
 		}).then(({ data }) => {
 			if (data.more) {
 				const initPhoto = data.more.map((img) => `${apiConnect}user/get_img_src/min/${img}`);

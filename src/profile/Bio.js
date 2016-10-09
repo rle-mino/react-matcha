@@ -27,7 +27,7 @@ class BioEdit extends React.Component {
 				bio: e.target.bio.value,
 			},
 			headers: {
-				logToken: localStorage.getItem('logToken'),
+				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
 			},
 		});
 		if (response.data.status === false) {

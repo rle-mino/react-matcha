@@ -38,33 +38,31 @@ class LoginForm extends React.Component {
 				password: e.target.password.value,
 			},
 		});
-		setTimeout(() => {
-			this.setState({
-				buttonValue: response.data.status ? 'SUCCESS' : 'SIGN IN',
-				serverResponse: response.data.details,
-			});
-			if (response.data.status === false) {
-				this.setState({ isPending: false });
-				if (response.data.details === 'invalid request') {
-					this.setState({ serverResponse: null });
-					const error = {};
-					response.data.error.forEach((err) => {
-						error[err.path] = err.error.toUpperCase();
-					});
-					this.setState({ ...error });
-				} else {
-					this.setState({ mainErr: 'errorMessageMain isVisible' });
-				}
-				if (response.data.details.match(/not activated$/g)) {
-					setTimeout(() => browserHistory.push('confirm_mail'), 1000);
-				}
-			}
-			else {
-				localStorage.setItem('logToken', response.headers.logtoken);
+		this.setState({
+			buttonValue: response.data.status ? 'SUCCESS' : 'SIGN IN',
+			serverResponse: response.data.details,
+		});
+		if (response.data.status === false) {
+			this.setState({ isPending: false });
+			if (response.data.details === 'invalid request') {
 				this.setState({ serverResponse: null });
-				setTimeout(() => browserHistory.push('/matcha/my_profile'), 1000);
+				const error = {};
+				response.data.error.forEach((err) => {
+					error[err.path] = err.error.toUpperCase();
+				});
+				this.setState({ ...error });
+			} else {
+				this.setState({ mainErr: 'errorMessageMain isVisible' });
 			}
-		}, 1000);
+			if (response.data.details.match(/not activated$/g)) {
+				setTimeout(() => browserHistory.push('confirm_mail'), 1000);
+			}
+		}
+		else {
+			localStorage.setItem('logToken', response.headers['x-access-token']);
+			this.setState({ serverResponse: null });
+			setTimeout(() => browserHistory.push('/matcha/my_profile'), 1000);
+		}
 	};
 
 	render() {
