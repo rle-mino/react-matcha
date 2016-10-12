@@ -1,7 +1,7 @@
 import React					from 'react';
 import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import axios					from 'axios'
-import { Link }					from 'react-router';
+import { Link, browserHistory }	from 'react-router';
 import apiConnect				from './../apiConnect';
 
 import ThumbRemovable			from '../components/ThumbRemovable';
@@ -23,7 +23,7 @@ class AddPhotosForm extends React.Component {
 	sendPic = async (file) => {
 		const data = new FormData()
 		data.append('image', file);
-		const response = await axios({
+		axios({
 			url: `${apiConnect}user/add_image`,
 			method: 'post',
 			data,
@@ -31,10 +31,11 @@ class AddPhotosForm extends React.Component {
 				'Content-type': 'multipart/form-data',
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
 			},
-		});
-		const newPhotos = this.state.photo;
-		newPhotos.push(`${apiConnect}user/get_img_src/${response.data.more}`)
-		this.setState({ photo: newPhotos });
+		}).then(({ data }) => {
+			const newPhotos = this.state.photo;
+			newPhotos.push(`${apiConnect}user/get_img_src/${data.more}`)
+			this.setState({ photo: newPhotos });
+		}).catch(() => this.setState({ serverResponse: 'AN ERROR OCCURED' }));
 	}
 
 	// called on click
@@ -116,7 +117,7 @@ class AddPhotosForm extends React.Component {
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
 			}
-		});
+		}).catch(() => this.setState({ serverResponse: 'AN ERROR OCCURED' }));
 	}
 
 	componentWillMount() {
@@ -131,7 +132,7 @@ class AddPhotosForm extends React.Component {
 				const initPhoto = data.more.map((img) => `${apiConnect}user/get_img_src/min/${img}`);
 				this.setState({ photo: initPhoto });
 			}
-		});
+		}).catch(() => browserHistory.push('/'));
 	}
 
 	stopEdit = (e) => {
@@ -156,7 +157,7 @@ class AddPhotosForm extends React.Component {
 				onDrop={this.addByDrop}
 			>
 				<div className="errorMessageMain">{mainErr}</div>
-				<input type="file" id="file" onChange={this.addByClick} value={inpVal} />
+				<input type="file" id="file" className="addPhotoInput" onChange={this.addByClick} value={inpVal} />
 				<label htmlFor="file" className={isHover}>{dropStatus}</label>
 				<div className="imgList">{imgs}</div>
 				{!this.props.isEditComp && (<Link to="/matcha/"><div className="mainButton isLNK">GO</div></Link>)}

@@ -2,9 +2,10 @@ import React						from 'react';
 import axios						from 'axios';
 import apiConnect					from '../../apiConnect';
 
-import NameGenderOriProf			from '../../profile/NameGenderOri.js';
-import ImageProf					from '../../profile/Image.js';
-import BioProf						from '../../profile/Bio.js';
+import NameAgeProf					from '../../profile/NameAge';
+import ImageProf					from '../../profile/Image';
+import BioProf						from '../../profile/Bio';
+import MicroProf					from '../../profile/Micro';
 
 import './profile.sass';
 
@@ -53,10 +54,17 @@ export default class Profile extends React.Component {
 			username,
 			lastname,
 			images,
+			age,
 			bio,
+			orientation,
 			gender,
-			orientation
+			popularity,
+			interestCounter,
+			interToReq,
+			visit,
+			visiter,
 		} = this.state.data;
+		console.log(this.state.data);
 		const { editable, profileClass, editComp } = this.state;
 		return (
 			<div>
@@ -65,11 +73,16 @@ export default class Profile extends React.Component {
 						setEditComp={this.setEditComp}
 						updateImages={this.updateImages}
 					/>
-					<NameGenderOriProf
+					<NameAgeProf
 						firstname={firstname} username={username}
-						lastname={lastname} gender={gender}
-						orientation={orientation} editable={editable}
+						lastname={lastname} age={age} editable={editable}
 						setEditComp={this.setEditComp}
+					/>
+					<MicroProf popularity={popularity} gender={gender}
+						orientation={orientation} interToReq={interToReq}
+						interestCounter={interestCounter} visit={visit}
+						visiter={visiter} setEditComp={this.setEditComp}
+						editable={editable}
 					/>
 					<BioProf bio={bio} editable={editable} setEditComp={this.setEditComp} />
 				</div>

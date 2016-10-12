@@ -1,9 +1,16 @@
-import React					from 'react';
-import fuzzy					from 'fuzzy';
-import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
-import ReactDOM					from 'react-dom';
+import React						from 'react';
+import fuzzy						from 'fuzzy';
+import ReactCssTransitionGroup		from 'react-addons-css-transition-group';
+import ReactDOM						from 'react-dom';
 
 import './tagInput.sass';
+
+const checkLastChar = (last) => {
+	return (
+		!((last >= 'A' && last <= 'Z') ||
+		(last >= 'a' && last <= 'z') ||
+		(last >= '0' && last <= '9')) && last !== ' ');
+};
 
 export default class TagInput extends React.Component {
 	state = {
@@ -11,15 +18,22 @@ export default class TagInput extends React.Component {
 		tagSugg: [],
 		validTag: [],
 		suggBlock: '',
+		tip: 'tip invisible',
 	}
 
-	focus = (e) => this.setState({ suggBlock: 'suggBlock' });
-	blur = () => this.setState({ suggBlock: '', tagSugg: [] });
+	focus = () => this.setState({ suggBlock: 'suggBlock', tip: 'tip' });
+	blur = () => this.setState({ suggBlock: '', tagSugg: [], tip: 'tip invisible' });
 
 	handleEntry = (e) => {
+		const lastChar = e.target.value.slice(-1);
+		const { value } = e.target;
+		if (checkLastChar(lastChar)) {
+			e.target.value = value.substring(0, value.length - 1);
+			return (false);
+		}
 		if (e.target.value.slice(-1) === ' ' && e.target.value.length > 1) {
 			const actualTags = this.state.validTag;
-			actualTags.push(e.target.value.substring(0, e.target.value.length - 1));
+			actualTags.push(escape(e.target.value.substring(0, e.target.value.length - 1)));
 			e.target.value = '';
 			this.setState({ validTag: actualTags });
 			return true;
@@ -57,13 +71,14 @@ export default class TagInput extends React.Component {
 	}
 
 	render() {
-		const { tagSugg, suggBlock, validTag } = this.state;
+		const { tagSugg, suggBlock, validTag, tip } = this.state;
 		const suggTags = tagSugg.map((tag, index) => <li key={index} onMouseDown={this.addTag} className="sugg">{tag.string}</li>);
 		const activTags = validTag.map((tag, index) => <li key={index} onClick={this.removeTag} className="validTag">{tag}</li>);
 		return (
 			<div className="tagInput">
 				<div className="beforeInput">
-					<div className="label">TAGS</div>
+					<div className="label tag">TAGS</div>
+					<div className={tip}>PRESS SPACE BAR TO ADD TAG TO THE LIST</div>
 					{this.props.children}
 				</div>
 				<br/>

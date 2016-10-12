@@ -33,7 +33,7 @@ class GeolocInput extends React.Component {
 				const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}`);
 				if (response.data.status === 'OK') {
 					this.setState({
-						geolocButtonVal: response.data.results[0].formatted_address.toUpperCase(),
+						geolocButtonVal: response.data.results[3].formatted_address.toUpperCase(),
 						lat,
 						lng,
 					});
@@ -103,28 +103,28 @@ class AddDetailsForm extends React.Component {
 			bio: e.target.bio.value,
 			tags: this.refs.tagInput.state.validTag,
 		}
-		const response = await axios({
+		axios({
 			method: 'put',
 			url: `${apiConnect}user/add_details`,
 			data: data,
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
 			},
-		});
-		if (response.data.status === false) {
-			if (response.data.details === 'invalid request') {
-				const error = {};
-				response.data.error.forEach((el) => {
-					error[el.path] = el.error;
-				})
-				this.setState({ ...error, subVal: 'ADD DETAILS', subDis: false });
-			} else this.setState({ serverResponse: response.data.details, subVal: 'ADD DETAILS', subDis: false });
-		} else {
-			this.setState({ subVal: 'SUCCESS' });
-			setTimeout(() => {
-				browserHistory.push('add_photos');
-			});
-		}
+		}).then(({ data }) => {
+			console.log(data);
+			if (data.status === false) {
+				if (data.details === 'invalid request') {
+					const error = {};
+					data.error.forEach((el) => error[el.path] = el.error);
+					this.setState({ ...error, subVal: 'ADD DETAILS', subDis: false });
+				} else this.setState({ serverResponse: data.details, subVal: 'ADD DETAILS', subDis: false });
+			} else {
+				this.setState({ subVal: 'SUCCESS' });
+				setTimeout(() => {
+					browserHistory.push('add_photos');
+				}, 2000);
+			}
+		}).catch(() => this.setState({ subVal: 'ERROR', serverResponse: 'AN ERROR OCCURED' }));
 	}
 
 	render() {

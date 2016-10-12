@@ -20,7 +20,7 @@ class BioEdit extends React.Component {
 	saveBio = async (e) => {
 		e.preventDefault();
 		this.setState({ bio: null, subVal: 'WAIT', subDis: true })
-		const response = await axios({
+		axios({
 			method: 'put',
 			url: `${apiConnect}user/update_profile`,
 			data: {
@@ -29,19 +29,20 @@ class BioEdit extends React.Component {
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
 			},
-		});
-		if (response.data.status === false) {
-			if (response.data.details.includes('invalid request')) {
-				const error = [];
-				response.data.error.forEach((err) => error[err.path] = err.error)
-				this.setState({ ...error, subVal: 'SAVE', subDis: false });
-			} else this.setState({ serverResponse: response.data.details, subVal: 'SAVE', subDis: false });
-		} else {
-			this.setState({ subVal: 'SUCCESS' });
-			setTimeout(() => {
-				this.props.setEditComp(null);
-			}, 1000);
-		}
+		}).then(({ data }) => {
+			if (data.status === false) {
+				if (data.details.includes('invalid request')) {
+					const error = [];
+					data.error.forEach((err) => error[err.path] = err.error)
+					this.setState({ ...error, subVal: 'SAVE', subDis: false });
+				} else this.setState({ serverResponse: data.details, subVal: 'SAVE', subDis: false });
+			} else {
+				this.setState({ subVal: 'SUCCESS' });
+				setTimeout(() => {
+					this.props.setEditComp(null);
+				}, 1000);
+			}
+		}).catch(() => this.setState({ serverResponse: 'AN ERROR OCCURRED', subDis: false }));
 	}
 
 	cancel = (e) => {
@@ -62,7 +63,7 @@ class BioEdit extends React.Component {
 			>
 				<div className="errorMessageMain">{serverResponse}</div>
 				<form onSubmit={this.saveBio}>
-					<BioInput bio={this.props.bio} >
+					<BioInput bio={this.props.bio}>
 						<ErrorMessage message={bio}/>
 					</BioInput>
 					<input type="submit" value={subVal} className="mainButton" disabled={subDis}/>

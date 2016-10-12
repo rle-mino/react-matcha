@@ -19,25 +19,26 @@ class ForgotForm extends React.Component {
 	forgot = async (e) => {
 		e.preventDefault();
 		this.setState({ subVal: 'WAIT', mail: null, serverResponse: null, subDis: true });
-		const response = await axios({
+		axios({
 			method: 'put',
 			url: `${apiConnect}user/forgot_password`,
 			data: {
 				mail: e.target.mail.value,
 			}
-		});
-		if (response.data.status === false) {
-			if (response.data.details === 'invalid request') {
-				this.setState({ mail: response.data.error[0].error, subVal: 'SEND ME AN EMAIL' });
+		}).then(({ data }) => {
+			if (data.status === false) {
+				if (data.details === 'invalid request') {
+					this.setState({ mail: data.error[0].error, subVal: 'SEND ME AN EMAIL' });
+				} else {
+					this.setState({ subVal: 'SEND ME AN EMAIL', serverResponse: data.details });
+				}
 			} else {
-				this.setState({ subVal: 'SEND ME AN EMAIL', serverResponse: response.data.details });
+				this.setState({ subVal: 'SUCCESS', serverResponse: data.details });
+				setTimeout(() => {
+					browserHistory.push('reset_password');
+				}, 2000);
 			}
-		} else {
-			this.setState({ subVal: 'SUCCESS', serverResponse: response.data.details });
-			setTimeout(() => {
-				browserHistory.push('reset_password');
-			}, 2000);
-		}
+		}).catch(() => this.setState({ serverResponse: 'AN ERROR OCCURED', subVal: 'ERROR' }));
 	}
 
 	render() {
@@ -46,11 +47,7 @@ class ForgotForm extends React.Component {
 			<div>
 				<div className="errorMessageMain isVisible">{serverResponse}</div>
 				<form onSubmit={this.forgot}>
-					<MatchInput
-						label="MAIL"
-						inputType="text"
-						inputName="mail"
-					>
+					<MatchInput label="MAIL" inputType="text" inputName="mail">
 					{mail && (<ErrorMessage message={mail}/>)}
 					</MatchInput>
 					<input type="submit" className="mainButton" value={subVal} disabled={subDis} />
@@ -60,20 +57,15 @@ class ForgotForm extends React.Component {
 	}
 }
 
-export default class ForgotPassword extends React.Component {
-	render() {
-		return (
-			<ReactCssTransitionGroup
-				className="comp"
-				transitionName="route"
-				transitionAppear={true}
-				transitionEnterTimeout={500}
-				transitionLeaveTimeout={500}
-				transitionAppearTimeout={500}
-			>
-				<h1 className="mainTitle">FORGOT PASSWORD</h1>
-				<ForgotForm />
-			</ReactCssTransitionGroup>
-		);
-	}
-}
+export default () =>
+	<ReactCssTransitionGroup
+		className="comp"
+		transitionName="route"
+		transitionAppear={true}
+		transitionEnterTimeout={500}
+		transitionLeaveTimeout={500}
+		transitionAppearTimeout={500}
+	>
+		<h1 className="mainTitle">FORGOT PASSWORD</h1>
+		<ForgotForm />
+		</ReactCssTransitionGroup>

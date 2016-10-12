@@ -30,23 +30,19 @@ class FormRegister extends React.Component {
 	register = async (e) => {
 		e.preventDefault();
 		e.persist();
-		await this.setState({
+		this.setState({
 			username: null,
 			password: null,
 			passVReq: null,
-			passVInval: null,
 			firstname: null,
 			lastname: null,
 			birthdate: null,
 			birthInval: null,
 			mail: null,
 			mailVReq: null,
-			mailVInval: null,
 			serverResponse: null,
 			mainButtonDis: false,
 			mainButtonValue: 'WAIT',
-		});
-		await this.setState({
 			passVInval: e.target.password.value !== e.target.passwordVerif.value,
 			mailVInval: e.target.mail.value !== e.target.mailVerif.value,
 		});
@@ -55,7 +51,7 @@ class FormRegister extends React.Component {
 			return false;
 		} else {
 			const birthdate = `${e.target.day.value}-${e.target.month.value}-${e.target.year.value}`;
-			const response = await axios({
+			axios({
 				method: 'post',
 				url: `${apiConnect}user/register`,
 				data: {
@@ -66,23 +62,22 @@ class FormRegister extends React.Component {
 					birthdate: birthdate,
 					mail: e.target.mail.value,
 				},
-			});
-			setTimeout(() => {
-				if (response.data.details === 'invalid request') {
-					const error = {};
-					response.data.error.forEach((err) => {
-						error[err.path] = err.error.toUpperCase();
-					});
-					this.setState({ mainButtonValue: 'REGISTER', mainButtonDis: false, ...error });
-				} else if (response.data.details === 'already exists') {
-					this.setState({ serverResponse: response.data.error, mainButtonValue: 'REGISTER', mainButtonDis: false });
-				} else if (response.data.status === true){
+			}).then(({ data }) => {
+				if (data.status === false) {
+					if (data.details === 'invalid request') {
+						const error = {};
+						data.error.forEach((err) => {
+							error[err.path] = err.error.toUpperCase();
+						});
+						this.setState({ mainButtonValue: 'REGISTER', mainButtonDis: false, ...error });
+					} else {
+						this.setState({ serverResponse: data.details, mainButtonValue: 'REGISTER', mainButtonDis: false });
+					}
+				} else {
 					this.setState({ mainButtonValue: 'SUCCESS' });
-				}
-				if (response.data.status === true) {
 					setTimeout(() => browserHistory.push('confirm_mail'), 1000);
 				}
-			}, 1000);
+			}).catch(() => this.setState({ mainButtonValue: 'ERROR', serverResponse: 'AN ERROR OCCURED' }));
 		}
 	};
 
@@ -164,23 +159,18 @@ class FormRegister extends React.Component {
 	}
 }
 
-export default class Register extends React.Component {
-	render() {
-		return (
-			<ReactCssTransitionGroup
-			component="div"
-			transitionName="route"
-			className="comp"
-			transitionAppear={true}
-			transitionEnterTimeout={500}
-			transitionAppearTimeout={500}
-			transitionLeaveTimeout={500}>
-				<h1 className="mainTitle">REGISTER</h1>
-				<FormRegister />
-				<div className="otherOptions">
-					<Link to="/"><div className="otherOption centered">ALREADY REGISTERED</div></Link>
-				</div>
-			</ReactCssTransitionGroup>
-		)
-	}
-}
+export default () =>
+	<ReactCssTransitionGroup
+	component="div"
+	transitionName="route"
+	className="comp"
+	transitionAppear={true}
+	transitionEnterTimeout={500}
+	transitionAppearTimeout={500}
+	transitionLeaveTimeout={500}>
+		<h1 className="mainTitle">REGISTER</h1>
+		<FormRegister />
+		<div className="otherOptions">
+			<Link to="/"><div className="otherOption centered">ALREADY REGISTERED</div></Link>
+		</div>
+	</ReactCssTransitionGroup>

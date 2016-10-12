@@ -171,7 +171,7 @@ module.exports = {
   },
   // Point ESLint to our predefined config.
   eslint: {
-    // TODO: consider separate config for production,
+    // TODO:20 consider separate config for production,
     // e.g. to enable no-console and no-debugger only in production.
     configFile: path.join(__dirname, 'eslint.js'),
     useEslintrc: false
