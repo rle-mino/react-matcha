@@ -1,0 +1,41 @@
+.microBlock
+	position: relative
+	padding: 10px
+	display: flex
+	flex-direction: row
+	align-items: center
+	justify-content: center
+
+.icon, .value
+	margin: 5px
+
+.microBlock:hover
+	&:before
+		content: attr(title)
+		font-size: 12px
+		white-space: nowrap
+		position: absolute
+		bottom: 110%
+		background: black
+		padding: 10px
+		animation: titleIn .2s
+	&:after
+		bottom: 20px
+		border: solid transparent
+		content: " "
+		height: 0
+		width: 0
+		position: absolute
+		pointer-events: none
+		border-color: rgba(0, 0, 0, 0)
+		border-top-color: #000000
+		border-width: 20px
+		animation: titleIn .2s
+
+@keyframes titleIn
+	0%
+		transform: translateY(20px)
+		opacity: 0
+	100%
+		transform: translateY(0px)
+		opacity: 1

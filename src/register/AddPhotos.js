@@ -35,7 +35,7 @@ class AddPhotosForm extends React.Component {
 			const newPhotos = this.state.photo;
 			newPhotos.push(`${apiConnect}user/get_img_src/${data.more}`)
 			this.setState({ photo: newPhotos });
-		}).catch(() => this.setState({ serverResponse: 'AN ERROR OCCURED' }));
+		}).catch(() => this.setState({ serverResponse: 'AN ERROR OCCURRED' }));
 	}
 
 	// called on click
@@ -117,7 +117,7 @@ class AddPhotosForm extends React.Component {
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
 			}
-		}).catch(() => this.setState({ serverResponse: 'AN ERROR OCCURED' }));
+		}).catch(() => this.setState({ serverResponse: 'AN ERROR OCCURRED' }));
 	}
 
 	componentWillMount() {
@@ -160,7 +160,7 @@ class AddPhotosForm extends React.Component {
 				<input type="file" id="file" className="addPhotoInput" onChange={this.addByClick} value={inpVal} />
 				<label htmlFor="file" className={isHover}>{dropStatus}</label>
 				<div className="imgList">{imgs}</div>
-				{!this.props.isEditComp && (<Link to="/matcha/"><div className="mainButton isLNK">GO</div></Link>)}
+				{!this.props.isEditComp && (<Link to="/matcha/my_profile"><div className="mainButton isLNK">GO</div></Link>)}
 				{this.props.isEditComp && (<input type="button" className="mainButton" value="SAVE" onClick={this.stopEdit} />)}
 			</div>
 		)

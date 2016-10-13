@@ -38,10 +38,10 @@ class MatchHeader extends React.Component {
 	}
 
 	showHeader = (e) => {
-		if (this.state.headVis.includes('showNotif')) {
+		if (this.state.headVis.includes('isVisible')) {
 			this.setState({ headVis: 'header' });
 		} else {
-			this.setState({ headVis: 'header showNotif' });
+			this.setState({ headVis: 'header isVisible' });
 		}
 	}
 

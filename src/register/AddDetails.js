@@ -124,7 +124,7 @@ class AddDetailsForm extends React.Component {
 					browserHistory.push('add_photos');
 				}, 2000);
 			}
-		}).catch(() => this.setState({ subVal: 'ERROR', serverResponse: 'AN ERROR OCCURED' }));
+		}).catch(() => this.setState({ subVal: 'ERROR', serverResponse: 'AN ERROR OCCURRED' }));
 	}
 
 	render() {

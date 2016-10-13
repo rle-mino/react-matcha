@@ -34,23 +34,34 @@ class FormRegister extends React.Component {
 			username: null,
 			password: null,
 			passVReq: null,
+			passVInval: null,
 			firstname: null,
 			lastname: null,
 			birthdate: null,
 			birthInval: null,
 			mail: null,
 			mailVReq: null,
+			mailVInval: null,
 			serverResponse: null,
-			mainButtonDis: false,
+			mainButtonDis: true,
 			mainButtonValue: 'WAIT',
-			passVInval: e.target.password.value !== e.target.passwordVerif.value,
-			mailVInval: e.target.mail.value !== e.target.mailVerif.value,
 		});
+		if (e.target.password.value !== e.target.passwordVerif.value ||
+			e.target.mail.value !== e.target.mailVerif.value) {
+				this.setState({
+					passVInval: e.target.password.value !== e.target.passwordVerif.value,
+					mailVInval: e.target.mail.value !== e.target.mailVerif.value,
+					mainButtonDis: false,
+					mainButtonValue: 'REGISTER',
+				})
+				return (false);
+			}
 		if (!!this.state.passVInval || !!this.state.mailVInval || !!this.state.birthInval) {
 			this.setState({ mainButtonDis: false, mainButtonValue: 'REGISTER' });
 			return false;
 		} else {
-			const birthdate = `${e.target.day.value}-${e.target.month.value}-${e.target.year.value}`;
+			const day = e.target.day.value < 10 ? `0${e.target.day.value}` : e.target.day.value;
+			const birthdate = `${e.target.month.value}-${day}-${e.target.year.value}`;
 			axios({
 				method: 'post',
 				url: `${apiConnect}user/register`,
@@ -77,7 +88,7 @@ class FormRegister extends React.Component {
 					this.setState({ mainButtonValue: 'SUCCESS' });
 					setTimeout(() => browserHistory.push('confirm_mail'), 1000);
 				}
-			}).catch(() => this.setState({ mainButtonValue: 'ERROR', serverResponse: 'AN ERROR OCCURED' }));
+			}).catch(() => this.setState({ mainButtonValue: 'ERROR', serverResponse: 'AN ERROR OCCURRED' }));
 		}
 	};
 

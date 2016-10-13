@@ -38,14 +38,14 @@ class ForgotForm extends React.Component {
 					browserHistory.push('reset_password');
 				}, 2000);
 			}
-		}).catch(() => this.setState({ serverResponse: 'AN ERROR OCCURED', subVal: 'ERROR' }));
+		}).catch(() => this.setState({ serverResponse: 'AN ERROR OCCURRED', subVal: 'ERROR' }));
 	}
 
 	render() {
 		const { serverResponse, subVal, mail, subDis } = this.state
 		return (
 			<div>
-				<div className="errorMessageMain isVisible">{serverResponse}</div>
+				<div className="errorMessageMain">{serverResponse}</div>
 				<form onSubmit={this.forgot}>
 					<MatchInput label="MAIL" inputType="text" inputName="mail">
 					{mail && (<ErrorMessage message={mail}/>)}

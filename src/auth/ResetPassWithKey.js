@@ -60,7 +60,7 @@ class ResetPassWithKeyForm extends React.Component {
                 this.setState({subVal: 'SUCCESS'});
                 setTimeout(() => browserHistory.push('/'), 1000);
             }
-        }).catch(() => this.setState({subVal: 'ERROR', serverResponse: 'AN ERROR OCCURED'}));
+        }).catch(() => this.setState({subVal: 'ERROR', serverResponse: 'AN ERROR OCCURRED'}));
     }
 
     render() {

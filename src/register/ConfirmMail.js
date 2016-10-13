@@ -27,24 +27,23 @@ class ConfirmMailForm extends React.Component {
 			keyReq: false,
 			userReq: false,
 		});
-		const response = await axios({
+		axios({
 			method: 'put',
 			url: `${apiConnect}user/confirm_mail`,
 			data: {
 				username: e.target.username.value,
 				newMailKey: e.target.confirmationKey.value,
 			}
-		});
-		setTimeout(() => {
-			if (response.data.status === false) {
-				if (response.data.details !== 'invalid request') {
+		}).then(({ data, headers }) => {
+			if (data.status === false) {
+				if (data.details !== 'invalid request') {
 					this.setState({
-						serverResponse: response.data.details,
+						serverResponse: data.details,
 						mainButtonValue: 'CONFIRM',
 						subDis: false,
 					});
 				} else {
-					response.data.error.forEach((error) => {
+					data.error.forEach((error) => {
 						if (error.path === 'username') this.setState({ userReq: true });
 						if (error.path === 'newMailKey') this.setState({ keyReq: true });
 						return false;
@@ -53,9 +52,10 @@ class ConfirmMailForm extends React.Component {
 				}
 			} else {
 				this.setState({ mainButtonValue: 'SUCCESS' });
+				localStorage.setItem('logToken', headers['x-access-token']);
 				setTimeout(() => browserHistory.push('add_details'), 1000);
 			}
-		}, 1000)
+		}).catch(() => this.setState({ serverResponse: 'AN ERROR OCCURRED', mainButtonValue: 'ERROR' }));
 	}
 
 	render() {

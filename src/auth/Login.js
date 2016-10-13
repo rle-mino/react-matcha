@@ -56,7 +56,7 @@ class LoginForm extends React.Component {
                         ...error
                     });
                 } else {
-                    this.setState({mainErr: 'errorMessageMain isVisible'});
+                    this.setState({mainErr: 'errorMessageMain'});
                 }
                 if (data.details.match(/not activated$/g)) {
                     setTimeout(() => browserHistory.push('confirm_mail'), 1000);
@@ -66,7 +66,7 @@ class LoginForm extends React.Component {
                 this.setState({serverResponse: null});
                 setTimeout(() => browserHistory.push('/matcha/my_profile'), 1000);
             }
-        }).catch(() => this.setState({buttonValue: 'ERROR', serverResponse: 'AN ERROR OCCURED'}));
+        }).catch(() => this.setState({buttonValue: 'ERROR', serverResponse: 'AN ERROR OCCURRED'}));
     };
 
     render() {
