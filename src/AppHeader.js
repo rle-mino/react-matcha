@@ -15,11 +15,13 @@ class MatchHeader extends React.Component {
 		connectStatus: 'isConnected',
 		headVis: 'header',
 		notifBlock: 'notifBlock',
-		lastNotifClass: 'lastNotif'
+		lastNotifClass: 'lastNotif',
+		socket: null,
 	}
 
 	componentDidMount() {
 		this.socket = io('http://localhost:8080');
+		this.setState({ socket: this.socket });
 		this.socket.emit('auth', localStorage.getItem('logToken'));
 		this.socket.on('connect status', (status) => {})
 		this.socket.on('new notification', (notification) => {
@@ -115,12 +117,23 @@ export default class AppHeader extends React.Component {
 		}
 	}
 
+	getChildContext() {
+		if (this.refs && this.refs.header && this.refs.header.state) {
+			return ({ socket: this.refs.header.state.socket });
+		}
+		else return ({ socket: null });
+	}
+
 	render() {
 		return (
 			<div className="AppHeader">
-				<MatchHeader notifications={this.state.notifications}/>
+				<MatchHeader notifications={this.state.notifications} ref="header" />
 	    		{this.props.children}
 	        </div>
 		);
 	}
 }
+
+AppHeader.childContextTypes = {
+	socket: React.PropTypes.object,
+};

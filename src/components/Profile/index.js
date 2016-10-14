@@ -61,7 +61,9 @@ export default class Profile extends React.Component {
 			popularity,
 			interestCounter,
 			interToReq,
-			visit,
+			interestedIn,
+			interestedBy,
+			location,
 			visiter,
 		} = this.state.data;
 		console.log(this.state.data);
@@ -79,10 +81,11 @@ export default class Profile extends React.Component {
 						setEditComp={this.setEditComp}
 					/>
 					<MicroProf popularity={popularity} gender={gender}
+						interestedIn={interestedIn} interestedBy={interestedBy}
 						orientation={orientation} interToReq={interToReq}
-						interestCounter={interestCounter} visit={visit}
-						visiter={visiter} setEditComp={this.setEditComp}
-						editable={editable}
+						interestCounter={interestCounter} visiter={visiter}
+						location={location}
+						setEditComp={this.setEditComp} editable={editable}
 					/>
 					<BioProf bio={bio} editable={editable} setEditComp={this.setEditComp} />
 				</div>
@@ -90,4 +93,8 @@ export default class Profile extends React.Component {
 			</div>
 		)
 	}
+}
+
+Profile.contextTypes = {
+	socket: React.PropTypes.object,
 }

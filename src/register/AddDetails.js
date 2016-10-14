@@ -111,7 +111,6 @@ class AddDetailsForm extends React.Component {
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
 			},
 		}).then(({ data }) => {
-			console.log(data);
 			if (data.status === false) {
 				if (data.details === 'invalid request') {
 					const error = {};

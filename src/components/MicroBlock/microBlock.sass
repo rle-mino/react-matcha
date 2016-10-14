@@ -5,32 +5,66 @@
 	flex-direction: row
 	align-items: center
 	justify-content: center
+	&:hover
+		&:before
+			content: attr(title)
+			font-size: 12px
+			white-space: nowrap
+			position: absolute
+			bottom: 110%
+			background: black
+			padding: 10px
+			animation: titleIn .2s
+		&:after
+			bottom: 20px
+			border: solid transparent
+			content: " "
+			height: 0
+			width: 0
+			position: absolute
+			pointer-events: none
+			border-color: rgba(0, 0, 0, 0)
+			border-top-color: #000000
+			border-width: 20px
+			animation: titleIn .2s
 
 .icon, .value
 	margin: 5px
 
-.microBlock:hover
-	&:before
-		content: attr(title)
-		font-size: 12px
-		white-space: nowrap
-		position: absolute
-		bottom: 110%
-		background: black
-		padding: 10px
-		animation: titleIn .2s
-	&:after
-		bottom: 20px
-		border: solid transparent
-		content: " "
-		height: 0
-		width: 0
-		position: absolute
-		pointer-events: none
-		border-color: rgba(0, 0, 0, 0)
-		border-top-color: #000000
-		border-width: 20px
-		animation: titleIn .2s
+.micro
+	position: relative
+	display: flex
+	flex-direction: column
+	align-items: center
+	justify-content: center
+	&:hover > .microList
+		background-color: rgba(0, 0, 0, .8)
+		color: rgba(255, 255, 255, 1)
+		transform: translateY(0px)
+		pointer-events: auto
+
+.microList
+	position: absolute
+	list-style: none
+	max-height: 200px
+	top: 100%
+	overflow: auto
+	background-color: rgba(0, 0, 0, 0)
+	transform: translateY(-20px)
+	color: rgba(255, 255, 255, 0)
+	transition: all .2s
+	pointer-events: none
+	&::-webkit-scrollbar
+		display: none
+
+.listEl
+	padding: 15px
+	text-align: center
+	cursor: pointer
+	transition: background-color .2s, color .2s
+	&:hover
+		background-color: white
+		color: black
 
 @keyframes titleIn
 	0%
