@@ -6,6 +6,7 @@ import NameAgeProf					from '../../profile/NameAge';
 import ImageProf					from '../../profile/Image';
 import BioProf						from '../../profile/Bio';
 import MicroProf					from '../../profile/Micro';
+import TagProf						from '../../profile/Tag';
 
 import './profile.sass';
 
@@ -65,6 +66,7 @@ export default class Profile extends React.Component {
 			interestedBy,
 			location,
 			visiter,
+			tags,
 		} = this.state.data;
 		console.log(this.state.data);
 		const { editable, profileClass, editComp } = this.state;
@@ -88,13 +90,10 @@ export default class Profile extends React.Component {
 						setEditComp={this.setEditComp} editable={editable}
 					/>
 					<BioProf bio={bio} editable={editable} setEditComp={this.setEditComp} />
+					<TagProf tags={tags} editable={editable} />
 				</div>
 				{editComp}
 			</div>
 		)
 	}
-}
-
-Profile.contextTypes = {
-	socket: React.PropTypes.object,
 }

@@ -3,6 +3,8 @@ import fuzzy						from 'fuzzy';
 import ReactCssTransitionGroup		from 'react-addons-css-transition-group';
 import ReactDOM						from 'react-dom';
 
+import ActivTag						from '../ActivTag';
+
 import './tagInput.sass';
 
 const checkLastChar = (last) => {
@@ -73,7 +75,7 @@ export default class TagInput extends React.Component {
 	render() {
 		const { tagSugg, suggBlock, validTag, tip } = this.state;
 		const suggTags = tagSugg.map((tag, index) => <li key={index} onMouseDown={this.addTag} className="sugg">{tag.string}</li>);
-		const activTags = validTag.map((tag, index) => <li key={index} onClick={this.removeTag} className="validTag">{tag}</li>);
+		const activTags = validTag.map((tag, index) => <ActivTag key={index} remove={this.removeTag} tag={tag} />);
 		return (
 			<div className="tagInput">
 				<div className="beforeInput">

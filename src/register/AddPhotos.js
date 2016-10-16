@@ -17,11 +17,11 @@ class AddPhotosForm extends React.Component {
 		isValidIMG: false,
 		trashOver: false,
 		inpVal: '',
-	}
+	};
 
 	// called when the picture is converted
 	sendPic = async (file) => {
-		const data = new FormData()
+		const data = new FormData();
 		data.append('image', file);
 		axios({
 			url: `${apiConnect}user/add_image`,
@@ -36,7 +36,7 @@ class AddPhotosForm extends React.Component {
 			newPhotos.push(`${apiConnect}user/get_img_src/${data.more}`)
 			this.setState({ photo: newPhotos });
 		}).catch(() => this.setState({ serverResponse: 'AN ERROR OCCURRED' }));
-	}
+	};
 
 	// called on click
 	addByClick = (e) => {
@@ -53,10 +53,10 @@ class AddPhotosForm extends React.Component {
 		img.onload = () => {
 			this.sendPic(file);
 			this.setState({ inpVal: '' });
-		}
+		};
 		img.onerror = () => this.setState({ mainErr: 'PNG OR JPG AUTHORIZED' });
 		img.src = _URL.createObjectURL(file);
-	}
+	};
 
 	// called on drop
 	addByDrop = (e) => {
@@ -77,24 +77,24 @@ class AddPhotosForm extends React.Component {
 				dropStatus: 'SELECT A PHOTO OR DROP IT HERE',
 				isHover: 'addPhotoButton',
 			});
-		}
+		};
 		img.onerror = () => {
 			this.setState({
 				mainErr: 'PNG OR JPG AUTHORIZED',
 				dropStatus: 'SELECT A PHOTO OR DROP IT HERE',
 				isHover: 'addPhotoButton',
 			});
-		}
+		};
 		if(file) img.src = _URL.createObjectURL(file);
-	}
+	};
 
 	dragEnter = (e) => {
-		e.preventDefault()
+		e.preventDefault();
 		this.setState({
 			dropStatus: 'DROP !',
 			isHover: 'addPhotoButton isHover',
 		});
-	}
+	};
 
 	dragLeave = (e) => {
 		e.preventDefault();
@@ -102,7 +102,7 @@ class AddPhotosForm extends React.Component {
 			dropStatus: 'SELECT A PHOTO OR DROP IT HERE',
 			isHover: 'addPhotoButton',
 		});
-	}
+	};
 
 	removeImage = async (src) => {
 
@@ -118,7 +118,7 @@ class AddPhotosForm extends React.Component {
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
 			}
 		}).catch(() => this.setState({ serverResponse: 'AN ERROR OCCURRED' }));
-	}
+	};
 
 	componentWillMount() {
 		axios({
@@ -138,7 +138,7 @@ class AddPhotosForm extends React.Component {
 	stopEdit = (e) => {
 		e.preventDefault();
 		this.props.setEditComp(null);
-	}
+	};
 
 	render() {
 		const { photo, dropStatus, isHover, mainErr, inpVal } = this.state;
