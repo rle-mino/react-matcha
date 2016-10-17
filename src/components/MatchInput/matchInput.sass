@@ -1,18 +1,27 @@
+@import ../../colors
+
+.genderSelector, .orientationSelector
+	& .beforeInput
+		width: calc(100% - 6px)
+
 .beforeInput
 	margin-top: 15px
 	font-size: 14px
+	display: flex
+	flex-direction: row
+	justify-content: space-between
 
 .textInp
-	background-color: rgba(255, 255, 255, .1)
+	background-color: $darkDotTwo
 	display: block
 	padding: 15px
 	width: 94%
 	font-size: 16px
-	color: #f0f0f0
+	color: black
 	transition: background-color .5s, color .5s
 	&:focus
-		background-color: rgba(255, 255, 255, .6)
-		color: #000000
+		background-color: $darkDotSix
+		color: white
 
 .label
 	float: left

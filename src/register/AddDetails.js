@@ -70,6 +70,7 @@ class GeolocInput extends React.Component {
 class AddDetailsForm extends React.Component {
 	state = {
 		serverResponse: null,
+		addedTags: [],
 		subVal: 'ADD DETAILS',
 		subDis: false,
 		bio: null,
@@ -92,6 +93,7 @@ class AddDetailsForm extends React.Component {
 			serverResponse: null,
 		});
 		const { lat, lng } = this.refs.geolocInput.state;
+		const addedTags = this.refs.tagInput.state.addedTags;
 		const data = {
 			location: {
 				lat,
@@ -114,9 +116,10 @@ class AddDetailsForm extends React.Component {
 			if (data.status === false) {
 				if (data.details === 'invalid request') {
 					const error = {};
-					data.error.forEach((el) => error[el.path] = el.error);
-					this.setState({ ...error, subVal: 'ADD DETAILS', subDis: false });
-				} else this.setState({ serverResponse: data.details, subVal: 'ADD DETAILS', subDis: false });
+					data.error.forEach((el) => error[el.path] = el.error.toUpperCase());
+					this.setState({ ...error });
+				} else this.setState({ serverResponse: data.details });
+			this.setState({ subDis: false, subVal: 'ADD DETAILS', addedTags });
 			} else {
 				this.setState({ subVal: 'SUCCESS' });
 				setTimeout(() => {
@@ -136,13 +139,14 @@ class AddDetailsForm extends React.Component {
 			tags,
 			subVal,
 			subDis,
+			addedTags,
 		} = this.state;
 		return (
 			<div className="addDetailsForm">
 				<div className="errorMessageMain">{serverResponse}</div>
 				<form onSubmit={this.sendDetails}>
 					<GeolocInput ref="geolocInput">
-						{!!location && (<ErrorMessage message={location} />)}
+						<ErrorMessage message={location} />
 					</GeolocInput>
 					<ThreeSelector name="gender" label="GENDER"
 						value1="male" label1="MALE"
@@ -150,7 +154,7 @@ class AddDetailsForm extends React.Component {
 						value3="female" label3="FEMALE"
 						className="genderSelector"
 					>
-						{!!gender && (<ErrorMessage message={gender} />)}
+						<ErrorMessage message={gender} />
 					</ThreeSelector>
 					<ThreeSelector name="orientation" label="ORIENTATION"
 						value1="gay" label1="GAY"
@@ -158,13 +162,13 @@ class AddDetailsForm extends React.Component {
 						value3="straight" label3="STRAIGHT"
 						className="orientationSelector"
 					>
-						{!!orientation && (<ErrorMessage message={orientation} />)}
+						<ErrorMessage message={orientation} />
 					</ThreeSelector>
 					<BioInput>
-						{!!bio && (<ErrorMessage message={bio}/>)}
+						<ErrorMessage message={bio}/>
 					</BioInput>
-					<TagInput tags={this.props.tags} ref="tagInput" >
-						{tags && (<ErrorMessage message={tags}/>)}
+					<TagInput savedTags={this.props.tags} addedTags={addedTags} ref="tagInput" >
+						<ErrorMessage message={tags}/>
 					</TagInput>
 					<input type="submit" value={subVal} className="mainButton" disabled={subDis} />
 				</form>

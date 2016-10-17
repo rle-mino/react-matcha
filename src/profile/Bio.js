@@ -77,21 +77,30 @@ class BioEdit extends React.Component {
 export default class BioProf extends React.Component {
 	state = {
 		inEdit: false,
+		bioClass: 'bio',
 	}
 
 	edit = (e) => {
 		e.preventDefault();
+		if (!this.props.editable) return (false);
 		this.props.setEditComp(<BioEdit bio={this.props.bio} setEditComp={this.props.setEditComp} />)
 	}
 
+	showEditable = () => this.setState({ bioClass: 'bio editHover' });
+
+	hideEditable = () => this.setState({ bioClass: 'bio' });
+
 	render() {
+		const { bioClass } = this.state;
 		return (
-			<div className="bioProf">
+			<div className="bioProf" onDoubleClick={this.edit}>
 				<div className="beforeBio">
 					<h2 className="bioLabel">BIO</h2>
-					{this.props.editable && (<FontAwesome name="pencil" className="editBioButton" onClick={this.edit} />)}
+					{this.props.editable && (<FontAwesome name="pencil"
+					className="editBioButton" onClick={this.edit}
+					onMouseEnter={this.showEditable} onMouseLeave={this.hideEditable}/>)}
 				</div>
-				<p className="bio">{this.props.bio}</p>
+				<p className={bioClass}>{this.props.bio}</p>
 			</div>
 		);
 	}

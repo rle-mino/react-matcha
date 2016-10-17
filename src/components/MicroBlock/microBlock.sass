@@ -1,3 +1,5 @@
+@import ../../colors
+
 .microBlock
 	position: relative
 	padding: 10px
@@ -40,20 +42,20 @@
 	align-items: center
 	justify-content: center
 	&:hover > .microList
-		background-color: rgba(0, 0, 0, .8)
-		color: rgba(255, 255, 255, 1)
+		opacity: 1
 		transform: translateY(0px)
 		pointer-events: auto
 
 .microList
 	position: absolute
+	z-index: 4
 	list-style: none
 	max-height: 200px
 	top: 100%
 	overflow: auto
-	background-color: rgba(0, 0, 0, 0)
+	background-color: $darkDotHeight
+	opacity: 0
 	transform: translateY(-20px)
-	color: rgba(255, 255, 255, 0)
 	transition: all .2s
 	pointer-events: none
 	&::-webkit-scrollbar
@@ -61,12 +63,18 @@
 
 .listEl
 	padding: 15px
+	text-decoration: none
+	color: white
 	text-align: center
 	cursor: pointer
-	transition: background-color .2s, color .2s
+	transition: background-color .2s
+	& a
+		color: white
+		transition: color .2s
 	&:hover
-		background-color: white
-		color: black
+		background-color: black
+		& > a
+			color: white
 
 @keyframes titleIn
 	0%

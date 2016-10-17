@@ -16,9 +16,8 @@ const checkLastChar = (last) => {
 
 export default class TagInput extends React.Component {
 	state = {
-		tagsList: [],
 		tagSugg: [],
-		validTag: [],
+		addedTags: [],
 		suggBlock: '',
 		tip: 'tip invisible',
 	}
@@ -34,48 +33,54 @@ export default class TagInput extends React.Component {
 			return (false);
 		}
 		if (e.target.value.slice(-1) === ' ' && e.target.value.length > 1) {
-			const actualTags = this.state.validTag;
+			const actualTags = this.state.addedTags;
 			actualTags.push(escape(e.target.value.substring(0, e.target.value.length - 1)));
 			e.target.value = '';
-			this.setState({ validTag: actualTags });
+			this.setState({ addedTags: actualTags });
 			return true;
 		}
 		if (e.target.value.length === 1 && e.target.value.slice(-1) === ' ') e.target.value = '';
 		if (e.target.value) {
-			const { tags } = this.props;
-			const results = fuzzy.filter(e.target.value, tags, {
+			const { savedTags } = this.props;
+			const results = fuzzy.filter(e.target.value, savedTags, {
 				extract: el => el.value,
 			});
 			const matches = results.filter((element, index) => index < 5);
 			this.setState({ tagSugg: matches });
-		} else this.setState({ tagSugg: [] });
+		} else {
+			this.setState({ tagSugg: [] });
+		}
 	}
 
 	removeTag = (e) => {
 		e.preventDefault();
-		const allTags = this.state.validTag;
+		const allTags = this.state.addedTags;
 		const index = allTags.indexOf(e.target.innerHTML);
 		allTags.splice(index, 1);
-		this.setState({ validTag: allTags });
+		this.setState({ addedTags: allTags });
 	}
 
 	addTag = (e) => {
 		ReactDOM.findDOMNode(this.refs.tagInput).focus();
 		ReactDOM.findDOMNode(this.refs.tagInput).value = '';
 		e.preventDefault();
-		const newTags = this.state.validTag;
+		const newTags = this.state.addedTags;
 		newTags.push(escape(e.target.innerHTML));
-		this.setState({ validTag: newTags, tagSugg: [] });
+		this.setState({ addedTags: newTags, tagSugg: [] });
 	}
 
 	componentWillReceiveProps = (nextProps) => {
-		this.setState({ tagsList: nextProps.tags });
+		this.setState({ addedTags: nextProps.addedTags || [] });
+	}
+
+	componentDidMount() {
+		this.setState({ addedTags: this.props.addedTags || [] });
 	}
 
 	render() {
-		const { tagSugg, suggBlock, validTag, tip } = this.state;
+		const { tagSugg, suggBlock, addedTags, tip } = this.state;
 		const suggTags = tagSugg.map((tag, index) => <li key={index} onMouseDown={this.addTag} className="sugg">{tag.string}</li>);
-		const activTags = validTag.map((tag, index) => <ActivTag key={index} remove={this.removeTag} tag={tag} />);
+		const activTags = addedTags.map((tag, index) => <ActivTag key={index} remove={this.removeTag} tag={tag} editable={true}/>);
 		return (
 			<div className="tagInput">
 				<div className="beforeInput">

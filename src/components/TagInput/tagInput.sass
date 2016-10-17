@@ -1,3 +1,5 @@
+@import ../../colors
+
 .tagSuggs
 	opacity: 0
 	height: 0px
@@ -5,18 +7,20 @@
 	list-style: none
 
 .suggBlock
-	will-change: opacity
 	opacity: 1
 	height: 200px
 
 .sugg
-	background-color: rgba(255, 255, 255, 0.6)
-	color: black
+	background-color: $darkDotSix
+	color: white
 	transform-origin: top
 	padding: 10px
 	width: calc(100% - 20px)
 	cursor: pointer
-	transition: background-color .2s
+	transition: all .3s
+	&:hover
+		background-color: $darkDotFour
+		color: black
 
 .label.tag
 	margin-right: 40px
@@ -28,9 +32,6 @@
 	&.invisible
 		opacity: 0
 
-.sugg:hover
-	background-color: rgba(255, 255, 255, 0.8)
-
 .sugg-leave
 	animation: suggOut .2s ease-out forwards
 
@@ -38,8 +39,9 @@
 	animation: suggIn .2s ease-out forwards
 
 .validTags
-	background-color: rgba(255, 255, 255, 0.1)
-	width: calc(100%)
+	background-color: $darkDotTwo
+	margin-bottom: 10px
+	width: 100%
 	display: flex
 	flex-direction: colums
 	flex-wrap: wrap

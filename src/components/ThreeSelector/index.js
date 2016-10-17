@@ -37,13 +37,13 @@ export default class ThreeSelector extends React.Component {
 			label,
 			className,
 			checked,
-			errorMessage
+			children,
 		} = this.props;
 		return (
 			<div className={className}>
 				<div className="beforeInput">
 					<div className="labelRadio">{label}</div>
-					{errorMessage}
+					{children}
 				</div>
 				<div className="radioInps">
 					<input id={value1} type="radio" name={name} value={value1} onClick={this.activate} defaultChecked={checked === value1} />

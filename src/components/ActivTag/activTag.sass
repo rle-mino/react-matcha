@@ -1,11 +1,14 @@
+@import ../../colors
+
 .validTag
-	transition: background-color .3s
+	transition: all .2s
 	display: flex
 	flex-direction: row
 	align-items: center
 	justify-content: center
 	&:hover
-		background-color: rgba(255, 255, 255, 0.4)
+		background-color: $darkDotFour
+		color: white
 	& p
 		padding: 5px
 	& a
@@ -13,9 +16,9 @@
 		color: white
 	& .removeTag
 		cursor: pointer
-		padding: 5px
+		padding: 6px
 		font-size: 17px
 		transition: all .2s
 		&:hover
-			background-color: rgba(255, 255, 255, 0.6)
-			color: black
+			background-color: $darkDotSix
+			color: white

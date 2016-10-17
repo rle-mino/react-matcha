@@ -26,19 +26,18 @@ export default class MyProfile extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<ReactCssTransitionGroup
-					className="matcha"
-					transitionName="route"
-					transitionAppear={true}
-					transitionEnterTimeout={500}
-					transitionLeaveTimeout={500}
-					transitionAppearTimeout={500}
-				>
-					<h1 className="mainTitle">PROFILE</h1>
-					<Profile editable={true} data={this.state.data} />
-				</ReactCssTransitionGroup>
-			</div>
+			<ReactCssTransitionGroup
+				className="matcha"
+				component="div"
+				transitionName="route"
+				transitionAppear={true}
+				transitionEnterTimeout={500}
+				transitionLeaveTimeout={500}
+				transitionAppearTimeout={500}
+			>
+				<h1 className="mainTitle">PROFILE</h1>
+				<Profile editable={true} data={this.state.data} />
+			</ReactCssTransitionGroup>
 		);
 	}
 }

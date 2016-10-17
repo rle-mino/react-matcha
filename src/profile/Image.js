@@ -37,10 +37,14 @@ export default class ImageProf extends React.Component {
 	}
 
 	componentDidMount = () => {
-		setInterval(() => {;
+		this.interval = setInterval(() => {;
 			const newMargin = (this.state.marginLeft + 300) % (this.state.availableImages.length * 300);
 			this.setState({ marginLeft: newMargin });
 		}, 4000);
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.interval);
 	}
 
 	render() {

@@ -1,26 +1,36 @@
+@import ../../colors
+
 .bioProf
 	margin-top: 10px
 	margin-bottom: 10px
+	width: calc(100% - 20px)
 	&:hover > .beforeBio > .editBioButton
 		color: rgba(255, 255, 255, 1)
+		color: black
 		&:hover
-			color: rgba(0, 0, 0, 1)
+			color: white
 
 .beforeBio
 	display: flex
 	padding: 0
 	margin: 0
 
+.bio
+	padding: 5px
+	transition: all .3s
+	&.editHover
+		color: white
+		background-color: $darkDotSix
+
 .bioLabel
-	font-size: 30px
+	font-size: 20px
 
 .bioEditComp
 	height: 200px
 
 .editBioButton
-	font-size: 25px
-	margin-top: 5px
+	font-size: 20px
+	margin-top: 2px
 	margin-left: 14px
-	color: rgba(255, 255, 255, 0)
 	transition: color .3s
 	cursor: pointer

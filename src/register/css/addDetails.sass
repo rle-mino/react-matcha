@@ -1,3 +1,5 @@
+@import ../../colors
+
 .addDetailsComponent
 	background-color: rgba(255, 255, 255, 0)
 	position: absolute
@@ -13,39 +15,40 @@
 	display: inline-block
 
 .radioInps
-	background-color: rgba(255, 255, 255, .1)
+	background-color: $darkDotOne
 	text-align: center
 	width: 100%
 
 .radioInp
 	margin: 0
 	padding: 10px 0
-	background-color: rgba(255, 255, 255, .1)
-	color: #f0f0f0
-	transition: background-color .5s, color .5s
+	background-color: $darkDotTwo
+	color: black
+	transition: background-color .3s, color .3s
 	width: 33%
 	float: left
 	&:hover
-		background-color: rgba(255, 255, 255, .6)
-		color: black
+		background-color: $darkDotSix
+		color: white
 
 .isChecked
 	background-color: red
+	color: white
 
 input[type=radio]
 	display: none
 
 .geolocButton
-	background-color: rgba(255, 255, 255, 0.1)
+	background-color: $darkDotTwo
 	font-family: montserrat
 	cursor: pointer
 	width: 100%
-	transition: background-color .5s, color .5s
-	color: white
+	transition: background-color .3s, color .3s
+	color: black
 	padding: 10px
 	&:hover
-		background-color: rgba(255, 255, 255, 0.6)
-		color: black
+		background-color: $darkDotSix
+		color: white
 
 @keyframes suggIn
 	0%

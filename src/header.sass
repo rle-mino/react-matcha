@@ -1,5 +1,17 @@
+@import colors
+
+.footer
+	position: relative
+	padding: 1rem
+	margin-top: 20px
+	background-color: $darkDotTwo
+	color: white
+	text-align: center
+
+
 .headAndButton
 	position: absolute
+	top: 0
 	width: 100%
 
 .header
@@ -7,6 +19,7 @@
 	width: 100%
 	height: 50px
 	background-color: rgba(255, 255, 255, 0.1)
+	background-color: $darkDotTwo
 	z-index: 2
 
 .links
@@ -18,11 +31,11 @@
 	color: white
 	transition: background-color .3s, color .3s
 	&:hover
-		background-color: rgba(255, 255, 255, 0.4)
-		color: black
+		background-color: $darkDotFour
+		color: white
 
 .routeIsActive
-	background-color: rgba(255, 255, 255, .1)
+	background-color: $darkDotOne
 
 .showList
 	position: absolute
@@ -38,8 +51,8 @@
 	color: white
 	transition: background-color .3s, color .3s
 	&:hover
-		background-color: rgba(255, 255, 255, .4)
-		color: black
+		background-color: $darkDotFour
+		color: white
 
 
 .notifBlock
@@ -55,7 +68,7 @@
 	transition: height .3s, width .3s
 	transform-origin: top right
 	color: white
-	background-color: rgba(255, 255, 255, 0.1)
+	background-color: $darkDotTwo
 	&.showNotif
 		height: 220px
 		width: 250px
@@ -69,14 +82,15 @@
 	transition: background-color .3s, color .3s
 	&:hover
 		background-color: rgba(255, 255, 255, 0.4)
-		color: black
+		background-color: $darkDotFour
+		color: white
 
 @keyframes newNotif
 	0%
 		background-color: rgba(255, 255, 255, 0)
 		color: white
 	50%
-		background-color: rgba(255, 255, 255, .4)
+		background-color: $darkDotFour
 		color: black
 	100%
 		background-color: rgba(255, 255, 255, 0)
@@ -89,7 +103,7 @@
 	position: fixed
 	left: calc(100% - 325px)
 	top: 75px
-	background-color: rgba(255, 255, 255, .2)
+	background-color: $darkDotTwo
 	color: white
 	width: 300px
 	height: 75px
@@ -104,8 +118,8 @@
 	&.leave
 		animation: rmNewNotif .5s ease-out forwards
 	&:hover
-		background-color: rgba(255, 255, 255, .4)
-		color: black
+		background-color: $darkDotFour
+		color: white
 
 @keyframes newNotif
 	0%

@@ -1,14 +1,42 @@
+@import ../../colors
+
 .tagProf
-	background-color: rgba(255, 255, 255, 0.2)
 	margin: 20px 0px
-	width: calc(100% - 40px)
-	padding: 10px
+	width: calc(100% - 20px)
+	&:hover > .beforeTags > .editTagsButton
+		color: black
+		&:hover
+			color: white
 	& .tagsList
 		& .validTag
 			cursor: pointer
+			& > a
+				transition: color .3s
+.beforeTags
+	display: flex
+	flex-direction: row
+
+.tagLabel
+	font-size: 20px
+
+.editTagsButton
+	font-size: 20px
+	margin-top: 2px
+	margin-left: 14px
+	color: rgba(255, 255, 255, 0)
+	transition: color .3s
+	cursor: pointer
 
 .tagsList
+	background-color: $darkDotFour
+	padding: 10px
 	display: flex
 	flex-wrap: wrap
 	flex-direction: row
 	align-items: center
+	transition: all .3s
+	&.editHover
+		background-color: $darkDotSix
+		color: black !important
+		& > .validTag a
+			color: white

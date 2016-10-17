@@ -90,7 +90,7 @@ export default class Profile extends React.Component {
 						setEditComp={this.setEditComp} editable={editable}
 					/>
 					<BioProf bio={bio} editable={editable} setEditComp={this.setEditComp} />
-					<TagProf tags={tags} editable={editable} />
+					<TagProf tags={tags} editable={editable} setEditComp={this.setEditComp} />
 				</div>
 				{editComp}
 			</div>

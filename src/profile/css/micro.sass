@@ -1,5 +1,7 @@
+@import ../../colors
+
 .microProf
-	background-color: rgba(255, 255, 255, 0.2)
+	background-color: $darkDotFour
 	width: calc(100% - 20px)
 	margin:
 		top: 20px
@@ -7,8 +9,9 @@
 	display: flex
 	flex-wrap: wrap
 	justify-content: space-around
+	color: white
 	&.private
-		background-color: rgba(0, 0, 0, .5)
+		background-color: $darkDotHeight
 
 .editMicro
 	font-size: 25px
@@ -20,5 +23,5 @@
 	color: rgba(255, 255, 255, 1)
 	transition: all .2s
 	&:hover
-		background-color: rgba(255, 255, 255, .6)
+		background-color: $lightDotSix
 		color: black
