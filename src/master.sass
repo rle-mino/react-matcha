@@ -14,7 +14,7 @@ html
 	font-family: Montserrat
 
 html, body, #root, .AppHeader, .matcha
-	height: 100%
+	height: calc(100% - 1em)
 
 .background
 	width: 150%
@@ -119,7 +119,8 @@ html, body, #root, .AppHeader, .matcha
 	width: 200px
 
 .editComp
-	padding: 0px
+	position: fixed !important
+	display: block
 
 input[value='WAIT']
 	background-color: grey

@@ -19,6 +19,7 @@ class BioEdit extends React.Component {
 
 	saveBio = async (e) => {
 		e.preventDefault();
+		console.log('coucou');
 		this.setState({ bio: null, subVal: 'WAIT', subDis: true })
 		axios({
 			method: 'put',

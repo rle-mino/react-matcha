@@ -88,13 +88,13 @@ class MatchHeader extends React.Component {
 						<Link to="/matcha/my_profile" activeClassName="routeIsActive">
 							<div className="headerLink">MY PROFILE</div>
 						</Link>
-						<Link to="suggestion" activeClassName="routeIsActive">
+						<Link to="/matcha/suggestion" activeClassName="routeIsActive">
 							<div className="headerLink">SUGGESTIONS</div>
 						</Link>
-						<Link to="search" activeClassName="routeIsActive">
+						<Link to="/matcha/search" activeClassName="routeIsActive">
 							<div className="headerLink">SEARCH</div>
 						</Link>
-						<Link to="chats" activeClassName="routeIsActive">
+						<Link to="/matcha/chats" activeClassName="routeIsActive">
 							<div className="headerLink">CHATS</div>
 						</Link>
 						<Link to="logout" activeClassName="routeIsActive">

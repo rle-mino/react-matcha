@@ -144,7 +144,7 @@ module.exports = {
 
     // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/
 
-    // TODO:30 import rules are temporarily disabled because they don't play well
+    // TODO:20 import rules are temporarily disabled because they don't play well
     // with how eslint-loader only checks the file you change. So if module A
     // imports module B, and B is missing a default export, the linter will
     // record this as an issue in module A. Now if you fix module B, the linter

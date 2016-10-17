@@ -68,7 +68,6 @@ export default class Profile extends React.Component {
 			visiter,
 			tags,
 		} = this.state.data;
-		console.log(this.state.data);
 		const { editable, profileClass, editComp } = this.state;
 		return (
 			<div>

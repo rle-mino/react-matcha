@@ -12,6 +12,7 @@ import Login			from './auth/Login';
 import ForgotPassword	from './auth/ForgotPassword';
 import ResetPassWithKey	from './auth/ResetPassWithKey';
 import MyProfile		from './profile/MyProfile';
+import Search			from './Search/search';
 
 import './master.sass';
 
@@ -29,6 +30,7 @@ render((
 		</Route>
 		<Route path="/matcha" component={AppHeader} >
 			<Route path="my_profile" component={MyProfile} />
+			<Route path="search" component={Search} />
 		</Route>
 	</Router>
 ), document.getElementById('root'));
