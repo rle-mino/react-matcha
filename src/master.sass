@@ -7,7 +7,7 @@
 	text-decoration: none
 	margin: 0
 	padding: 0
-	-webkit-font-smoothing: antialiased
+	-webkit-font-smoothing: antialiased !important
 
 html
 	width: 100%
@@ -89,23 +89,6 @@ html, body, #root, .AppHeader, .matcha
 	100%
 		opacity: 1
 
-.mainButton
-	background-color: #1565C0
-	width: 100%
-	padding: 15px
-	color: white
-	transition: box-shadow 0.3s, background-color 0.3s
-	margin-top: 30px
-	text-align: center
-	color: white
-	font-size: 16px
-	cursor: pointer
-	overflow: hidden
-	&.isLNK > a
-		color: white
-	&.isLNK
-		width: calc(100% - 30px)
-
 .centered
 	margin: 0
 	padding: 0
@@ -121,15 +104,6 @@ html, body, #root, .AppHeader, .matcha
 .editComp
 	position: fixed !important
 	display: block
-
-input[value='WAIT']
-	background-color: grey
-
-input[value='SUCCESS']
-	background-color: green
-
-input[value='ERROR']
-	background-color: red
 
 .route-appear
 	overflow: hidden

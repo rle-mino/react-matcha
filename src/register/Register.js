@@ -2,10 +2,12 @@ import React					from 'react';
 import axios					from 'axios';
 import { Link, browserHistory }	from 'react-router';
 import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
+import apiConnect				from '../apiConnect.js';
+
 import MatchInput				from '../components/MatchInput';
 import ErrorMessage				from '../components/ErrorMessage';
 import DateInput				from '../components/DateInput';
-import apiConnect				from '../apiConnect.js';
+import RippledButton			from '../components/RippledButton';
 
 import './css/register.sass';
 
@@ -106,6 +108,7 @@ class FormRegister extends React.Component {
 			mailVReq,
 			mailVInval,
 			mainButtonValue,
+			mainButtonDis,
 		} = this.state;
 		return (
 			<form onSubmit={this.register}>
@@ -164,7 +167,7 @@ class FormRegister extends React.Component {
 					{(mailVReq && (<ErrorMessage message="REQUIRED"/>)) ||
 					(mailVInval && (<ErrorMessage message="INVALID" />))}
 				</MatchInput>
-				<input type="submit" value={mainButtonValue} className="mainButton" name="submit" disabled={this.state.mainButtonDis} />
+				<RippledButton butType="submit" value={mainButtonValue} disabled={mainButtonDis} />
 			</form>
 		);
 	}

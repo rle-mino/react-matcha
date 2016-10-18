@@ -3,8 +3,11 @@ import {Link, browserHistory}		from 'react-router';
 import axios						from 'axios';
 import ReactCssTransitionGroup		from 'react-addons-css-transition-group';
 import apiConnect					from '../apiConnect';
+
+
 import MatchInput					from '../components/MatchInput';
 import ErrorMessage					from '../components/ErrorMessage';
+import RippledButton                from '../components/RippledButton';
 
 import './css/login.sass';
 
@@ -88,10 +91,8 @@ class LoginForm extends React.Component {
                     <MatchInput label="PASSWORD" inputType="password" inputName="password">
                         <ErrorMessage message={password}/>
                     </MatchInput>
-                    <input
-					className="mainButton" type="submit"
-					name="button" value={buttonValue}
-					disabled={isPending} onClick={this.ripple}/>
+                    <RippledButton butType="submit" value={buttonValue} disabled={isPending}/>
+                    
                 </form>
             </div>
         );

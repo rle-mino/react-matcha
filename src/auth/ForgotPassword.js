@@ -4,6 +4,7 @@ import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
 
+import RippledButton			from '../components/RippledButton';
 import MatchInput				from '../components/MatchInput';
 import ErrorMessage				from '../components/ErrorMessage';
 
@@ -32,6 +33,7 @@ class ForgotForm extends React.Component {
 				} else {
 					this.setState({ subVal: 'SEND ME AN EMAIL', serverResponse: data.details });
 				}
+			this.setState({ subDis: false });
 			} else {
 				this.setState({ subVal: 'SUCCESS', serverResponse: data.details });
 				setTimeout(() => {
@@ -50,7 +52,7 @@ class ForgotForm extends React.Component {
 					<MatchInput label="MAIL" inputType="text" inputName="mail">
 					{mail && (<ErrorMessage message={mail}/>)}
 					</MatchInput>
-					<input type="submit" className="mainButton" value={subVal} disabled={subDis} />
+					<RippledButton butType="submit" value={subVal} disabled={subDis} />
 				</form>
 			</div>
 		);

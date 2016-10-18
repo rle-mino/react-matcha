@@ -6,6 +6,29 @@
 	& .label
 		text-align: center
 		width: 100%
+	& button[type=submit]
+		cursor: pointer
+		position: relative
+		overflow: hidden
+		font-size: 24px
+		text-align: center
+		padding: 10px
+		transition: all .2s
+		background-color: $darkDotTwo
+		&:hover
+			background-color: $darkDotSix
+			color: white
+		& .searchButton
+			pointer-events: none
+		.rippled
+			animation: miniRipple .5s linear
+
+@keyframes miniRipple
+	0%
+		background-color: rgba(255, 255, 255, .6)
+	100%
+		transform: scale(30)
+		background: transparent
 
 .searchBar
 	width: 100%
@@ -13,27 +36,6 @@
 	display: flex
 	& .textInp
 		width: calc(100% - 30px - 45px)
-
-button[type=submit]
-	cursor: pointer
-	position: relative
-	font-size: 24px
-	width: 45px
-	height: 50px
-	// overflow: hidden
-	text-align: center
-	padding: 10px
-	transition: all .2s
-	background-color: $darkDotTwo
-	&:hover
-		background-color: $darkDotSix
-		color: white
-
-.wrapper
-	position: absolute
-	width: 100px
-	height: 100px
-	background-color: red
 
 .searchInput
 	text-align: center

@@ -10,6 +10,7 @@ import Unauthorized				from '../Unauthorized';
 import ErrorMessage				from '../components/ErrorMessage';
 import BioInput					from '../components/BioInput';
 import ThreeSelector			from '../components/ThreeSelector';
+import RippledButton			from '../components/RippledButton';
 
 import './css/addDetails.sass';
 
@@ -170,7 +171,7 @@ class AddDetailsForm extends React.Component {
 					<TagInput savedTags={this.props.tags} addedTags={addedTags} ref="tagInput" >
 						<ErrorMessage message={tags}/>
 					</TagInput>
-					<input type="submit" value={subVal} className="mainButton" disabled={subDis} />
+					<RippledButton butType="submit" value={subVal} disabled={subDis} />
 				</form>
 			</div>
 		);

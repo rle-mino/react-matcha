@@ -1,0 +1,36 @@
+@import ../../colors
+
+.mainButton
+	background-color: $darkDotFour
+	position: relative
+	width: 100%
+	padding: 15px
+	color: white
+	transition: box-shadow 0.3s, background-color 0.3s
+	margin-top: 30px
+	text-align: center
+	font-family: Montserrat
+	color: white
+	font-size: 16px
+	cursor: pointer
+	overflow: hidden
+	&.isLNK > a
+		color: white
+	&.isLNK
+		width: calc(100% - 30px)
+
+.rippled
+	position: absolute
+	pointer-events: none
+	border-radius: 50%
+	animation: ripple .5s linear
+	-webkit-backface-visibility: hidden
+    -webkit-transform: translateZ(0) scale(1.0, 1.0)
+    transform: translateZ(0)
+
+@keyframes ripple
+	0%
+		background-color: rgba(255, 255, 255, .6)
+	100%
+		transform: scale(100)
+		background: transparent
