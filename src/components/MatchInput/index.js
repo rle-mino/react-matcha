@@ -9,14 +9,12 @@ export default ({label, children, inputType, inputName, value}) => {
 				<div className="label">{label}</div>
 				{children}
 			</div>
-			<div>
 				<input
 					type={inputType}
 					name={inputName}
 					className='textInp'
 					defaultValue={value}
 				/>
-			</div>
 		</div>
 	)
 }

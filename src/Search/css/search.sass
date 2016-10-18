@@ -3,23 +3,49 @@
 .searchForm
 	margin-top: 50px
 	color: black
-	& .beforeInput
-		display: flex
-		flex-direction: row
-		justify-content: center
+	& .label
 		text-align: center
+		width: 100%
+
+.searchBar
+	width: 100%
+	position: relative
+	display: flex
+	& .textInp
+		width: calc(100% - 30px - 45px)
+
+button[type=submit]
+	cursor: pointer
+	position: relative
+	font-size: 24px
+	width: 45px
+	height: 50px
+	// overflow: hidden
+	text-align: center
+	padding: 10px
+	transition: all .2s
+	background-color: $darkDotTwo
+	&:hover
+		background-color: $darkDotSix
+		color: white
+
+.wrapper
+	position: absolute
+	width: 100px
+	height: 100px
+	background-color: red
 
 .searchInput
 	text-align: center
-	width: 100%
+	margin: 30px 0px
 
 .searchBlocks
-	margin-top: 20px
+	margin: 20px 0
 	width: 100%
 	display: flex
 	flex-direction: row
 	justify-content: space-between
 	& > div
-		padding: 30px
+		padding: 0px 30px
 		background-color: $darkDotTwo
 		width: calc(50% - 60px)

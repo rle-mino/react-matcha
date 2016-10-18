@@ -1,13 +1,12 @@
 @import ../../colors
 
-$InputRange-fontFamily: 'Helvetica Neue', san-serif !default
-$InputRange-primaryColor: $darkDotFour !default
+$InputRange-primaryColor: $darkDotHeight !default
 $InputRange-neutralColor: #aaaaaa !default
 $InputRange-neutralLightColor: rgba(255, 255, 255, 0) !default
 $InputRange-disabledColor: #cccccc !default
 // InputRange-slide
 $InputRange-slider-background: $InputRange-primaryColor !default
-$InputRange-slider-border: 1px solid $InputRange-primaryColor !default
+$InputRange-slider-border: 1px solid $darkDotFour !default
 $InputRange-slider-height: 1.3rem !default
 $InputRange-slider-width: 1.3rem !default
 $InputRange-slider-transition: transform 0.2s ease-out, box-shadow 0.2s ease-out !default
@@ -33,7 +32,6 @@ $InputRange-track--is-disabled-background: $InputRange-neutralLightColor !defaul
 
 .InputRange-label
 	color: $InputRange-label-color
-	font-family: $InputRange-fontFamily
 	font-size: 0.9rem
 	white-space: nowrap
 
@@ -56,7 +54,7 @@ $InputRange-track--is-disabled-background: $InputRange-neutralLightColor !defaul
 
 .InputRange-slider
 	appearance: none
-	background: black
+	background: $darkDotHeight
 	border: $InputRange-slider-border
 	border-radius: 100%
 	cursor: pointer
