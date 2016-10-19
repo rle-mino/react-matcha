@@ -6,6 +6,7 @@ import apiConnect				from '../apiConnect';
 import FontAwesome				from 'react-fontawesome';
 import TagInput					from '../components/TagInput';
 import ValidTag					from '../components/ActivTag';
+import RippledButton			from '../components/RippledButton';
 
 import './css/tag.sass';
 
@@ -80,8 +81,8 @@ class EditTags extends React.Component{
 				<div className="errorMessageMain">{serverResponse}</div>
 				<form onSubmit={this.sendTags}>
 					<TagInput addedTags={addedTags} savedTags={savedTags} ref="tagInput" />
-					<input type="submit" className="mainButton" value={subVal} disabled={subDis}/>
-					<input type="button" className="mainButton" value="CANCEL" onClick={this.finish}/>
+					<RippledButton butType="submit" value={subVal} disabled={subDis} />
+					<RippledButton butType="button" value="CANCEL" onClick={this.finish} />
 				</form>
 			</ReactCssTransitionGroup>
 		);

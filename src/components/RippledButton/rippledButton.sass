@@ -24,13 +24,11 @@
 	pointer-events: none
 	border-radius: 50%
 	animation: ripple .5s linear
-	-webkit-backface-visibility: hidden
-    -webkit-transform: translateZ(0) scale(1.0, 1.0)
-    transform: translateZ(0)
+	background-color: rgba(255, 255, 255, .6)
 
 @keyframes ripple
 	0%
-		background-color: rgba(255, 255, 255, .6)
+		transform: scale(1)
 	100%
 		transform: scale(100)
-		background: transparent
+		opacity: 0

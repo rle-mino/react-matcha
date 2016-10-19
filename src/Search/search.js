@@ -1,8 +1,9 @@
 import React					from 'react';
 import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import InputRange				from 'react-input-range';
+import axios					from 'axios';
+import apiConnect				from '../apiConnect';
 
-// import MatchInput				from '../components/MatchInput';
 import FontAwesome				from 'react-fontawesome';
 
 import './css/search.sass'
@@ -18,9 +19,6 @@ export default class Search extends React.Component {
 	state = {
 		subDis: false,
 		subVal: '&nbsp;',
-		clickX: 0,
-		clickY: 0,
-		rippled: '',
 		ageVal: {
 			min: 18,
 			max: 100,
@@ -41,9 +39,27 @@ export default class Search extends React.Component {
 
 	search = (e) => {
 		e.preventDefault();
-		const data = {
-			name: e.target.name.value,
-		}
+		const { ageVal, popVal, tagVal, distVal } = this.state;
+		axios.get(`${apiConnect}user/search`, {
+			params: {
+				name: e.target.name.value,
+				ageMin: ageVal.min,
+				ageMax: ageVal.max,
+				popMin: popVal.min,
+				popMax: popVal.max,
+				tagMin: tagVal.min,
+				tagMax: tagVal.max,
+				distMax: distVal.max,
+				distMin: distVal.min,
+				// gender: e.target.gender
+				// orientation: e.target.orientation
+			},
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
+			}
+		}).then(({ data }) => {
+			console.log(data);
+		});
 	}
 
 	updateAge = (comp, values) => this.setState({ ageVal: values });
@@ -90,7 +106,6 @@ export default class Search extends React.Component {
 					<div className="searchBar">
 						<input type="text" name="name" className="textInp" />
 						<button type="submit" disabled={subDis} onMouseDown={this.ripple}>
-							{/*<div className={`ripple ${rippled}`} style={{left: `${clickX}px`, top: `${clickY}px`, width: `${size}px`, height: `${size}px`}} />*/}
 							<FontAwesome name="search" className="searchButton" />
 						</button>
 					</div>

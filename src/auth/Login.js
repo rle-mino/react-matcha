@@ -91,8 +91,7 @@ class LoginForm extends React.Component {
                     <MatchInput label="PASSWORD" inputType="password" inputName="password">
                         <ErrorMessage message={password}/>
                     </MatchInput>
-                    <RippledButton butType="submit" value={buttonValue} disabled={isPending}/>
-                    
+                    <RippledButton butType="submit" value={buttonValue} disabled={isPending} />                    
                 </form>
             </div>
         );

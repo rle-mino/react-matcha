@@ -6,6 +6,7 @@ import ReactCssTransitionGroup		from 'react-addons-css-transition-group';
 import FontAwesome					from 'react-fontawesome';
 import MatchInput					from '../components/MatchInput';
 import ErrorMessage					from '../components/ErrorMessage';
+import RippledButton				from '../components/RippledButton';
 
 import './css/nameAge.sass';
 
@@ -89,8 +90,8 @@ class NameEdit extends React.Component {
 					inputType="text" value={this.props.lastname}>
 						{lastname && <ErrorMessage message={lastname} />}
 					</MatchInput>
-					<input type="submit" className="mainButton" value={subVal} disabled={subDis}/>
-					<input name="exit" type="button" className="mainButton" value="CANCEL" onClick={this.props.finish} />
+					<RippledButton butType="submit" value={subVal} disabled={subDis} />
+					<RippledButton butType="button" value="CANCEL" onClick={this.props.finish} />
 				</form>
 			</ReactCssTransitionGroup>
 		);

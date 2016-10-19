@@ -8,6 +8,7 @@ import FontAwesome				from 'react-fontawesome';
 import ErrorMessage				from '../components/ErrorMessage';
 import ThreeSelector			from '../components/ThreeSelector';
 import MatchInput				from '../components/MatchInput';
+import RippledButton				from '../components/RippledButton';
 
 import './css/micro.sass';
 
@@ -108,8 +109,8 @@ class MicroEdit extends React.Component {
 					<MatchInput label="LOCATION" inputName="location" inputType="text" value={props.location}>
 						<ErrorMessage message={location} />
 					</MatchInput>
-					<input type="submit" value={subVal} className="mainButton" disabled={subDis}/>
-					<input type="button" value="CANCEL" className="mainButton" onClick={this.cancel} />
+					<RippledButton butType="submit" value={subVal} disabled={subDis}/>
+					<RippledButton butType="button" value="CANCEL" onClick={this.cancel} />
 				</form>
 			</ReactCssTransitionGroup>
 		);

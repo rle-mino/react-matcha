@@ -15,13 +15,14 @@ export default class RippledButton extends React.Component {
 		e.target.appendChild(circle);
 		setTimeout(() => {
 			e.target.removeChild(circle);
+            if (this.props.onClick) this.props.onClick(e);
 		}, 500);
     }
     
     render() {
         return (
             <button
-                type={this.props.butType} className="mainButton"
+                type={this.props.butType} className={`${this.props.className || 'mainButton'}`}
                 onClick={this.ripple} disabled={this.props.disabled}
             >
                 {this.props.value}

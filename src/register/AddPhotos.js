@@ -5,6 +5,7 @@ import { Link, browserHistory }	from 'react-router';
 import apiConnect				from './../apiConnect';
 
 import ThumbRemovable			from '../components/ThumbRemovable';
+import RippledButton			from '../components/RippledButton';
 
 import './css/addPhoto.sass';
 
@@ -161,7 +162,7 @@ class AddPhotosForm extends React.Component {
 				<label htmlFor="file" className={isHover}>{dropStatus}</label>
 				<div className="imgList">{imgs}</div>
 				{!this.props.isEditComp && (<Link to="/matcha/my_profile"><div className="mainButton isLNK">GO</div></Link>)}
-				{this.props.isEditComp && (<input type="button" className="mainButton" value="SAVE" onClick={this.stopEdit} />)}
+				{this.props.isEditComp && (<RippledButton butType="button" value="SAVE" onClick={this.stopEdit} />)}
 			</div>
 		)
 	}

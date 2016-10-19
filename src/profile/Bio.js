@@ -5,6 +5,7 @@ import apiConnect					from '../apiConnect';
 
 import BioInput						from '../components/BioInput';
 import ErrorMessage					from '../components/ErrorMessage';
+import RippledButton				from '../components/RippledButton';
 import FontAwesome					from 'react-fontawesome';
 
 import './css/bio.sass';
@@ -67,8 +68,8 @@ class BioEdit extends React.Component {
 					<BioInput bio={this.props.bio}>
 						<ErrorMessage message={bio}/>
 					</BioInput>
-					<input type="submit" value={subVal} className="mainButton" disabled={subDis}/>
-					<input type="button" value="CANCEL" className="mainButton" onClick={this.cancel} />
+					<RippledButton butType="submit" value={subVal} disabled={subDis}/>
+					<RippledButton butType="button" value="CANCEL" onClick={this.cancel} />
 				</form>
 			</ReactCssTransitionGroup>
 		);
