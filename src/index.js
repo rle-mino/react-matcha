@@ -1,18 +1,18 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import React						from 'react';
+import { render }					from 'react-dom';
+import { Router, Route, IndexRoute, browserHistory }	from 'react-router';
 
-import App				from './App';
+import App			from './App';
 import AppHeader		from './AppHeader';
 import Register 		from './register/Register';
 import ConfirmMail		from './register/ConfirmMail';
 import AddDetails		from './register/AddDetails';
 import AddPhotos		from './register/AddPhotos';
 import Login			from './auth/Login';
-import ForgotPassword	from './auth/ForgotPassword';
-import ResetPassWithKey	from './auth/ResetPassWithKey';
+import ForgotPassword		from './auth/ForgotPassword';
+import ResetPassWithKey		from './auth/ResetPassWithKey';
 import MyProfile		from './profile/MyProfile';
-import Search			from './Search/search';
+import Search			from './search/search';
 
 import './master.sass';
 

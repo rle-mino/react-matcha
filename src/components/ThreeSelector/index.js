@@ -10,13 +10,24 @@ export default class ThreeSelector extends React.Component {
 	activate = (e) => {
 		const { value1, value2, value3 } = this.props;
 		const checked = e ? e.target.id : this.props.checked;
-		this.setState({ firstC: '', secondC: '', thirdC: '' });
-		if (checked === value1) {
-			this.setState({ firstC: 'isChecked' });
-		} else if (checked === value2) {
-			this.setState({ secondC: 'isChecked' });
-		} else if (checked === value3) {
-			this.setState({ thirdC: 'isChecked' });
+		const { firstC, secondC, thirdC } = this.state;
+		if (this.props.inpType === 'checkbox') {
+			if (checked === value1) {
+				this.setState({ firstC: firstC ? '' : 'isChecked' });
+			} else if (checked === value2) {
+				this.setState({ secondC: secondC ? '' : 'isChecked' });
+			} else if (checked === value3) {
+				this.setState({ thirdC: thirdC ? '' : 'isChecked' });
+			}
+		} else {
+			this.setState({ firstC: '', secondC: '', thirdC: '' });
+			if (checked === value1) {
+				this.setState({ firstC: 'isChecked' });
+			} else if (checked === value2) {
+				this.setState({ secondC: 'isChecked' });
+			} else if (checked === value3) {
+				this.setState({ thirdC: 'isChecked' });
+			}
 		}
 	}
 
@@ -38,6 +49,7 @@ export default class ThreeSelector extends React.Component {
 			className,
 			checked,
 			children,
+			inpType
 		} = this.props;
 		return (
 			<div className={className}>
@@ -46,11 +58,11 @@ export default class ThreeSelector extends React.Component {
 					{children}
 				</div>
 				<div className="radioInps">
-					<input id={value1} type="radio" name={name} value={value1} onClick={this.activate} defaultChecked={checked === value1} />
+					<input id={value1} type={inpType ? inpType : 'radio'} name={name} value={value1} onClick={this.activate} defaultChecked={checked === value1} />
 				    <label htmlFor={value1} className={`radioInp ${firstC}`}>{label1}</label>
-					<input id={value2} type="radio" name={name} value={value2} onClick={this.activate} defaultChecked={checked === value2} />
+					<input id={value2} type={inpType ? inpType : 'radio'} name={name} value={value2} onClick={this.activate} defaultChecked={checked === value2} />
 					<label htmlFor={value2} className={`radioInp ${secondC}`}>{label2}</label>
-				    <input id={value3} type="radio" name={name} value={value3} onClick={this.activate} defaultChecked={checked === value3} />
+				    <input id={value3} type={inpType ? inpType : 'radio'} name={name} value={value3} onClick={this.activate} defaultChecked={checked === value3} />
 				    <label htmlFor={value3} className={`radioInp ${thirdC}`}>{label3}</label>
 				</div>
 			</div>

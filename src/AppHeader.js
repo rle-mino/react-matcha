@@ -101,7 +101,7 @@ class MatchHeader extends React.Component {
 							<div className="headerLink">LOGOUT</div>
 						</Link>
 					</div>
-					<div className="showList" onClick={this.seeList}>LATESTS NOTIFICATION</div>
+					<div className="showList" onClick={this.seeList}>LATESTS NOTIFICATIONS</div>
 					{lastNotif && (<div className={lastNotifClass} onClick={this.watched}>{lastNotif}</div>)}
 					<ul className={notifBlock}>
 						{notifList}
