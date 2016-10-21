@@ -112,7 +112,7 @@ class MatchHeader extends React.Component {
 	}
 }
 
-const MatchFooter = () => <footer className="footer">rle-mino 2016</footer>
+// const MatchFooter = () => <footer className="footer">rle-mino 2016</footer>
 
 export default class AppHeader extends React.Component {
 	state = {
@@ -147,7 +147,6 @@ export default class AppHeader extends React.Component {
 			<div className="AppHeader">
 				<MatchHeader notifications={this.state.notifications} ref="header" />
 	    		{this.props.children}
-				<MatchFooter />
 	        </div>
 		);
 	}

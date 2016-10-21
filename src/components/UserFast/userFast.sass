@@ -1,43 +1,71 @@
 @import ../../colors
 
 .userFast
-    list-style: none
-    position: relative
-    width: calc(32%)
-    height: 300px
-    background-color: $darkDotTwo
-    color: black
-    margin-top: 10px
-    & .names
-        width: 100%
-        font-size: 16px
-        display: flex
-        flex-direction: row
-        justify-content: space-around
-        background: blue
-        width: 50%
-            
-    & .fastBottom
-        background-color: rgba(255, 255, 255, .7)
-        height: calc(100% - 134px) 
-        display: flex
-        flex-direction: column
-        justify-content: center
-        align-items: flex-start
-        & .username
-            text-align: left
-    & .fastIMG
-        position: relative
-        width: 150px
-        margin:
-            left: auto
-            right: auto
-            top: 30px
-            bottom: -50px
-        height: 150px
-        border-radius: 50%
-        border: 2px solid white
-        background:
-            size: cover
-            repeat: no-repeat
-            position: center
+	list-style: none
+	position: relative
+	width: 250px
+	height: 300px
+	background-color: $darkDotTwo
+	color: black
+	margin-top: 10px
+	transition: all .2s
+	&:hover
+		background-color: $darkDotSix
+		color: white
+
+	& .fastTop
+		position: absolute
+		width: 100%
+		display: flex
+		flex-direction: row
+		justify-content: space-between
+		& .popDist > span
+			margin: 5px
+
+
+	& .fastBottom
+		height: calc(150px - 24px) 
+		display: flex
+		flex-direction: column
+
+		& .names
+			position: relative
+			width: 100%
+			font-size: 16px
+			display: flex
+			flex-direction: row
+			justify-content: center
+
+		& .age
+			width: 100%
+			margin-top: 10px
+			text-align: center
+
+		& .firstname
+			width: 50%
+			margin: 0 5px
+			text-align: right
+
+		& .lastname
+			width: 50%
+			margin: 0 5px
+			text-align: left
+
+		& .popOriGender
+			display: flex
+			flex-direction: row
+			justify-content: space-between
+			margin: 5px
+
+
+	& .fastIMG
+		position: relative
+		width: 150px
+		margin: 10px auto
+		height: 150px
+		border-radius: 50%
+		border: 2px solid white
+		background:
+			size: cover
+			repeat: no-repeat
+			position: center

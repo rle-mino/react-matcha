@@ -104,8 +104,9 @@ class AddDetailsForm extends React.Component {
 			gender: e.target.gender.value,
 			orientation: e.target.orientation.value,
 			bio: e.target.bio.value,
-			tags: this.refs.tagInput.state.validTag,
+			tags: this.refs.tagInput.state.addedTags,
 		}
+		console.log(data);
 		axios({
 			method: 'put',
 			url: `${apiConnect}user/add_details`,
