@@ -20,7 +20,6 @@ class BioEdit extends React.Component {
 
 	saveBio = async (e) => {
 		e.preventDefault();
-		console.log('coucou');
 		this.setState({ bio: null, subVal: 'WAIT', subDis: true })
 		axios({
 			method: 'put',
@@ -68,8 +67,8 @@ class BioEdit extends React.Component {
 					<BioInput bio={this.props.bio}>
 						<ErrorMessage message={bio}/>
 					</BioInput>
-					<RippledButton butType="submit" value={subVal} disabled={subDis}/>
-					<RippledButton butType="button" value="CANCEL" onClick={this.cancel} />
+					<RippledButton butType="submit" value={subVal} disabled={subDis} />
+					<RippledButton butType="button" value="CANCEL" event={this.cancel} />
 				</form>
 			</ReactCssTransitionGroup>
 		);

@@ -1,13 +1,16 @@
 import React					from 'react';
 import _						from 'lodash';
+import { Link }					from 'react-router';
 import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import InputRange				from 'react-input-range';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
+import ripple					from '../ripple';
 
 import FontAwesome				from 'react-fontawesome';
 import ThreeSelector			from '../components/ThreeSelector';
 import UserFast					from '../components/UserFast';
+import SortBar					from '../components/SortBar';
 
 import './css/search.sass';
 import './css/inputRange.sass';
@@ -22,6 +25,7 @@ class SearchForm extends React.Component {
 		state = {
 		subDis: false,
 		subVal: '&nbsp;',
+		advanced: false,
 		serverResponse: null,
 		ageVal: {
 			min: 18,
@@ -61,6 +65,7 @@ class SearchForm extends React.Component {
 				orientation1: orientation[0],
 				orientation2: orientation[1],
 				orientation3: orientation[2],
+				sort: e.target.sort.value,
 			},
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
@@ -78,21 +83,7 @@ class SearchForm extends React.Component {
 	updatePop = (comp, values) => this.setState({ popVal: values });
 	updateDist = (comp, values) => this.setState({ distVal: values });
 	updateTag = (comp, values) => this.setState({ tagVal: values });
-
-	ripple = (e) => {
-		e.persist();
-		const size = 5
-		const rect = e.target.getBoundingClientRect();
-		const circle = document.createElement('div');
-		circle.style.left = `${e.clientX - rect.left}px`;
-		circle.style.top = `${e.clientY - rect.top}px`;
-		circle.style.width = circle.style.height = `${size}px`;
-		circle.className = 'rippled';
-		e.target.appendChild(circle);
-		setTimeout(() => {
-			e.target.removeChild(circle);
-		}, 500);
-	}
+	showAdvanced = (e) => this.setState({ advanced: !this.state.advanced });
 
 	render() {
 		const {
@@ -102,18 +93,17 @@ class SearchForm extends React.Component {
 			tagVal,
 			subDis,
 			serverResponse,
+			advanced,
 		} = this.state;
 		return (
 			<form onSubmit={this.search} className="searchForm">
 				<div className="mainError">{serverResponse}</div>
 				<div className="label">NAME / USERNAME</div>
-				<div className="searchBar">
-					<input type="text" name="name" className="textInp" />
-					<button type="submit" disabled={subDis} onMouseDown={this.ripple}>
-						<FontAwesome name="search" className="searchButton" />
-					</button>
-				</div>
-				<div className="searchBlocks">
+				<input type="text" name="name" className="textInp" />
+				<button onClick={ripple} className="showAdvancedButton" type="button">
+					<FontAwesome name={advanced ? 'angle-up' : 'angle-down'} className="showAdvanced" onClick={this.showAdvanced} />
+				</button>
+				<div className={`searchBlocks ${!advanced ? 'invisible' : ''}`}>
 					<div className="leftSearch">
 						<SearchInput label="AGE">
 							<InputRange maxValue={100} minValue={18} value={ageVal} onChange={this.updateAge.bind(this)} />
@@ -144,38 +134,49 @@ class SearchForm extends React.Component {
 						/>
 					</div>
 				</div>
-				<input type="submit" hidden={true} />
+				<SortBar defaultSort="popularity" />
+				<button type="submit" disabled={subDis} onMouseDown={ripple}>
+					<FontAwesome name="search" className="searchButton" />
+				</button>
 			</form>
 		);
 	}
 }
 
 export default class Search extends React.Component {
-		state = {
-			users: [],
-		}
+	state = {
+		users: [],
+	}
 
-		setResults = (results) => {
-			const users = results.map((el, key) => <UserFast data={el} key={key} />);
-			this.setState({ users });
-		}
-		
-		render() {
-			const { users } = this.state;
-			return (
+	setResults = (results) => {
+		const users = results.map((el, key) => <Link to={`/matcha/profile/${el.username}`} key={key}><UserFast data={el} /></Link>);
+		this.setState({ users });
+	}
+	
+	render() {
+		const { users } = this.state;
+		return (
+			<ReactCssTransitionGroup
+				className="matcha"
+				component="div"
+				transitionName="route"
+				transitionAppear={true}
+				transitionEnterTimeout={500}
+				transitionLeaveTimeout={500}
+				transitionAppearTimeout={500}
+			>
+				<div className="mainTitle">SEARCH</div>
+				<SearchForm setResults={this.setResults} />
 				<ReactCssTransitionGroup
-					className="matcha"
-					component="div"
-					transitionName="route"
-					transitionAppear={true}
-					transitionEnterTimeout={500}
-					transitionLeaveTimeout={500}
-					transitionAppearTimeout={500}
+					className="results"
+					component="ul"
+					transitionName="card"
+					transitionEnterTimeout={300}
+					transitionLeaveTimeout={300}
 				>
-					<div className="mainTitle">SEARCH</div>
-					<SearchForm setResults={this.setResults} />
-					<ul className="results">{users}</ul>
+					{users}
 				</ReactCssTransitionGroup>
+			</ReactCssTransitionGroup>
 		);
 	}
 }

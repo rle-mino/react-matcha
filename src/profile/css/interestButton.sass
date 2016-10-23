@@ -1,0 +1,54 @@
+@import ../../colors
+
+.interestBlock
+	width: 100px
+	margin-top: -20px
+	margin-bottom: -30px
+	position: relative
+	& .invisible > .popup
+		height: 0
+		padding: 0
+
+	& .visible > .popup
+		height: 60px
+
+	& .invisible > .popupAfter
+		border-width: 0px
+
+.interest
+	width: 100px
+	height: 100px
+	background: url(../../interestButton.png) no-repeat
+	background-position: 0 0
+	cursor: pointer
+	transition: background .6s steps(28)
+	&.interested
+		background-position: -2800px 0
+
+.popup
+	background-color: $darkDotHeight
+	color: white
+	position: absolute
+	top: -80px
+	left: -10px
+	width: 100px
+	padding: 10px
+	text-align: center
+	font-size: 12px
+	transition: all .3s
+
+.popupAfter
+	position: absolute
+	top: 0px
+	left: 30px
+	border: solid transparent
+	margin-left: auto
+	margin-right: auto
+	content: " "
+	height: 0
+	width: 0
+	pointer-events: none
+	border-color: rgba(0, 0, 0, 0)
+	border-top-color: $darkDotHeight
+	border-width: 20px
+	transition: all .3s

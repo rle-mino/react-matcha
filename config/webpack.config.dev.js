@@ -107,56 +107,56 @@ module.exports = {
 	  {
 		  test: /\.sass$/,
 		  loaders: [ 'style', 'css', 'postcss', 'sass?indentedSyntax' ],
-      },
-      {
-        test: /\.css$/,
-        loader: 'style!css!postcss'
-      },
-      // JSON is not enabled by default in Webpack but both Node and Browserify
-      // allow it implicitly so we also enable it.
-      {
-        test: /\.json$/,
-        loader: 'json'
-      },
+    },
+    {
+      test: /\.css$/,
+      loader: 'style!css!postcss'
+    },
+    // JSON is not enabled by default in Webpack but both Node and Browserify
+    // allow it implicitly so we also enable it.
+    {
+      test: /\.json$/,
+      loader: 'json'
+    },
       // "file" loader makes sure those assets get served by WebpackDevServer.
       // When you `import` an asset, you get its (virtual) filename.
       // In production, they would get copied to the `build` folder.
-      {
-        test: /\.(ico|jpg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
-        exclude: /\/favicon.ico$/,
-        loader: 'file',
-        query: {
-          name: 'static/media/[name].[hash:8].[ext]'
-        }
-      },
-      // A special case for favicon.ico to place it into build root directory.
-      {
-        test: /\/favicon.ico$/,
-        include: [paths.appSrc],
-        loader: 'file',
-        query: {
-          name: 'favicon.ico?[hash:8]'
-        }
-      },
-      // "url" loader works just like "file" loader but it also embeds
-      // assets smaller than specified size as data URLs to avoid requests.
-      {
-        test: /\.(mp4|webm)(\?.*)?$/,
-        loader: 'url',
-        query: {
-          limit: 10000,
-          name: 'static/media/[name].[hash:8].[ext]'
-        }
-      },
-      // "html" loader is used to process template page (index.html) to resolve
-      // resources linked with <link href="./relative/path"> HTML tags.
-      {
-        test: /\.html$/,
-        loader: 'html',
-        query: {
-          attrs: ['link:href'],
-        }
+    {
+      test: /\.(ico|jpg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
+      exclude: /\/favicon.ico$/,
+      loader: 'file',
+      query: {
+        name: 'static/media/[name].[hash:8].[ext]'
       }
+    },
+    // A special case for favicon.ico to place it into build root directory.
+    {
+      test: /\/favicon.ico$/,
+      include: [paths.appSrc],
+      loader: 'file',
+      query: {
+        name: 'favicon.ico?[hash:8]'
+      }
+    },
+    // "url" loader works just like "file" loader but it also embeds
+    // assets smaller than specified size as data URLs to avoid requests.
+    {
+      test: /\.(mp4|webm)(\?.*)?$/,
+      loader: 'url',
+      query: {
+        limit: 10000,
+        name: 'static/media/[name].[hash:8].[ext]'
+      }
+    },
+    // "html" loader is used to process template page (index.html) to resolve
+    // resources linked with <link href="./relative/path"> HTML tags.
+    {
+      test: /\.html$/,
+      loader: 'html',
+      query: {
+        attrs: ['link:href'],
+      }
+    }
     ]
   },
   // Point ESLint to our predefined config.

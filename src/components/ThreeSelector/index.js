@@ -1,4 +1,5 @@
 import React			from 'react';
+import ripple			from '../../ripple';
 
 export default class ThreeSelector extends React.Component {
 	state = {
@@ -59,11 +60,11 @@ export default class ThreeSelector extends React.Component {
 				</div>
 				<div className="radioInps">
 					<input id={value1} type={inpType ? inpType : 'radio'} name={name} value={value1} onClick={this.activate} defaultChecked={checked === value1} />
-				    <label htmlFor={value1} className={`radioInp ${firstC}`}>{label1}</label>
+				    <label htmlFor={value1} className={`radioInp ${firstC}`} onClick={ripple}>{label1}</label>
 					<input id={value2} type={inpType ? inpType : 'radio'} name={name} value={value2} onClick={this.activate} defaultChecked={checked === value2} />
-					<label htmlFor={value2} className={`radioInp ${secondC}`}>{label2}</label>
+					<label htmlFor={value2} className={`radioInp ${secondC}`} onClick={ripple}>{label2}</label>
 				    <input id={value3} type={inpType ? inpType : 'radio'} name={name} value={value3} onClick={this.activate} defaultChecked={checked === value3} />
-				    <label htmlFor={value3} className={`radioInp ${thirdC}`}>{label3}</label>
+				    <label htmlFor={value3} className={`radioInp ${thirdC}`} onClick={ripple}>{label3}</label>
 				</div>
 			</div>
 		);

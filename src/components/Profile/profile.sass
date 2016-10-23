@@ -1,3 +1,5 @@
+@import ../../colors
+
 .profile
 	margin-top: 20px
 	transition: transform .5s, filter .2s linear
@@ -6,3 +8,20 @@
 		filter: blur(10px)
 		transform: scale(.7)
 		opacity: .7
+
+.blockReport
+	width: calc(100% - 20px)
+	display: flex
+	flex-direction: row
+	justify-content: space-around
+
+.blockReport > span
+	width: 100%
+	cursor: pointer
+	padding: 10px
+	text-align: center
+	transition: all .3s
+
+	&:hover
+		background-color: $darkDotSix
+		color: white

@@ -138,14 +138,14 @@ export default class MicroProf extends React.Component {
 	getGenderIcon = (gender) => {
 		if (gender === 'male') this.setState({ genderIcon: 'mars' });
 		else if (gender === 'female') this.setState({ genderIcon: 'venus' });
-		else this.setState({ genderIcon: 'transgender-alt' });
+		else this.setState({ genderIcon: 'genderless' });
 	};
 
 	getOriIcon = (ori, gender) => {
 		if (ori === 'straight') this.setState({ oriIcon: 'venus-mars' });
 		else if (ori === 'gay' && gender === 'male') this.setState({ oriIcon: 'mars-double' });
 		else if (ori === 'gay' && gender === 'female') this.setState({ oriIcon: 'venus-double' });
-		else this.setState({ oriIcon: 'genderless' });
+		else this.setState({ oriIcon: 'intersex' });
 	};
 
 	edit = (e) => {

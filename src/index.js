@@ -1,18 +1,19 @@
-import React						from 'react';
-import { render }					from 'react-dom';
+import React											from 'react';
+import { render }										from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory }	from 'react-router';
 
-import App			from './App';
-import AppHeader		from './AppHeader';
-import Register 		from './register/Register';
-import ConfirmMail		from './register/ConfirmMail';
-import AddDetails		from './register/AddDetails';
-import AddPhotos		from './register/AddPhotos';
-import Login			from './auth/Login';
-import ForgotPassword		from './auth/ForgotPassword';
-import ResetPassWithKey		from './auth/ResetPassWithKey';
-import MyProfile		from './profile/MyProfile';
-import Search			from './search/search';
+import App												from './App';
+import AppHeader										from './AppHeader';
+import Register 										from './register/Register';
+import ConfirmMail										from './register/ConfirmMail';
+import AddDetails										from './register/AddDetails';
+import AddPhotos										from './register/AddPhotos';
+import Login											from './auth/Login';
+import ForgotPassword									from './auth/ForgotPassword';
+import ResetPassWithKey									from './auth/ResetPassWithKey';
+import MyProfile										from './profile/MyProfile';
+import Search											from './search/search';
+import ProfileExt										from './profile/Profile';
 
 import './master.sass';
 
@@ -31,6 +32,7 @@ render((
 		<Route path="/matcha" component={AppHeader} >
 			<Route path="my_profile" component={MyProfile} />
 			<Route path="search" component={Search} />
+			<Route path="profile/:username" component={ProfileExt} />
 		</Route>
 	</Router>
 ), document.getElementById('root'));

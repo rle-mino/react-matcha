@@ -115,20 +115,16 @@ export default class NameInfo extends React.Component {
 		this.setState({ inEdit: false });
 	}
 
-	componentWillReceiveProps = (newProps) => {
-		const { firstname, lastname, username, age } = newProps;
-		this.setState({ firstname, lastname, username, age });
-	}
-
 	render() {
-		const { firstname, lastname, username, age} = this.state;
+		const { firstname, lastname, username, age, editable } = this.props;
 		return (
 			<div className="nameAgeProf">
 				<div className="names">
 					<span className="name">{firstname}</span>
 					<span className="name">
 						{lastname}
-						{this.props.editable && <FontAwesome name='pencil' className="editNamesButton" onClick={this.edit} />}
+						{editable && <FontAwesome name='pencil' className="editNamesButton" onClick={this.edit} />}
+						{this.props.children}
 					</span>
 				</div>
 				<div className="userAge">

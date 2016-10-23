@@ -18,22 +18,27 @@ export default class ImageProf extends React.Component {
 		if (e.target.className.includes('editSaveButton') && this.state.inEdit) {
 			return (false)
 		};
-		this.props.setEditComp(<AddPhotos isEditComp={true}
-									updateImages={this.props.updateImages}
-									setEditComp={this.props.setEditComp}
-								/>);
+		this.props.setEditComp(<AddPhotos isEditComp={true} setEditComp={this.props.setEditComp} />);
 	}
 
-	componentWillReceiveProps = (newProps) => {
+	formatImages = (savedIMG) => {
 		let images = []
-		if (!newProps.imgs) {
+		if (!savedIMG || !savedIMG.length) {
 			images = ['undef.jpg'];
 		} else {
-			images = newProps.imgs
+			images = savedIMG
 		}
 		this.setState({
 			availableImages: images,
 		});;
+	}
+
+	componentWillReceiveProps = (newProps) => {
+		this.formatImages(newProps.imgs);
+	}
+
+	componentWillMount() {
+		this.formatImages(this.props.imgs);
 	}
 
 	componentDidMount = () => {

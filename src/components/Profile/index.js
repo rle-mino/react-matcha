@@ -1,29 +1,30 @@
 import React						from 'react';
 import axios						from 'axios';
 import apiConnect					from '../../apiConnect';
+import { browserHistory }			from 'react-router';
 
 import NameAgeProf					from '../../profile/NameAge';
 import ImageProf					from '../../profile/Image';
 import BioProf						from '../../profile/Bio';
 import MicroProf					from '../../profile/Micro';
 import TagProf						from '../../profile/Tag';
+import InterestButton				from '../../profile/InterestButton';
 
 import './profile.sass';
 
 export default class Profile extends React.Component {
 	state = {
-		data: {},
-		editable: false,
 		profileClass: 'profile',
 		editComp: null,
+		data: null,
+	}
+
+	componentWillMount() {
+		this.setState({ data: this.props.data });
 	}
 
 	componentWillReceiveProps = (newProps) => {
-		this.setState({ data: newProps.data, editable: newProps.editable });
-	}
-
-	componentWillMont() {
-		this.setState({ data: this.props.data, editable: this.props.editable });
+		this.setState({ data: newProps.data });
 	}
 
 	setEditComp = async (component) => {
@@ -49,6 +50,32 @@ export default class Profile extends React.Component {
 		if (this.state.editComp) this.setState({ editComp: null, profileClass: 'profile' });
 	}
 
+	report = (e) => {
+		axios({
+			url: `${apiConnect}user/report/fake`,
+			method: 'put',
+			data: { username: this.state.data.username },
+			headers: { Authorization: `Bearer ${localStorage.getItem('logToken')}` }
+		}).then(({ data }) => {
+			if (data.status === true) {
+				browserHistory.push('/matcha/my_profile');
+			}
+		});
+	}
+
+	block = (e) => {
+		axios({
+			url: `${apiConnect}user/report/block`,
+			method: 'put',
+			data: { username: this.state.data.username },
+			headers: { Authorization: `Bearer ${localStorage.getItem('logToken')}` }
+		}).then(({ data }) => {
+			if (data.status === true) {
+				browserHistory.push('/matcha/my_profile');
+			}
+		});
+	}
+
 	render() {
 		const {
 			firstname,
@@ -67,20 +94,27 @@ export default class Profile extends React.Component {
 			location,
 			visiter,
 			tags,
+			liked,
+			alreadyReportAsFake,
 		} = this.state.data;
-		const { editable, profileClass, editComp } = this.state;
+		const { editable } = this.props;
+		const { profileClass, editComp } = this.state;
+		if (!this.state.data) return (<div>LOADING...</div>)
 		return (
 			<div>
 				<div className={profileClass} onClick={this.resetEditComp}>
+				<div className="topProf">
 					<ImageProf imgs={images} editable={editable}
 						setEditComp={this.setEditComp}
-						updateImages={this.updateImages}
 					/>
+				</div>
 					<NameAgeProf
 						firstname={firstname} username={username}
 						lastname={lastname} age={age} editable={editable}
 						setEditComp={this.setEditComp}
-					/>
+					>
+					{!editable && (<InterestButton username={username} liked={liked} />)}
+					</NameAgeProf>
 					<MicroProf popularity={popularity} gender={gender}
 						interestedIn={interestedIn} interestedBy={interestedBy}
 						orientation={orientation} interToReq={interToReq}
@@ -90,6 +124,10 @@ export default class Profile extends React.Component {
 					/>
 					<BioProf bio={bio} editable={editable} setEditComp={this.setEditComp} />
 					<TagProf tags={tags} editable={editable} setEditComp={this.setEditComp} />
+					{!editable && <div className="blockReport">
+						{!alreadyReportAsFake && <span onClick={this.report}>REPORT AS FAKE</span>}
+						<span onClick={this.block}>BLOCK THIS USER</span>
+					</div>}
 				</div>
 				{editComp}
 			</div>

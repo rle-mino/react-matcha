@@ -106,7 +106,6 @@ class AddPhotosForm extends React.Component {
 	};
 
 	removeImage = async (src) => {
-
 		const newPhotos = this.state.photo.filter((el) => el !== src);
 		this.setState({ photo: newPhotos });
 		axios({
@@ -162,13 +161,13 @@ class AddPhotosForm extends React.Component {
 				<label htmlFor="file" className={isHover}>{dropStatus}</label>
 				<div className="imgList">{imgs}</div>
 				{!this.props.isEditComp && (<Link to="/matcha/my_profile"><div className="mainButton isLNK">GO</div></Link>)}
-				{this.props.isEditComp && (<RippledButton butType="button" value="SAVE" onClick={this.stopEdit} />)}
+				{this.props.isEditComp && (<RippledButton butType="button" value="SAVE" event={this.stopEdit} />)}
 			</div>
 		)
 	}
 }
 
-export default ({ isEditComp, updateImages, setEditComp }) => {
+export default ({ isEditComp, setEditComp }) => {
 	return (
 		<ReactCssTransitionGroup
 			component="div"
@@ -180,7 +179,7 @@ export default ({ isEditComp, updateImages, setEditComp }) => {
 			transitionLeaveTimeout={500}
 		>
 			{!isEditComp && <h1 className="mainTitle">ADD PHOTOS</h1>}
-			<AddPhotosForm isEditComp={isEditComp} updateImages={updateImages} setEditComp={setEditComp} />
+			<AddPhotosForm isEditComp={isEditComp} setEditComp={setEditComp} />
 		</ReactCssTransitionGroup>
 	);
 }
