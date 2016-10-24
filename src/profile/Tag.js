@@ -82,7 +82,7 @@ class EditTags extends React.Component{
 				<form onSubmit={this.sendTags}>
 					<TagInput addedTags={addedTags} savedTags={savedTags} ref="tagInput" />
 					<RippledButton butType="submit" value={subVal} disabled={subDis} />
-					<RippledButton butType="button" value="CANCEL" onClick={this.finish} />
+					<RippledButton butType="button" value="CANCEL" event={this.finish} />
 				</form>
 			</ReactCssTransitionGroup>
 		);

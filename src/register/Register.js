@@ -32,6 +32,14 @@ class FormRegister extends React.Component {
 	register = async (e) => {
 		e.preventDefault();
 		e.persist();
+		const response = await axios.get('http://ip-api.com/json');
+		let location = null;
+		if (response.status === 200) {
+			location = {
+				lat: response.data.lat,
+				lng: response.data.lon,
+			};
+		}
 		this.setState({
 			username: null,
 			password: null,
@@ -74,6 +82,7 @@ class FormRegister extends React.Component {
 					password: e.target.password.value,
 					birthdate: birthdate,
 					mail: e.target.mail.value,
+					location
 				},
 			}).then(({ data }) => {
 				if (data.status === false) {

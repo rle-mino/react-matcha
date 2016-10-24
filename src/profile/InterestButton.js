@@ -20,6 +20,7 @@ export default class InterestButton extends React.Component {
 
 	like = (e) => {
 		e.preventDefault();
+		this.setState({ popup: null });
 		axios({
 			url: `${apiConnect}user/update_interest`,
 			method: 'put',
@@ -29,7 +30,7 @@ export default class InterestButton extends React.Component {
 			if (data.status === false) {
 				if (data.details.includes('needs to upload at least one image')) {
 					this.setState({ popup: 'YOU HAVE TO UPLOAD AT LEAST ONE IMAGE' });
-				}
+				} else this.setState({ popup: data.details.toUpperCase() });
 			} else {
 				this.setState({ liked: !this.state.liked });
 			}

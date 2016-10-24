@@ -106,7 +106,6 @@ class AddDetailsForm extends React.Component {
 			bio: e.target.bio.value,
 			tags: this.refs.tagInput.state.addedTags,
 		}
-		console.log(data);
 		axios({
 			method: 'put',
 			url: `${apiConnect}user/add_details`,

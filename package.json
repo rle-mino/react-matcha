@@ -59,13 +59,15 @@
     "eslint-plugin-react": "^5.2.2",
     "fuzzy": "^0.1.1",
     "lodash": "^4.16.1",
+    "net": "^1.0.2",
     "react": "^15.3.1",
     "react-addons-css-transition-group": "^15.3.2",
     "react-dom": "^15.3.1",
     "react-fontawesome": "^1.2.0",
     "react-input-range": "^0.9.2",
     "react-router": "^2.8.0",
-    "socket.io-client": "^1.5.0"
+    "socket.io-client": "^1.5.0",
+    "tls": "0.0.1"
   },
   "scripts": {
     "start": "node scripts/start.js",

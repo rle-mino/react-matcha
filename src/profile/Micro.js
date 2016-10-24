@@ -110,7 +110,7 @@ class MicroEdit extends React.Component {
 						<ErrorMessage message={location} />
 					</MatchInput>
 					<RippledButton butType="submit" value={subVal} disabled={subDis}/>
-					<RippledButton butType="button" value="CANCEL" onClick={this.cancel} />
+					<RippledButton butType="button" value="CANCEL" event={this.cancel} />
 				</form>
 			</ReactCssTransitionGroup>
 		);
@@ -128,11 +128,13 @@ export default class MicroProf extends React.Component {
 	componentWillReceiveProps = (newProps) => {
 		this.getGenderIcon(newProps.gender);
 		this.getOriIcon(newProps.orientation, newProps.gender);
+		this.getLastCoIcon(newProps.lastConnection);
 	};
 
 	componentWillMount() {
 		this.getGenderIcon(this.props.gender);
 		this.getOriIcon(this.props.orientation, this.props.gender);
+		this.getLastCoIcon(this.props.lastConnection);
 	}
 
 	getGenderIcon = (gender) => {
@@ -148,6 +150,15 @@ export default class MicroProf extends React.Component {
 		else this.setState({ oriIcon: 'intersex' });
 	};
 
+	getLastCoIcon = (lastConnection) => {
+		if (lastConnection) {
+			this.setState({ lastCoIcon:
+				lastConnection.includes('connected') ?
+				'circle' : 'circle-o'
+			});
+		} else this.setState({ lastCoIcon: 'circle-o' });
+	}
+
 	edit = (e) => {
 		const { gender, orientation, location } = this.props
 		e.preventDefault();
@@ -159,6 +170,7 @@ export default class MicroProf extends React.Component {
 		const {
 			genderIcon,
 			oriIcon,
+			lastCoIcon,
 		} = this.state;
 		const {
 			popularity,
@@ -169,6 +181,7 @@ export default class MicroProf extends React.Component {
 			interToReq,
 			visiter,
 			location,
+			lastConnection,
 			editable
 		} = this.props;
 		return (
@@ -178,6 +191,7 @@ export default class MicroProf extends React.Component {
 					<MicroBlock label="gender" value={gender} icon={genderIcon} />
 					<MicroBlock label="orientation" value={orientation} icon={oriIcon} />
 					<MicroBlock label="interested in you" value={interToReq ? 'yes' : 'not yet'} icon="arrows-h" />
+					<MicroBlock label="Last connection" value={lastConnection} icon={lastCoIcon} />
 				</div>
 				{editable &&
 				<div className="microProf private">

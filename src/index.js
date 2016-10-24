@@ -3,6 +3,7 @@ import { render }										from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory }	from 'react-router';
 
 import App												from './App';
+import FhF												from './FhF';
 import AppHeader										from './AppHeader';
 import Register 										from './register/Register';
 import ConfirmMail										from './register/ConfirmMail';
@@ -34,5 +35,6 @@ render((
 			<Route path="search" component={Search} />
 			<Route path="profile/:username" component={ProfileExt} />
 		</Route>
+		<Route path="*" component={FhF} />
 	</Router>
 ), document.getElementById('root'));

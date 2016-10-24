@@ -96,6 +96,7 @@ export default class Profile extends React.Component {
 			tags,
 			liked,
 			alreadyReportAsFake,
+			lastConnection,
 		} = this.state.data;
 		const { editable } = this.props;
 		const { profileClass, editComp } = this.state;
@@ -119,7 +120,7 @@ export default class Profile extends React.Component {
 						interestedIn={interestedIn} interestedBy={interestedBy}
 						orientation={orientation} interToReq={interToReq}
 						interestCounter={interestCounter} visiter={visiter}
-						location={location}
+						location={location} lastConnection={lastConnection}
 						setEditComp={this.setEditComp} editable={editable}
 					/>
 					<BioProf bio={bio} editable={editable} setEditComp={this.setEditComp} />

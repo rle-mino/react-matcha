@@ -91,7 +91,7 @@ class NameEdit extends React.Component {
 						{lastname && <ErrorMessage message={lastname} />}
 					</MatchInput>
 					<RippledButton butType="submit" value={subVal} disabled={subDis} />
-					<RippledButton butType="button" value="CANCEL" onClick={this.props.finish} />
+					<RippledButton butType="button" value="CANCEL" event={this.props.finish} />
 				</form>
 			</ReactCssTransitionGroup>
 		);

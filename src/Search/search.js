@@ -50,6 +50,7 @@ class SearchForm extends React.Component {
 		const { ageVal, popVal, tagVal, distVal } = this.state;
 		const checkedInput = _.filter(e.target.orientation, (el) => el.checked);
 		const orientation = checkedInput.map((el) => el.value);
+		this.setState({ serverResponse: null });
 		axios.get(`${apiConnect}user/search`, {
 			params: {
 				name: e.target.name.value,
@@ -74,6 +75,9 @@ class SearchForm extends React.Component {
 			if (data.status === false) {
 				this.setState({ serverResponse: 'AN ERROR OCCURRED' });
 			} else {
+				if (!data.more.length) {
+					this.setState({ serverResponse: 'NO RESULTS FOUND' });
+				}
 				this.props.setResults(data.more);
 			}
 		});
@@ -83,7 +87,10 @@ class SearchForm extends React.Component {
 	updatePop = (comp, values) => this.setState({ popVal: values });
 	updateDist = (comp, values) => this.setState({ distVal: values });
 	updateTag = (comp, values) => this.setState({ tagVal: values });
-	showAdvanced = (e) => this.setState({ advanced: !this.state.advanced });
+	showAdvanced = (e) => {
+		ripple(e);
+		this.setState({ advanced: !this.state.advanced });
+	}
 
 	render() {
 		const {
@@ -97,11 +104,11 @@ class SearchForm extends React.Component {
 		} = this.state;
 		return (
 			<form onSubmit={this.search} className="searchForm">
-				<div className="mainError">{serverResponse}</div>
+				<div className="errorMessageMain">{serverResponse}</div>
 				<div className="label">NAME / USERNAME</div>
 				<input type="text" name="name" className="textInp" />
-				<button onClick={ripple} className="showAdvancedButton" type="button">
-					<FontAwesome name={advanced ? 'angle-up' : 'angle-down'} className="showAdvanced" onClick={this.showAdvanced} />
+				<button onClick={this.showAdvanced} className="showAdvancedButton" type="button">
+					<FontAwesome name={advanced ? 'angle-up' : 'angle-down'} className="showAdvanced" />
 				</button>
 				<div className={`searchBlocks ${!advanced ? 'invisible' : ''}`}>
 					<div className="leftSearch">
@@ -151,6 +158,23 @@ export default class Search extends React.Component {
 	setResults = (results) => {
 		const users = results.map((el, key) => <Link to={`/matcha/profile/${el.username}`} key={key}><UserFast data={el} /></Link>);
 		this.setState({ users });
+	}
+
+	componentWillMount() {
+		if (this.props.location.query.tag) {
+			axios.get(`${apiConnect}tag/search`, {
+				params: {
+					tag: this.props.location.query.tag,
+				},
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('logToken')}`,
+				},
+			}).then(({ data }) => {
+				if (data.status === true) {
+					this.setResults(data.more);
+				}
+			});
+		}
 	}
 	
 	render() {

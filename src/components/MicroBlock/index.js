@@ -14,7 +14,7 @@ export default class MicroBlock extends React.Component {
 	render() {
 		const { label, value, icon, list } = this.props;
 		const { listClass } = this.state;
-		const listHTML = list ? list.map((el, key) => <li className="listEl" key={key}><Link to={`/matcha/user/${el}`}>{el}</Link></li>) : '';
+		const listHTML = list ? list.map((el, key) => <li className="listEl" key={key}><Link to={`/matcha/profile/${el}`}>{el}</Link></li>) : '';
 		return (
 			<div className="micro">
 				<div className="microBlock" title={label}>

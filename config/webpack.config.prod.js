@@ -107,9 +107,9 @@ module.exports = {
       // use the "style" loader inside the async code so CSS from them won't be
       // in the main CSS file.
 	  {
-		  test: /\.sass$/,
-		  loaders: [ 'style', 'css', 'sass?indentedSyntax', 'autoprefixer' ]
-      },
+		test: /\.sass$/,
+		loaders: [ 'style', 'css', 'postcss', 'sass?indentedSyntax' ],
+	  },
       {
         test: /\.css$/,
         // "?-autoprefixer" disables autoprefixer in css-loader itself:
