@@ -14,10 +14,10 @@ import ForgotPassword									from './auth/ForgotPassword';
 import ResetPassWithKey									from './auth/ResetPassWithKey';
 import MyProfile										from './profile/MyProfile';
 import Search											from './search/search';
+import Suggest											from './suggestion/Suggest';
 import ProfileExt										from './profile/Profile';
 
 import './master.sass';
-
 
 render((
 	<Router history={browserHistory}>
@@ -33,6 +33,7 @@ render((
 		<Route path="/matcha" component={AppHeader} >
 			<Route path="my_profile" component={MyProfile} />
 			<Route path="search" component={Search} />
+			<Route path="suggestion" component={Suggest} />
 			<Route path="profile/:username" component={ProfileExt} />
 		</Route>
 		<Route path="*" component={FhF} />

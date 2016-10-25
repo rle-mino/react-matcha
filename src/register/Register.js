@@ -184,13 +184,14 @@ class FormRegister extends React.Component {
 
 export default () =>
 	<ReactCssTransitionGroup
-	component="div"
-	transitionName="route"
-	className="comp"
-	transitionAppear={true}
-	transitionEnterTimeout={500}
-	transitionAppearTimeout={500}
-	transitionLeaveTimeout={500}>
+		component="div"
+		transitionName="route"
+		className="comp"
+		transitionAppear={true}
+		transitionEnterTimeout={500}
+		transitionAppearTimeout={500}
+		transitionLeaveTimeout={500}
+	>
 		<h1 className="mainTitle">REGISTER</h1>
 		<FormRegister />
 		<div className="otherOptions">
