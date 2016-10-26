@@ -31,7 +31,10 @@ export default class Suggest extends React.Component {
 		}).then(({ data }) => {
 			if (data.status === true) {
 				this.setState({ results: data.more.map((el, key) => <Link to={`/matcha/profile/${el.username}`} key={key}><UserFast data={el} /></Link>), users: data.more })
-			} else browserHistory.push('/matcha/my_profile');
+			} else {
+				if (data.details === 'user unauthorized') browserHistory.push('/');
+				else browserHistory.push('/matcha/my_profile');
+			}
 		})
 	}
 

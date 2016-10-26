@@ -16,6 +16,8 @@ import MyProfile										from './profile/MyProfile';
 import Search											from './search/search';
 import Suggest											from './suggestion/Suggest';
 import ProfileExt										from './profile/Profile';
+import UpdatePassword									from './auth/UpdatePassword';
+import UpdateMail										from './auth/UpdateMail';
 
 import './master.sass';
 
@@ -35,6 +37,8 @@ render((
 			<Route path="search" component={Search} />
 			<Route path="suggestion" component={Suggest} />
 			<Route path="profile/:username" component={ProfileExt} />
+			<Route path="update_password" component={UpdatePassword} />
+			<Route path="update_mail" component={UpdateMail} />
 		</Route>
 		<Route path="*" component={FhF} />
 	</Router>

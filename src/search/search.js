@@ -1,6 +1,6 @@
 import React					from 'react';
 import _						from 'lodash';
-import { Link }					from 'react-router';
+import { Link, browserHistory }	from 'react-router';
 import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import InputRange				from 'react-input-range';
 import axios					from 'axios';
@@ -153,6 +153,7 @@ class SearchForm extends React.Component {
 export default class Search extends React.Component {
 	state = {
 		users: [],
+		auth: false,
 	}
 
 	setResults = (results) => {
@@ -161,6 +162,14 @@ export default class Search extends React.Component {
 	}
 
 	componentWillMount() {
+		axios.get(`${apiConnect}user/checkAuth`, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('logToken')}`
+			}
+		}).then(({ data }) => {
+			if (data.status === false) browserHistory.push('/');
+			else this.setState({ auth: true });
+		});
 		if (this.props.location.query.tag) {
 			axios.get(`${apiConnect}tag/search`, {
 				params: {
@@ -178,7 +187,8 @@ export default class Search extends React.Component {
 	}
 	
 	render() {
-		const { users } = this.state;
+		const { users, auth } = this.state;
+		if (!auth) return (<div></div>);
 		return (
 			<ReactCssTransitionGroup
 				className="matcha"

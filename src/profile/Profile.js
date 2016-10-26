@@ -12,24 +12,22 @@ export default class ProfileExt extends React.Component {
 	}
 
 	componentWillMount() {
-		const logToken = localStorage.getItem('logToken');
-		if (!logToken) browserHistory.push('/');
 		axios({
 			url: `${apiConnect}user/singular/all?username=${this.props.params.username}`,
-			headers: { Authorization : `Bearer ${logToken}` },
+			headers: { Authorization : `Bearer ${localStorage.getItem('logToken')}` },
 		}).then(({data}) => {
-			if (data.status === false) browserHistory.push('/matcha/my_profile');
+			if (data.status === false) {
+				if (data.details === 'user unauthorized') {
+					browserHistory.push('/');
+				} else browserHistory.push('/matcha/my_profile');
+			}
 			else this.setState({ data: data.more });
 		});
 	}
 
 	render() {
 		const { data } = this.state;
-		if (!data) {
-			return (
-				<div>LOADING...</div>
-			);
-		}
+		if (!data) return (<div></div>);
 		return (
 			<ReactCssTransitionGroup
 				className="matcha"

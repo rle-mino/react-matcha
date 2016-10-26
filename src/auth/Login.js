@@ -1,5 +1,5 @@
 import React						from 'react';
-import {Link, browserHistory}		from 'react-router';
+import {Link, browserHistory }		from 'react-router';
 import axios						from 'axios';
 import ReactCssTransitionGroup		from 'react-addons-css-transition-group';
 import apiConnect					from '../apiConnect';
@@ -52,12 +52,8 @@ class LoginForm extends React.Component {
                 if (data.details === 'invalid request') {
                     this.setState({serverResponse: null});
                     const error = {};
-                    data.error.forEach((err) => {
-                        error[err.path] = err.error.toUpperCase();
-                    });
-                    this.setState({
-                        ...error
-                    });
+                    data.error.forEach((err) => error[err.path] = err.error.toUpperCase());
+                    this.setState({...error, buttonValue: 'SIGN IN', isPending: false});
                 } else {
                     this.setState({mainErr: 'errorMessageMain'});
                 }
@@ -99,16 +95,37 @@ class LoginForm extends React.Component {
 };
 
 export default class Login extends React.Component {
-    render() {
+	state = {
+		auth: true,
+	}
+	
+	checkAuth = async () => {
+		const { data } = await axios.get(`${apiConnect}user/checkAuth`, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('logToken')}`
+			}
+		});
+		if (data.status === true) browserHistory.push('/matcha/my_profile');
+		else this.setState({ auth: false });
+	}
+
+	componentWillMount() {
+		this.checkAuth();
+	}
+	
+	render() {
+		const { auth } = this.state;
+		if (auth) return (<div></div>)
         return (
             <ReactCssTransitionGroup
-			component="div"
-			transitionName="route"
-			className="comp"
-			transitionAppear={true}
-			transitionEnterTimeout={500}
-			transitionAppearTimeout={500}
-			transitionLeaveTimeout={500}>
+				component="div"
+				transitionName="route"
+				className="comp"
+				transitionAppear={true}
+				transitionEnterTimeout={500}
+				transitionAppearTimeout={500}
+				transitionLeaveTimeout={500}
+			>
                 <h1 className="mainTitle">LOGIN</h1>
                 <LoginForm/>
                 <div className="otherOptions">

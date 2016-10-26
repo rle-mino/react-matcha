@@ -51,9 +51,13 @@ class ConfirmMailForm extends React.Component {
 					this.setState({ mainButtonValue: 'CONFIRM', subDis: false });
 				}
 			} else {
-				this.setState({ mainButtonValue: 'SUCCESS' });
 				localStorage.setItem('logToken', headers['x-access-token']);
-				setTimeout(() => browserHistory.push('add_details'), 1000);
+				this.setState({ mainButtonValue: 'SUCCESS' });
+				if (data.details.includes('mail successfully confirmed')) {
+					setTimeout(() => browserHistory.push('/matcha/my_profile'), 1000);
+				} else {
+					setTimeout(() => browserHistory.push('add_details'), 1000);
+				}
 			}
 		}).catch(() => this.setState({ serverResponse: 'AN ERROR OCCURRED', mainButtonValue: 'ERROR' }));
 	}

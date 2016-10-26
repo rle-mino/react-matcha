@@ -1,7 +1,7 @@
 import React						from 'react';
 import axios						from 'axios';
 import apiConnect					from '../../apiConnect';
-import { browserHistory }			from 'react-router';
+import { browserHistory, Link }		from 'react-router';
 
 import NameAgeProf					from '../../profile/NameAge';
 import ImageProf					from '../../profile/Image';
@@ -129,6 +129,12 @@ export default class Profile extends React.Component {
 						{!alreadyReportAsFake && <span onClick={this.report}>REPORT AS FAKE</span>}
 						<span onClick={this.block}>BLOCK THIS USER</span>
 					</div>}
+					{editable &&
+						<div className="blockUpdate">
+							<Link to="/matcha/update_password">UPDATE YOUR PASSWORD</Link>
+							<Link to="/matcha/update_mail">UPDATE YOUR MAIL</Link>
+						</div>
+					}
 				</div>
 				{editComp}
 			</div>

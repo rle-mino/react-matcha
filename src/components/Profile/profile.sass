@@ -9,19 +9,19 @@
 		transform: scale(.7)
 		opacity: .7
 
-.blockReport
+.blockReport, .blockUpdate
 	width: calc(100% - 20px)
 	display: flex
 	flex-direction: row
 	justify-content: space-around
-
-.blockReport > span
-	width: 100%
-	cursor: pointer
-	padding: 10px
-	text-align: center
-	transition: all .3s
-
-	&:hover
-		background-color: $darkDotSix
-		color: white
+	& > span, & > a
+		width: 100%
+		color: black
+		cursor: pointer
+		padding: 10px
+		text-align: center
+		transition: all .3s
+		
+		&:hover
+			background-color: $darkDotSix
+			color: white
