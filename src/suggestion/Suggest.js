@@ -13,7 +13,6 @@ export default class Suggest extends React.Component {
 		users: [],
 	}
 
-
 	sortResults = async (e) => {
 		const sortedUser = await this.state.users.sort((a, b) => {
 			if (e.target.value === 'distance' || e.target.value === 'age') {

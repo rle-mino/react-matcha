@@ -18,6 +18,7 @@ import Suggest											from './suggestion/Suggest';
 import ProfileExt										from './profile/Profile';
 import UpdatePassword									from './auth/UpdatePassword';
 import UpdateMail										from './auth/UpdateMail';
+import Chat												from './chat/Chats';
 
 import './master.sass';
 
@@ -39,6 +40,7 @@ render((
 			<Route path="profile/:username" component={ProfileExt} />
 			<Route path="update_password" component={UpdatePassword} />
 			<Route path="update_mail" component={UpdateMail} />
+			<Route path="chats" component={Chat} />
 		</Route>
 		<Route path="*" component={FhF} />
 	</Router>

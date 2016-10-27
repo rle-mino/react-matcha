@@ -70,6 +70,7 @@ export default class UpdateMail extends React.Component {
 	}
 
 	componentWillMount() {
+		console.log(this.props.con);
 		axios.get(`${apiConnect}user/checkAuth`, {
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`
@@ -79,6 +80,8 @@ export default class UpdateMail extends React.Component {
 			else this.setState({ auth: true });
 		});
 	}
+
+	componentWillReceiveProps = (newProps) => console.log(newProps.con);
 	
 	render() {
 		const { auth } = this.state;

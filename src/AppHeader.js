@@ -61,22 +61,6 @@ class MatchHeader extends React.Component {
 		}, 500);
 	}
 
-	componentWillAppear = () => {
-		console.log('componentWillAppear');
-	}
-
-	componentDidEnter = () => {
-		console.log('did enter');
-	}
-
-	componentWillLeave = () => {
-		console.log('will leave');
-	}
-
-	componentDidLeave = () => {
-		console.log('componentDidLeave');
-	}
-
 	render() {
 		const { lastNotif, headVis, notifications, notifBlock, lastNotifClass } = this.state;
 		const notifList = notifications ? notifications.map((el, key) => <li key={key} className="notification">{el}</li>) : [];

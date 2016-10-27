@@ -95,17 +95,18 @@
 	left: calc(100% - 325px)
 	top: 75px
 	background-color: $darkDotTwo
+	display: flex
+	justify-content: center
+	align-items: center
 	color: white
 	width: 300px
 	height: 75px
 	font-size: 16px
 	text-align: center
-	vertical-align: middle
 	cursor: pointer
-	line-height: 75px
 	transition: background-color .3s, color .3s
 	animation: newNotif .5s ease-out
-	z-index: 2
+	z-index: 10
 	&.leave
 		animation: rmNewNotif .5s ease-out forwards
 	&:hover
