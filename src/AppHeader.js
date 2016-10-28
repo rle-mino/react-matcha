@@ -23,7 +23,6 @@ class MatchHeader extends React.Component {
 		this.socket = io('http://localhost:8080');
 		this.setState({ socket: this.socket });
 		this.socket.emit('auth', localStorage.getItem('logToken'));
-		this.socket.on('connect status', (status) => {})
 		this.socket.on('new notification', (notification) => {
 			const { notifications } = this.state;
 			const newNotifList = notifications ? [notification, ...notifications] : [notification];
