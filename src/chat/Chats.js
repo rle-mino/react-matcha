@@ -10,39 +10,19 @@ import RippledButton			from '../components/RippledButton';
 import './chats.sass';
 
 class ChatRoom extends React.Component {
-	state = {
-		messages: [],
-	}
-
-	setupSocket = (props) => {
-		if (!props.socket) return (null);
-		props.socket.removeEventListener('new message');
-		props.socket.on('receive message', (messageData) => {
-			this.setState({ messages: [messageData, ...this.state.messages] });
-		});
-	}
-
-	componentWillMount() {
-		this.setupSocket(this.props);
-		this.setState({ messages: this.props.messages || [] });
-	}
-	
-	componentWillReceiveProps = (newProps) => {
-		this.setupSocket(newProps);
-		this.setState({ messages: newProps.messages || [] });
-	}
-
 	sendMessage = (e) => {
 		e.preventDefault();
-		this.props.socket.emit('send message', {
+		const messageData = {
 			receiver: this.props.to,
-			message: e.target.message.value
-		});
+			message: e.target.message.value,
+		};
+		this.props.sendMessage(messageData);
+		e.target.message.value = '';
 	}
 
 	render() {
-		if (!this.state.messages) return (<div></div>);
-		const messages = this.state.messages.map((el, key) => {
+		if (!this.props.messages) return (<div></div>);
+		const messages = this.props.messages.map((el, key) => {
 			return (
 				<li key={key}>{el.message}{el.author}</li>
 			);
@@ -50,8 +30,8 @@ class ChatRoom extends React.Component {
 		return(
 			<div className="chatRoom">
 				<form onSubmit={this.sendMessage}>
-					<input type="text" name="message" className="textInp" />
-					<RippledButton butType="submit" value="send" />
+					<input type="text" name="message" className="textInp" autoComplete="off"/>
+					<RippledButton butType="submit" value="SEND" />
 				</form>
 				<ReactCssTransitionGroup
 					className="messageList"
@@ -81,6 +61,17 @@ export default class Chat extends React.Component {
 		this.setState({ selectedChat: key });
 	}
 
+	sendMessage = (messageData) => {
+		this.context.socket.emit('send message', messageData);
+		const newData = this.state.data.map((room) => {
+			if (room.user.username === messageData.receiver) {
+				room.messages.unshift({ author: 'me', message: messageData.message });
+				return (room);
+			} else return (room);
+		});
+		this.setState({ data: newData });
+	};
+
 	componentWillMount() {
 		axios.get(`${apiConnect}user/get_self_interest`, {
 			headers: {
@@ -98,6 +89,15 @@ export default class Chat extends React.Component {
 						</li>
 					);
 				}) });
+				this.context.socket.on('receive message', (messageData) => {
+					const newData = this.state.data.map((room) => {
+						if (room.user.username === messageData.author) {
+							room.messages.unshift(messageData);
+							return (room);
+						} else return (room);
+					});
+					this.setState({ data: newData });
+				});
 			}
 		});
 	}
@@ -120,7 +120,7 @@ export default class Chat extends React.Component {
 				{data && <ChatRoom
 							messages={data[selectedChat].messages}
 							to={data[selectedChat].user.username}
-							socket={this.context.socket}
+							sendMessage={this.sendMessage}
 						/>
 				}
 			</ReactCssTransitionGroup>
