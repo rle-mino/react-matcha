@@ -20,7 +20,11 @@ export default class Suggest extends React.Component {
 			}
 			return (-a[e.target.value] - -b[e.target.value]);
 		});
-		const newUserFasts = sortedUser.map((el, key) => <Link to={`/matcha/profile/${el.username}`} key={key}><UserFast data={el} /></Link>);
+		const newUserFasts = sortedUser.map((el, key) =>
+			<Link to={`/matcha/profile/${el.username}`} key={key}>
+				<UserFast data={el} />
+			</Link>
+		);
 		this.setState({ results: newUserFasts });
 	}
 
@@ -29,7 +33,11 @@ export default class Suggest extends React.Component {
 			headers: { Authorization: `Bearer ${localStorage.getItem('logToken')}` }
 		}).then(({ data }) => {
 			if (data.status === true) {
-				this.setState({ results: data.more.map((el, key) => <Link to={`/matcha/profile/${el.username}`} key={key}><UserFast data={el} /></Link>), users: data.more })
+				this.setState({ results: data.more.map((el, key) =>
+					<Link to={`/matcha/profile/${el.username}`} key={key}>
+						<UserFast data={el} />
+					</Link>
+				), users: data.more })
 			} else {
 				if (data.details === 'user unauthorized') browserHistory.push('/');
 				else browserHistory.push('/matcha/my_profile');

@@ -1,3 +1,5 @@
+@import ../colors.sass
+
 .rooms
 	width: calc(100% - 20px)
 	display: flex
@@ -11,12 +13,46 @@
 	text-align: center
 	width: 100px
 	color: black
+	margin: 10px
 
 .thumbChat 
 	width: 100px
 	height: 100px
 	border-radius: 50%
 	margin-bottom: 10px
+	transition: border-radius .2s
 	background:
 		size: cover
 		position: center
+	&.selected
+		border-radius: 0
+
+.messageList
+	list-style: none
+	margin-top: 50px
+	width: 100%
+	display: flex
+	flex-direction: column
+	height: 500px
+	overflow: auto
+	&::-webkit-scrollbar
+		display: none
+
+.message
+	padding: 10px
+	margin-top: 5px
+	border-radius: 20px
+	animation: messagesIn .5s
+	&.me
+		margin-left: auto
+		background-color: $darkDotSix
+	&.to
+		background-color: $lightDotSix
+		color: black
+		margin-right: auto
+
+@keyframes messagesIn
+	0%
+		transform: translateY(-400px)
+	100%
+		transform: translateY(0px)
