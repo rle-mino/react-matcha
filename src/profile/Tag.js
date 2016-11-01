@@ -116,9 +116,9 @@ export default class TagProf extends React.Component {
 					{editable && <FontAwesome name="pencil" className="editTagsButton"
 					onMouseEnter={this.showEditable} onMouseLeave={this.hideEditable} onClick={this.edit}/>}
 				</div>
-				<ul className={tagsListClass}>
+				{((addedTags && addedTags.length > 1) && <ul className={tagsListClass}>
 					{addedTags}
-				</ul>
+				</ul>) || (<div>NO TAGS YET</div>)}
 			</div>
 		);
 	}

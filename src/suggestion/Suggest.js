@@ -8,6 +8,8 @@ import SortBar					from '../components/SortBar';
 import UserFast					from '../components/UserFast';
 
 export default class Suggest extends React.Component {
+	_mounted = false;
+	
 	state = {
 		results: [],
 		users: [],
@@ -32,17 +34,26 @@ export default class Suggest extends React.Component {
 		axios.get(`${apiConnect}user/suggest`, {
 			headers: { Authorization: `Bearer ${localStorage.getItem('logToken')}` }
 		}).then(({ data }) => {
+			if (!this._mounted) return (false);
 			if (data.status === true) {
-				this.setState({ results: data.more.map((el, key) =>
+				this.setState({ users: data.more, results: data.more.map((el, key) =>
 					<Link to={`/matcha/profile/${el.username}`} key={key}>
 						<UserFast data={el} />
 					</Link>
-				), users: data.more })
+				)});
 			} else {
 				if (data.details === 'user unauthorized') browserHistory.push('/');
 				else browserHistory.push('/matcha/my_profile');
 			}
 		})
+	}
+
+	componentDidMount() {
+		this._mounted = true;
+	}
+
+	componentWillUnMount() {
+		this._mounted = false;
 	}
 
 	render() {

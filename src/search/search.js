@@ -151,6 +151,8 @@ class SearchForm extends React.Component {
 }
 
 export default class Search extends React.Component {
+	_mounted = false;
+
 	state = {
 		users: [],
 		auth: false,
@@ -167,6 +169,7 @@ export default class Search extends React.Component {
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`
 			}
 		}).then(({ data }) => {
+			if (!this._mounted) return (false);
 			if (data.status === false) browserHistory.push('/');
 			else this.setState({ auth: true });
 		});
@@ -179,11 +182,20 @@ export default class Search extends React.Component {
 					Authorization: `Bearer ${localStorage.getItem('logToken')}`,
 				},
 			}).then(({ data }) => {
+				if (!this._mounted) return (false);
 				if (data.status === true) {
 					this.setResults(data.more);
 				}
 			});
 		}
+	}
+
+	componentWillUnmount() {
+		this._mounted = false;		
+	}
+
+	componentDidMount() {
+		this._mounted = true;
 	}
 	
 	render() {

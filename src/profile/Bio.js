@@ -101,7 +101,7 @@ export default class BioProf extends React.Component {
 					className="editBioButton" onClick={this.edit}
 					onMouseEnter={this.showEditable} onMouseLeave={this.hideEditable}/>)}
 				</div>
-				<p className={bioClass}>{this.props.bio}</p>
+				<p className={bioClass}>{this.props.bio || 'NO BIO YET'}</p>
 			</div>
 		);
 	}

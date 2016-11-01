@@ -23,14 +23,9 @@ export default class ImageProf extends React.Component {
 
 	formatImages = (savedIMG) => {
 		let images = []
-		if (!savedIMG || !savedIMG.length) {
-			images = ['undef.jpg'];
-		} else {
-			images = savedIMG
-		}
-		this.setState({
-			availableImages: images,
-		});;
+		if (!savedIMG || !savedIMG.length) images = ['undef.jpg'];
+		else images = savedIMG
+		this.setState({ availableImages: images });
 	}
 
 	componentWillReceiveProps = (newProps) => {

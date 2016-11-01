@@ -1,23 +1,56 @@
 import React					from 'react';
+import ReactDOM					from 'react-dom';
 import { browserHistory }		from 'react-router';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
 import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 
 import RippledButton			from '../components/RippledButton';
-// import MatchInput				from '../components/MatchInput';
 
 import './chats.sass';
 
+const checkLastChar = (last) => {
+	return (
+		!((last >= 'A' && last <= 'Z') ||
+		(last >= 'a' && last <= 'z') ||
+		(last >= '0' && last <= '9') ||
+		last === '?' || last === '!') && last !== ' ');
+};
+
 class ChatRoom extends React.Component {
-	sendMessage = (e) => {
+
+	sendMessage = async (e) => {
 		e.preventDefault();
+		e.persist();
+		if (e.target.message.value === '' || !e.target.message.value) return (false);
 		const messageData = {
-			receiver: this.props.to,
+			recipient: this.props.to,
 			message: e.target.message.value,
 		};
-		this.props.sendMessage(messageData);
+		await this.props.sendMessage(messageData);
 		e.target.message.value = '';
+		this.scrollBottom();
+	}
+
+	handleChange = (e) => {
+		const { value } = e.target;
+		const lastChar = e.target.value.slice(-1);
+		if (checkLastChar(lastChar)) {
+			e.target.value = value.substring(0, value.length - 1);
+			return (false);
+		}
+	}
+
+	scrollBottom = () => {
+		const chat = ReactDOM.findDOMNode(this);
+		if (chat) {
+			const messageList = chat.querySelector('ul');
+			if (messageList) messageList.scrollTop = messageList.scrollHeight;
+		}
+	}
+
+	componentDidMount() {
+		this.scrollBottom();
 	}
 
 	render() {
@@ -29,19 +62,21 @@ class ChatRoom extends React.Component {
 		);
 		return(
 			<div className="chatRoom">
-				<form onSubmit={this.sendMessage}>
-					<input type="text" name="message" className="textInp" autoComplete="off"/>
-					<RippledButton butType="submit" value="SEND" />
-				</form>
 				<ul className="messageList">
 					{messages}
 				</ul>
+				<form onSubmit={this.sendMessage}>
+					<input type="text" name="message" className="textInp" autoComplete="off" onChange={this.handleChange}/>
+					<RippledButton butType="submit" value="SEND" />
+				</form>
 			</div>
-		)
+		);
 	}
 }
 
 export default class Chat extends React.Component {
+	_mounted = false;
+
 	state = {
 		rooms: null,
 		auth: false,
@@ -53,15 +88,16 @@ export default class Chat extends React.Component {
 		await this.setState({ selectedChat: key, rooms: this.drawRoom(this.state.data, key) });
 	}
 
-	sendMessage = (messageData) => {
+	sendMessage = async (messageData) => {
 		this.context.socket.emit('send message', messageData);
 		const newData = this.state.data.map((room) => {
-			if (room.user.username === messageData.receiver) {
-				room.messages.unshift({ author: 'me', message: messageData.message });
+
+			if (room.user.username === messageData.recipient) {
+				room.messages.push({ author: 'me', message: messageData.message });
 				return (room);
 			} else return (room);
 		});
-		this.setState({ data: newData });
+		await this.setState({ data: newData });
 	};
 
 	drawRoom = (data, selected) => {
@@ -73,7 +109,7 @@ export default class Chat extends React.Component {
 				/>
 				<span>{el.user.username}</span>
 			</li>
-		)
+		);
 	}
 
 	componentWillMount() {
@@ -82,6 +118,8 @@ export default class Chat extends React.Component {
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`
 			}
 		}).then(({ data }) => {
+			if (!this._mounted) return (false);
+			
 			if (data.status === false) {
 				if (data.details === 'user unauthorized') browserHistory.push('/');
 			} else {
@@ -90,10 +128,12 @@ export default class Chat extends React.Component {
 					data: data.more,
 					rooms: this.drawRoom(data.more, this.state.selectedChat)
 				});
+				if (!this.context.socket) return (false);
 				this.context.socket.on('receive message', (messageData) => {
 					const newData = this.state.data.map((room) => {
+
 						if (room.user.username === messageData.author) {
-							room.messages.unshift(messageData);
+							room.messages.push(messageData);
 							return (room);
 						} else return (room);
 					});
@@ -103,6 +143,14 @@ export default class Chat extends React.Component {
 		});
 	}
 	
+	componentDidMount() {
+		this._mounted = true;
+	}
+
+	componentWillUnmount() {
+		this._mounted = false;
+	}
+
 	render() {
 		const { rooms, auth, data, selectedChat } = this.state;
 		if (!auth) return (<div></div>);
