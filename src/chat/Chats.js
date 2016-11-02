@@ -22,6 +22,7 @@ class ChatRoom extends React.Component {
 	sendMessage = async (e) => {
 		e.preventDefault();
 		e.persist();
+		if (!e.target.message.value.match(/[A-Za-z0-9?!]/)) return (false);
 		if (e.target.message.value === '' || !e.target.message.value) return (false);
 		const messageData = {
 			recipient: this.props.to,
@@ -52,6 +53,10 @@ class ChatRoom extends React.Component {
 	componentDidMount() {
 		this.scrollBottom();
 	}
+
+	componentWillReceiveProps = (newProps) => {
+		setTimeout(() => this.scrollBottom(), 20);
+	} 
 
 	render() {
 		if (!this.props.messages) return (<div></div>);
@@ -106,7 +111,7 @@ export default class Chat extends React.Component {
 				<div
 					className={`thumbChat ${selected === key ? 'selected' : ''}`}
 					style={{ backgroundImage: `url('${apiConnect}user/get_img_src/${el.user.image}')` }}
-				/>
+				></div>
 				<span>{el.user.username}</span>
 			</li>
 		);

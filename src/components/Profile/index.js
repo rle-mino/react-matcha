@@ -1,6 +1,7 @@
 import React						from 'react';
 import axios						from 'axios';
 import apiConnect					from '../../apiConnect';
+import ReactCssTransitionGroup		from 'react-addons-css-transition-group';
 import { browserHistory, Link }		from 'react-router';
 
 import NameAgeProf					from '../../profile/NameAge';
@@ -11,6 +12,22 @@ import TagProf						from '../../profile/Tag';
 import InterestButton				from '../../profile/InterestButton';
 
 import './profile.sass';
+
+const Confirm = ({next, cancel}) =>
+	<ReactCssTransitionGroup
+				className="editComp comp"
+				transitionName="route"
+				transitionAppear={true}
+				transitionEnterTimeout={500}
+				transitionLeaveTimeout={500}
+				transitionAppearTimeout={500}
+			>
+		<h1 className="mainTitle">ARE YOU SURE?</h1>
+		<div className="sureButton">
+			<span onClick={next}>YES</span>
+		<span onClick={() => cancel(null)}>NO</span>
+		</div>
+	</ReactCssTransitionGroup>
 
 export default class Profile extends React.Component {
 	state = {
@@ -29,7 +46,7 @@ export default class Profile extends React.Component {
 
 	setEditComp = async (component) => {
 		if (this.state.editComp && component && this.state.editComp !== component) return (false);
-		if (!component) {
+		if (!component && this.props.editable) {
 			const response = await axios({
 				method: 'get',
 				url: `${apiConnect}user/singular/all`,
@@ -74,6 +91,14 @@ export default class Profile extends React.Component {
 				browserHistory.push('/matcha/my_profile');
 			}
 		});
+	}
+
+	confirm = (e) => {
+		if (e.target.className.includes('fake')) {
+			this.setEditComp(<Confirm next={this.report} cancel={this.setEditComp} />);
+		} else if (e.target.className.includes('block')) {
+			this.setEditComp(<Confirm next={this.block} cancel={this.setEditComp} />);
+		}
 	}
 
 	render() {
@@ -126,8 +151,9 @@ export default class Profile extends React.Component {
 					<BioProf bio={bio} editable={editable} setEditComp={this.setEditComp} />
 					<TagProf tags={tags} editable={editable} setEditComp={this.setEditComp} />
 					{!editable && <div className="blockReport">
-						{!alreadyReportAsFake && <span onClick={this.report}>REPORT AS FAKE</span>}
-						<span onClick={this.block}>BLOCK THIS USER</span>
+						{!alreadyReportAsFake &&
+							<span className="fake" onClick={this.confirm}>REPORT AS FAKE</span>}
+							<span className="block" onClick={this.confirm}>BLOCK THIS USER</span>
 					</div>}
 					{editable &&
 						<div className="blockUpdate">

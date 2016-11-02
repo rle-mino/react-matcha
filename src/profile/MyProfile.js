@@ -19,7 +19,7 @@ export default class MyProfile extends React.Component {
 			url: `${apiConnect}user/singular/all`,
 			headers: { Authorization : `Bearer ${localStorage.getItem('logToken')}` },
 		}).then(({ data }) => {
-			if (!this._monted) return (false); 
+			if (!this._mounted) return (false); 
 			if (data.status === false) browserHistory.push('/');
 			else this.setState({ data: data.more });
 		});

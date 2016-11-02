@@ -8,6 +8,10 @@
 	padding: 10px
 	justify-content: center
 
+.chatRoom
+	& button
+		margin-top: 10px
+
 .miniChat
 	list-style: none
 	text-align: center
@@ -21,17 +25,20 @@
 	height: 100px
 	border-radius: 50%
 	margin-bottom: 10px
-	transition: border-radius .2s
+	transition: filter .2s
 	background:
 		size: cover
 		position: center
+	filter: grayscale(100%)
 	&.selected
-		border-radius: 0
+		filter: grayscale(0%)
 
 .messageList
 	list-style: none
+	background-color: $darkDotTwo
+	padding: 10px
 	margin-bottom: 10px
-	width: 100%
+	width: calc(100% - 20px)
 	display: flex
 	flex-direction: column
 	height: 500px

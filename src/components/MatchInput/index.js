@@ -14,6 +14,7 @@ export default ({label, children, inputType, inputName, value}) => {
 					name={inputName}
 					className='textInp'
 					defaultValue={value}
+					autoComplete="off"
 				/>
 		</div>
 	)

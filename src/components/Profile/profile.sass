@@ -9,6 +9,23 @@
 		transform: scale(.7)
 		opacity: .7
 
+.sureButton
+	display: flex
+	flex-direction: row
+	width: 100%
+	justify-content: space-around
+	& > span
+		cursor: pointer
+		transition: all .2s
+		margin-top: 10px
+		background-color: $darkDotTwo
+		width: 100%
+		text-align: center
+		font-size: 30px
+		&:hover
+			background-color: $darkDotSix
+			color: white
+
 .blockReport, .blockUpdate
 	width: calc(100% - 20px)
 	display: flex

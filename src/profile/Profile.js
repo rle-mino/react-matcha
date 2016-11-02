@@ -7,6 +7,8 @@ import { browserHistory }		from 'react-router';
 import Profile					from '../components/Profile';
 
 export default class ProfileExt extends React.Component {
+	_mounted = false;
+
 	state = {
 		data: null,
 	}
@@ -16,6 +18,7 @@ export default class ProfileExt extends React.Component {
 			url: `${apiConnect}user/singular/all?username=${this.props.params.username}`,
 			headers: { Authorization : `Bearer ${localStorage.getItem('logToken')}` },
 		}).then(({data}) => {
+			if (!this._mounted) return (false);
 			if (data.status === false) {
 				if (data.details === 'user unauthorized') {
 					browserHistory.push('/');
@@ -23,6 +26,14 @@ export default class ProfileExt extends React.Component {
 			}
 			else this.setState({ data: data.more });
 		});
+	}
+
+	componentDidMount() {
+		this._mounted = true;
+	}
+
+	componentWillUnmount() {
+		this._mounted = false;
 	}
 
 	render() {
