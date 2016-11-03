@@ -159,6 +159,22 @@ export default class Chat extends React.Component {
 	render() {
 		const { rooms, auth, data, selectedChat } = this.state;
 		if (!auth) return (<div></div>);
+		if (data && data.length === 0) {
+			return (
+				<ReactCssTransitionGroup
+					className="comp"
+					component="div"
+					transitionName="route"
+					transitionAppear={true}
+					transitionEnterTimeout={500}
+					transitionLeaveTimeout={500}
+					transitionAppearTimeout={500}
+				>
+					<h1 className="mainTitle">NO AVAILABLE CHAT</h1>
+					<p className="noChatMess">YOU MUST BE CONNECTED WITH AT LEAST ONE USER TO CHAT</p>				
+				</ReactCssTransitionGroup>
+			);
+		}
 		return (
 			<ReactCssTransitionGroup
 				className="matcha"

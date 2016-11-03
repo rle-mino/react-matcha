@@ -48,7 +48,7 @@ export default class UserFast extends React.Component {
 		return (
 			<li className="userFast">
 				<div className="fastIMG" style={{
-					backgroundImage: `url('${apiConnect}user/get_img_src/${images ? images[0] : 'undef.jpg' }')`,
+					backgroundImage: `url('${apiConnect}user/get_img_src/${images.length ? images[0] : 'undef.jpg' }')`,
 				}} />
 				<div className="fastBottom">
 					<div className="fastTop">
@@ -62,8 +62,8 @@ export default class UserFast extends React.Component {
 					<span className="age">{age}</span>
 					<span className="commonTags">{`${commonTags} tag${commonTags > 1 ? 's' : ''} in common`}</span>
 					<div className="popOriGender">
-						<span><FontAwesome name={oriIcon} />{orientation}</span>
 						<span><FontAwesome name={genderIcon} />{gender}</span>
+						<span><FontAwesome name={oriIcon} />{orientation}</span>
 					</div>
 				</div>
 			</li>

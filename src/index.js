@@ -12,6 +12,7 @@ import AddPhotos										from './register/AddPhotos';
 import Login											from './auth/Login';
 import ForgotPassword									from './auth/ForgotPassword';
 import ResetPassWithKey									from './auth/ResetPassWithKey';
+import Logout											from './auth/Logout';
 import MyProfile										from './profile/MyProfile';
 import Search											from './search/search';
 import Suggest											from './suggestion/Suggest';
@@ -41,6 +42,7 @@ render((
 			<Route path="update_password" component={UpdatePassword} />
 			<Route path="update_mail" component={UpdateMail} />
 			<Route path="chats" component={Chat} />
+			<Route path="logout" component={Logout} />
 		</Route>
 		<Route path="*" component={FhF} />
 	</Router>

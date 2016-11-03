@@ -23,18 +23,41 @@ class MatchHeader extends React.Component {
 		this.socket = io('http://localhost:8080');
 		this.setState({ socket: this.socket });
 		this.socket.emit('auth', localStorage.getItem('logToken'));
+
 		this.socket.on('new notification', (notification) => {
 			const { notifications } = this.state;
 			const newNotifList = notifications ? [notification, ...notifications] : [notification];
 			this.setState({ lastNotif: notification, notifications: newNotifList });
 		});
+		if (this.props.location.pathname === '/matcha/chats') {
+			console.log('header set');
+			this.socket.on('receive message', this.notifMessage);
+		}
+	}
+
+	notifMessage = ({ author }) => {
+		const { notifications } = this.state;
+		const notification = `${author} sent you a message`;
+		const newNotifList = notifications ? [notification, ...notifications] : [notification];
+		this.setState({ notifications: newNotifList, lastNotif: notification });
+	}
+
+	componentWillUnmount() {
+		this.socket.disconnect();
 	}
 
 	componentWillReceiveProps = (newProps) => {
+		if (newProps.location.pathname === '/matcha/chats') {
+			console.log('header unset');
+			this.socket.removeListener('receive message');
+		} else {
+			this.socket.removeListener('receive message');
+			this.socket.on('receive message', this.notifMessage);
+		}
 		this.setState({ notifications: newProps.notifications });
 	}
 
-	componentWillMount(){
+	componentWillMount() {
 		this.setState({ notifications: this.props.notifications });
 	}
 
@@ -80,7 +103,7 @@ class MatchHeader extends React.Component {
 						<Link to="/matcha/chats" activeClassName="routeIsActive">
 							<div className="headerLink">CHAT</div>
 						</Link>
-						<Link to="logout" activeClassName="routeIsActive">
+						<Link to="/matcha/logout" activeClassName="routeIsActive">
 							<div className="headerLink">LOGOUT</div>
 						</Link>
 					</div>
@@ -128,7 +151,7 @@ export default class AppHeader extends React.Component {
 	render() {
 		return (
 			<div className="AppHeader">
-				<MatchHeader notifications={this.state.notifications} ref="header" />
+				<MatchHeader notifications={this.state.notifications} ref="header" location={this.props.location} />
 	    		{this.props.children}
 	        </div>
 		);

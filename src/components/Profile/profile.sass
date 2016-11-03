@@ -2,12 +2,13 @@
 
 .profile
 	margin-top: 20px
-	transition: transform .5s, filter .2s linear
+	transition: transform .5s, filter .5s ease-out
 	color: black
 	&.isBlurred
 		filter: blur(10px)
 		transform: scale(.7)
 		opacity: .7
+		pointer-events: none
 
 .sureButton
 	display: flex
