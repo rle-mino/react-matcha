@@ -70,7 +70,7 @@ class SearchForm extends React.Component {
 			},
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
-			}
+			},
 		}).then(({ data }) => {
 			if (data.status === false) {
 				this.setState({ serverResponse: 'AN ERROR OCCURRED' });
@@ -166,8 +166,8 @@ export default class Search extends React.Component {
 	componentWillMount() {
 		axios.get(`${apiConnect}user/checkAuth`, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('logToken')}`
-			}
+				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
+			},
 		}).then(({ data }) => {
 			if (!this._mounted) return (false);
 			if (data.status === false) browserHistory.push('/');
@@ -191,13 +191,13 @@ export default class Search extends React.Component {
 	}
 
 	componentWillUnmount() {
-		this._mounted = false;		
+		this._mounted = false;
 	}
 
 	componentDidMount() {
 		this._mounted = true;
 	}
-	
+
 	render() {
 		const { users, auth } = this.state;
 		if (!auth) return (<div></div>);

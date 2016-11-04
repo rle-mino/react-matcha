@@ -17,14 +17,13 @@ export default class ProfileExt extends React.Component {
 		axios({
 			url: `${apiConnect}user/singular/all?username=${this.props.params.username}`,
 			headers: { Authorization : `Bearer ${localStorage.getItem('logToken')}` },
-		}).then(({data}) => {
+		}).then(({ data }) => {
 			if (!this._mounted) return (false);
 			if (data.status === false) {
 				if (data.details === 'user unauthorized') {
 					browserHistory.push('/');
 				} else browserHistory.push('/matcha/my_profile');
-			}
-			else this.setState({ data: data.more });
+			} else this.setState({ data: data.more });
 		});
 	}
 

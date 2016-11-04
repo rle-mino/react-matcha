@@ -41,7 +41,7 @@ class UpdatePasswordForm extends React.Component {
 			},
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
-			}
+			},
 		}).then(({ data }) => {
 			if (data.status === false) {
 				if (data.details === 'invalid request') {
@@ -52,7 +52,7 @@ class UpdatePasswordForm extends React.Component {
 					this.setState({
 						serverResponse: data.details.toUpperCase(),
 						subDis: false,
-						subVal: 'SAVE'
+						subVal: 'SAVE',
 					});
 				}
 			} else {
@@ -61,8 +61,7 @@ class UpdatePasswordForm extends React.Component {
 					browserHistory.push('/matcha/my_profile');
 				}, 1000);
 			}
-		}).catch((err) => {
-			console.log(err); this.setState({ serverResponse: 'AN ERROR OCCURRED', subVal: 'ERROR' })});
+		}).catch((err) => this.setState({ serverResponse: 'AN ERROR OCCURRED', subVal: 'ERROR' }));
 	}
 
 	render() {
@@ -75,7 +74,7 @@ class UpdatePasswordForm extends React.Component {
 			serverResponse,
 		} = this.state;
 		return (
-			
+
 			<form onSubmit={this.updatePass}>
 				<div className="errorMessageMain">{serverResponse}</div>
 				<MatchInput label="OLD PASSWORD" inputName="oldPassword" inputType="password">
@@ -101,14 +100,14 @@ export default class UpdatePassword extends React.Component {
 	componentWillMount() {
 		axios.get(`${apiConnect}user/checkAuth`, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('logToken')}`
-			}
+				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
+			},
 		}).then(({ data }) => {
 			if (data.status === false) browserHistory.push('/');
 			else this.setState({ auth: true });
 		});
 	}
-	
+
 	render() {
 		const { auth } = this.state;
 		if (!auth) return (<div></div>);

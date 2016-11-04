@@ -37,7 +37,7 @@ export default class ImageProf extends React.Component {
 	}
 
 	componentDidMount = () => {
-		this.interval = setInterval(() => {;
+		this.interval = setInterval(() => {
 			const newMargin = (this.state.marginLeft + 300) % (this.state.availableImages.length * 300);
 			this.setState({ marginLeft: newMargin });
 		}, 4000);
@@ -52,7 +52,7 @@ export default class ImageProf extends React.Component {
 		const imgList = availableImages.map((img, key) => {
 			return (
 				<li key={key} className="img" onClick={this.setImage}>
-					<div className="imgSingle" style={{backgroundImage:`url('${apiConnect}user/get_img_src/${img}')`}}/>
+					<div className="imgSingle" style={{ backgroundImage:`url('${apiConnect}user/get_img_src/${img}')` }}/>
 				</li>);
 		})
 		return (
@@ -65,7 +65,7 @@ export default class ImageProf extends React.Component {
 							onClick={this.edit}
 						/>
 					)}
-					<ul className="listIMG" style={{marginLeft: `-${marginLeft}px`}}>
+					<ul className="listIMG" style={{ marginLeft: `-${marginLeft}px` }}>
 						{imgList}
 					</ul>
 				</div>

@@ -1,5 +1,5 @@
 import React						from 'react';
-import {Link, browserHistory }		from 'react-router';
+import { Link, browserHistory }		from 'react-router';
 import axios						from 'axios';
 import ReactCssTransitionGroup		from 'react-addons-css-transition-group';
 import apiConnect					from '../apiConnect';
@@ -20,7 +20,7 @@ class LoginForm extends React.Component {
         buttonValue: 'SIGN IN',
         username: null,
         password: null,
-        mainErr: 'errorMessageMain'
+        mainErr: 'errorMessageMain',
     };
 
     login = async(e) => {
@@ -31,41 +31,41 @@ class LoginForm extends React.Component {
             username: null,
             password: null,
             mainErr: 'errorMessageMain',
-            serverResponse: null
+            serverResponse: null,
         });
         axios({
             method: 'put',
             url: `${apiConnect}user/login`,
             data: {
                 username: e.target.username.value,
-                password: e.target.password.value
-            }
-        }).then(({data, headers}) => {
+                password: e.target.password.value,
+            },
+        }).then(({ data, headers }) => {
             this.setState({
                 buttonValue: data.status
                     ? 'SUCCESS'
                     : 'SIGN IN',
-                serverResponse: data.details
+                serverResponse: data.details,
             });
             if (data.status === false) {
-                this.setState({isPending: false});
+                this.setState({ isPending: false });
                 if (data.details === 'invalid request') {
-                    this.setState({serverResponse: null});
+                    this.setState({ serverResponse: null });
                     const error = {};
                     data.error.forEach((err) => error[err.path] = err.error.toUpperCase());
-                    this.setState({...error, buttonValue: 'SIGN IN', isPending: false});
+                    this.setState({ ...error, buttonValue: 'SIGN IN', isPending: false });
                 } else {
-                    this.setState({mainErr: 'errorMessageMain'});
+                    this.setState({ mainErr: 'errorMessageMain' });
                 }
                 if (data.details.match(/not activated$/g)) {
                     setTimeout(() => browserHistory.push('confirm_mail'), 1000);
                 }
             } else {
                 localStorage.setItem('logToken', headers['x-access-token']);
-                this.setState({serverResponse: null});
+                this.setState({ serverResponse: null });
                 setTimeout(() => browserHistory.push('/matcha/my_profile'), 1000);
             }
-        }).catch(() => this.setState({buttonValue: 'ERROR', serverResponse: 'AN ERROR OCCURRED'}));
+        }).catch(() => this.setState({ buttonValue: 'ERROR', serverResponse: 'AN ERROR OCCURRED' }));
     };
 
     render() {
@@ -75,7 +75,7 @@ class LoginForm extends React.Component {
             password,
             serverResponse,
             buttonValue,
-            mainErr
+            mainErr,
         } = this.state;
         return (
             <div>
@@ -87,7 +87,7 @@ class LoginForm extends React.Component {
                     <MatchInput label="PASSWORD" inputType="password" inputName="password">
                         <ErrorMessage message={password}/>
                     </MatchInput>
-                    <RippledButton butType="submit" value={buttonValue} disabled={isPending} />                    
+                    <RippledButton butType="submit" value={buttonValue} disabled={isPending} />
                 </form>
             </div>
         );
@@ -98,12 +98,12 @@ export default class Login extends React.Component {
 	state = {
 		auth: true,
 	}
-	
+
 	checkAuth = async () => {
 		const { data } = await axios.get(`${apiConnect}user/checkAuth`, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('logToken')}`
-			}
+				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
+			},
 		});
 		if (data.status === true) browserHistory.push('/matcha/my_profile');
 		else this.setState({ auth: false });
@@ -112,7 +112,7 @@ export default class Login extends React.Component {
 	componentWillMount() {
 		this.checkAuth();
 	}
-	
+
 	render() {
 		const { auth } = this.state;
 		if (auth) return (<div></div>)

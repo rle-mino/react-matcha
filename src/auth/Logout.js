@@ -22,7 +22,7 @@ export default class Logout extends React.Component {
 				// localStorage.removeItem('logToken');
 				setTimeout(() => browserHistory.push('/'), 1000);
 			} else browserHistory.push('/');
-		})/*.catch(() => browserHistory.push('/'));*/
+		}).catch(() => browserHistory.push('/'));
 	}
 
 	render() {
@@ -38,7 +38,7 @@ export default class Logout extends React.Component {
 				transitionAppearTimeout={500}
 				transitionLeaveTimeout={500}
 			>
-				<h1 className="mainTitle">{message}</h1>	
+				<h1 className="mainTitle">{message}</h1>
 			</ReactCssTransitionGroup>
 		)
 	}

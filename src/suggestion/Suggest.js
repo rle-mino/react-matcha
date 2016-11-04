@@ -9,7 +9,7 @@ import UserFast					from '../components/UserFast';
 
 export default class Suggest extends React.Component {
 	_mounted = false;
-	
+
 	state = {
 		results: [],
 		users: [],
@@ -32,7 +32,9 @@ export default class Suggest extends React.Component {
 
 	componentWillMount() {
 		axios.get(`${apiConnect}user/suggest`, {
-			headers: { Authorization: `Bearer ${localStorage.getItem('logToken')}` }
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
+			},
 		}).then(({ data }) => {
 			if (!this._mounted) return (false);
 			if (data.status === true) {
@@ -40,7 +42,7 @@ export default class Suggest extends React.Component {
 					<Link to={`/matcha/profile/${el.username}`} key={key}>
 						<UserFast data={el} />
 					</Link>
-				)});
+				) });
 			} else {
 				if (data.details === 'user unauthorized') browserHistory.push('/');
 				else browserHistory.push('/matcha/my_profile');
@@ -57,7 +59,8 @@ export default class Suggest extends React.Component {
 	}
 
 	render() {
-		const { results } = this.state;
+		let { results } = this.state;
+		if (!results.length) results = (<div className="errorMessageMain">NOTHING TO SUGGEST</div>);
 		return (
 			<ReactCssTransitionGroup
 				className="matcha"
@@ -68,10 +71,10 @@ export default class Suggest extends React.Component {
 				transitionLeaveTimeout={500}
 				transitionAppearTimeout={500}
 			>
-			<form onChange={this.sortResults}>
-				<SortBar defaultSort="popularity" />
-			</form>
-			<ReactCssTransitionGroup
+				<form onChange={this.sortResults}>
+					<SortBar defaultSort="popularity" />
+				</form>
+				<ReactCssTransitionGroup
 					className="results"
 					component="ul"
 					transitionName="card"

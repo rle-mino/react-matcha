@@ -21,7 +21,7 @@ export default class UserFast extends React.Component {
 		else if (ori === 'gay' && gender === 'female') this.setState({ oriIcon: 'venus-double' });
 		else this.setState({ oriIcon: 'intersex' });
 	}
-	
+
 	componentWillReceiveProps = (newProps) => {
 		this.getGenderIcon(newProps.data.gender);
 		this.getOriIcon(newProps.data.orientation, newProps.data.gender);
@@ -44,7 +44,7 @@ export default class UserFast extends React.Component {
 			popularity,
 			images,
 		} = this.props.data;
-		const { oriIcon, genderIcon } = this.state;
+		// const { oriIcon, genderIcon } = this.state;
 		return (
 			<li className="userFast">
 				<div className="fastIMG" style={{
@@ -60,10 +60,10 @@ export default class UserFast extends React.Component {
 						<span className="lastname">{lastname}</span>
 					</div>
 					<span className="age">{age}</span>
-					<span className="commonTags">{`${commonTags} tag${commonTags > 1 ? 's' : ''} in common`}</span>
-					<div className="popOriGender">
-						<span><FontAwesome name={genderIcon} />{gender}</span>
-						<span><FontAwesome name={oriIcon} />{orientation}</span>
+					<div className="bottom">
+						<span className="commonTags">{commonTags}</span>
+						<span>{gender}</span>
+						<span>{orientation}</span>
 					</div>
 				</div>
 			</li>

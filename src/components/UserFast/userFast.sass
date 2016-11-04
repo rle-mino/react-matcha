@@ -2,6 +2,68 @@
 
 .userFast
 	list-style: none
+	background-color: $darkDotTwo
+	width: 250px
+	color: black
+	height: 275px
+	margin-top: 10px
+	margin-left: 2px
+
+	& .fastBottom
+		width: 100%
+
+		& .names
+			position: relative
+			width: 100%
+			font-size: 16px
+			display: flex
+			flex-direction: row
+			justify-content: center
+
+		& .firstname
+			width: 50%
+			margin: 0 5px
+			text-align: right
+
+		& .lastname
+			width: 50%
+			margin: 0 5px
+			text-align: left
+
+		& .age
+			width: 100%
+			display: block
+			text-align: center
+		
+		& .bottom
+			position: absolute
+			bottom: calc(0% + 20px)
+			width: calc(230px)
+			padding: 10px
+			display: flex
+			flex-direction: row
+			justify-content: space-around
+
+
+	& .fastIMG
+		position: relative
+		width: 150px
+		top: 10px
+		z-index: 2
+		margin:
+			bottom: -22px
+			left: auto
+			right: auto
+		height: 150px
+		border-radius: 50%
+		transition: all .2s
+		background:
+			size: cover
+			repeat: no-repeat
+			position: center
+
+/*.userFast
+	list-style: none
 	position: relative
 	width: 250px
 	height: 275px
@@ -9,6 +71,7 @@
 	margin-top: 10px
 	margin-left: 2px
 	transition: all .2s
+
 	&:hover
 		color: white
 
@@ -69,22 +132,4 @@
 			display: flex
 			flex-direction: row
 			justify-content: space-between
-			margin: 5px
-
-
-	& .fastIMG
-		position: relative
-		width: 150px
-		top: 10px
-		z-index: 2
-		margin:
-			bottom: -22px
-			left: auto
-			right: auto
-		height: 150px
-		border-radius: 50%
-		transition: all .2s
-		background:
-			size: cover
-			repeat: no-repeat
-			position: center
+			margin: 5px*/

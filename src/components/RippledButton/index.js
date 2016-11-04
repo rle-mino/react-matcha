@@ -8,7 +8,7 @@ export default class RippledButton extends React.Component {
 		ripple(e);
 		if (this.props.event) this.props.event(e);
 	}
-	
+
 	render() {
         return (
             <button
@@ -20,4 +20,4 @@ export default class RippledButton extends React.Component {
             </button>
         );
     }
-} 
+}

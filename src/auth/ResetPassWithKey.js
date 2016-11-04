@@ -1,5 +1,5 @@
 import React					from 'react';
-import {browserHistory}			from 'react-router';
+import { browserHistory }		from 'react-router';
 import axios					from 'axios';
 import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import apiConnect				from '../apiConnect';
@@ -16,7 +16,7 @@ class ResetPassWithKeyForm extends React.Component {
 		password: null,
 		passVerif: null,
 		subVal: 'SET NEW PASSWORD',
-		subDis: false
+		subDis: false,
 	}
 
 	resetPassWithKey = async(e) => {
@@ -28,10 +28,10 @@ class ResetPassWithKeyForm extends React.Component {
 			passVerif: null,
 			subVal: 'WAIT',
 			serverResponse: null,
-			subDis: true
+			subDis: true,
 		});
 		if (e.target.password.value !== e.target.passVerif.value) {
-			this.setState({passVerif: 'INVALID', subVal: 'SET NEW PASSWORD'});
+			this.setState({ passVerif: 'INVALID', subVal: 'SET NEW PASSWORD' });
 			return (false);
 		}
 		axios({
@@ -40,9 +40,9 @@ class ResetPassWithKeyForm extends React.Component {
 			data: {
 				username: e.target.username.value,
 				resetKey: e.target.resetKey.value,
-				password: e.target.password.value
-			}
-		}).then(({data}) => {
+				password: e.target.password.value,
+			},
+		}).then(({ data }) => {
 			if (data.status === false) {
 				if (data.details === 'invalid request') {
 					const error = {};
@@ -52,16 +52,16 @@ class ResetPassWithKeyForm extends React.Component {
 					this.setState({
 						...error,
 						subVal: 'SET NEW PASSWORD',
-						subDis: false
+						subDis: false,
 					});
 				} else {
-					this.setState({serverResponse: data.details, subVal: 'SET NEW PASSWORD', subDis: false});
+					this.setState({ serverResponse: data.details, subVal: 'SET NEW PASSWORD', subDis: false });
 				}
 			} else {
-				this.setState({subVal: 'SUCCESS'});
+				this.setState({ subVal: 'SUCCESS' });
 				setTimeout(() => browserHistory.push('/'), 1000);
 			}
-		}).catch(() => this.setState({subVal: 'ERROR', serverResponse: 'AN ERROR OCCURRED'}));
+		}).catch(() => this.setState({ subVal: 'ERROR', serverResponse: 'AN ERROR OCCURRED' }));
 	}
 
 	render() {
@@ -72,7 +72,7 @@ class ResetPassWithKeyForm extends React.Component {
 			password,
 			passVerif,
 			subVal,
-			subDis
+			subDis,
 		} = this.state;
 		return (
 			<div>

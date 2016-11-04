@@ -116,7 +116,7 @@ class AddPhotosForm extends React.Component {
 			},
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
-			}
+			},
 		}).catch(() => this.setState({ serverResponse: 'AN ERROR OCCURRED' }));
 	};
 

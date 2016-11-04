@@ -25,7 +25,7 @@ class EditTags extends React.Component{
 			method: 'get',
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
-			}
+			},
 		}).then(({ data }) => {
 			if (data) this.setState({ savedTags: data });
 		})

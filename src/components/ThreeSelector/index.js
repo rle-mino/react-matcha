@@ -50,7 +50,7 @@ export default class ThreeSelector extends React.Component {
 			className,
 			checked,
 			children,
-			inpType
+			inpType,
 		} = this.props;
 		return (
 			<div className={className}>

@@ -54,8 +54,8 @@ class MicroEdit extends React.Component {
 			},
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
-			}
-		}).then(({data}) => {
+			},
+		}).then(({ data }) => {
 			if (data.status === false) {
 				if (data.details === 'invalid request') {
 					const error = {};
@@ -67,7 +67,7 @@ class MicroEdit extends React.Component {
 				this.setState({ subVal: 'SUCCESS' });
 				setTimeout(() => this.props.setEditComp(null), 1000);
 			}
-		}).catch((err) => {console.log(err);this.setState({ subVal: 'ERROR', serverResponse: 'AN ERROR OCCURRED' })});
+		}).catch((err) => this.setState({ subVal: 'ERROR', serverResponse: 'AN ERROR OCCURRED' }));
 	}
 
 	cancel = (e) => {
@@ -154,7 +154,7 @@ export default class MicroProf extends React.Component {
 		if (lastConnection) {
 			this.setState({ lastCoIcon:
 				lastConnection.includes('connected') ?
-				'circle' : 'circle-o'
+				'circle' : 'circle-o',
 			});
 		} else this.setState({ lastCoIcon: 'circle-o' });
 	}
@@ -182,7 +182,7 @@ export default class MicroProf extends React.Component {
 			visiter,
 			location,
 			lastConnection,
-			editable
+			editable,
 		} = this.props;
 		return (
 			<div>

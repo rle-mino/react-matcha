@@ -15,7 +15,7 @@ class UpdateMailForm extends React.Component {
 		subDis: false,
 		serverResponse: null,
 	}
-	
+
 	updateMail = (e) => {
 		e.preventDefault();
 		this.setState({
@@ -32,7 +32,7 @@ class UpdateMailForm extends React.Component {
 			},
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
-			}
+			},
 		}).then(({ data }) => {
 			if (data.status === false) {
 				if (data.details === 'invalid request') {
@@ -49,7 +49,7 @@ class UpdateMailForm extends React.Component {
 			this.setState({ serverResponse: 'AN ERROR OCCURRRED', subVal: 'ERROR' })
 		});
 	}
-	
+
 	render() {
 		const { mail, serverResponse, subVal, subDis } = this.state;
 		return (
@@ -73,8 +73,8 @@ export default class UpdateMail extends React.Component {
 		console.log(this.props.con);
 		axios.get(`${apiConnect}user/checkAuth`, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('logToken')}`
-			}
+				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
+			},
 		}).then(({ data }) => {
 			if (data.status === false) browserHistory.push('/');
 			else this.setState({ auth: true });
@@ -82,7 +82,7 @@ export default class UpdateMail extends React.Component {
 	}
 
 	componentWillReceiveProps = (newProps) => console.log(newProps.con);
-	
+
 	render() {
 		const { auth } = this.state;
 		if (!auth) return (<div></div>);

@@ -30,7 +30,6 @@ class MatchHeader extends React.Component {
 			this.setState({ lastNotif: notification, notifications: newNotifList });
 		});
 		if (this.props.location.pathname === '/matcha/chats') {
-			console.log('header set');
 			this.socket.on('receive message', this.notifMessage);
 		}
 	}
@@ -48,7 +47,6 @@ class MatchHeader extends React.Component {
 
 	componentWillReceiveProps = (newProps) => {
 		if (newProps.location.pathname === '/matcha/chats') {
-			console.log('header unset');
 			this.socket.removeListener('receive message');
 		} else {
 			this.socket.removeListener('receive message');
@@ -72,7 +70,7 @@ class MatchHeader extends React.Component {
 	seeList = (e) => {
 		this.setState({
 			notifBlock: this.state.notifBlock === 'notifBlock showNotif' ?
-				'notifBlock' : 'notifBlock showNotif'
+				'notifBlock' : 'notifBlock showNotif',
 			});
 	}
 
@@ -145,7 +143,7 @@ export default class AppHeader extends React.Component {
 		if (this.refs && this.refs.header && this.refs.header.state) {
 			return ({ socket: this.refs.header.state.socket });
 		}
-		else return ({ socket: null });
+		return ({ socket: null });
 	}
 
 	render() {

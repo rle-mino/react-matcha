@@ -56,7 +56,7 @@ class ChatRoom extends React.Component {
 
 	componentWillReceiveProps = (newProps) => {
 		setTimeout(() => this.scrollBottom(), 20);
-	} 
+	}
 
 	render() {
 		if (!this.props.messages) return (<div></div>);
@@ -120,18 +120,18 @@ export default class Chat extends React.Component {
 	componentWillMount() {
 		axios.get(`${apiConnect}user/get_self_interest`, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('logToken')}`
-			}
+				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
+			},
 		}).then(({ data }) => {
 			if (!this._mounted) return (false);
-			
+
 			if (data.status === false) {
 				if (data.details === 'user unauthorized') browserHistory.push('/');
 			} else {
 				this.setState({
 					auth: true,
 					data: data.more,
-					rooms: this.drawRoom(data.more, this.state.selectedChat)
+					rooms: this.drawRoom(data.more, this.state.selectedChat),
 				});
 				if (!this.context.socket) return (false);
 				this.context.socket.on('receive message', (messageData) => {
@@ -147,7 +147,7 @@ export default class Chat extends React.Component {
 			}
 		});
 	}
-	
+
 	componentDidMount() {
 		this._mounted = true;
 	}
@@ -171,7 +171,7 @@ export default class Chat extends React.Component {
 					transitionAppearTimeout={500}
 				>
 					<h1 className="mainTitle">NO AVAILABLE CHAT</h1>
-					<p className="noChatMess">YOU MUST BE CONNECTED WITH AT LEAST ONE USER TO CHAT</p>				
+					<p className="noChatMess">YOU MUST BE CONNECTED WITH AT LEAST ONE USER TO CHAT</p>
 				</ReactCssTransitionGroup>
 			);
 		}
@@ -199,5 +199,5 @@ export default class Chat extends React.Component {
 }
 
 Chat.contextTypes = {
-	socket: React.PropTypes.object
+	socket: React.PropTypes.object,
 };

@@ -141,6 +141,10 @@ module.exports = {
     'unicode-bom': ['warn', 'never'],
     'use-isnan': 'warn',
     'valid-typeof': 'warn',
+	'no-trailing-spaces': 'warn',
+	'object-curly-spacing': ['warn', 'always'],
+	'comma-dangle': ['warn', 'always-multiline'],
+	'brace-style': 'warn',
 
     // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/
 

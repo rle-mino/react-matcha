@@ -33,7 +33,7 @@ class ConfirmMailForm extends React.Component {
 			data: {
 				username: e.target.username.value,
 				newMailKey: e.target.confirmationKey.value,
-			}
+			},
 		}).then(({ data, headers }) => {
 			if (data.status === false) {
 				if (data.details !== 'invalid request') {

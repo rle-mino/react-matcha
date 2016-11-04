@@ -82,7 +82,7 @@ class FormRegister extends React.Component {
 					password: e.target.password.value,
 					birthdate: birthdate,
 					mail: e.target.mail.value,
-					location
+					location,
 				},
 			}).then(({ data }) => {
 				if (data.status === false) {

@@ -13,7 +13,7 @@ import InterestButton				from '../../profile/InterestButton';
 
 import './profile.sass';
 
-const Confirm = ({next, cancel}) =>
+const Confirm = ({ next, cancel }) =>
 	<ReactCssTransitionGroup
 				className="editComp comp"
 				transitionName="route"
@@ -72,7 +72,7 @@ export default class Profile extends React.Component {
 			url: `${apiConnect}user/report/fake`,
 			method: 'put',
 			data: { username: this.state.data.username },
-			headers: { Authorization: `Bearer ${localStorage.getItem('logToken')}` }
+			headers: { Authorization: `Bearer ${localStorage.getItem('logToken')}` },
 		}).then(({ data }) => {
 			if (data.status === true) {
 				browserHistory.push('/matcha/my_profile');
@@ -85,7 +85,7 @@ export default class Profile extends React.Component {
 			url: `${apiConnect}user/report/block`,
 			method: 'put',
 			data: { username: this.state.data.username },
-			headers: { Authorization: `Bearer ${localStorage.getItem('logToken')}` }
+			headers: { Authorization: `Bearer ${localStorage.getItem('logToken')}` },
 		}).then(({ data }) => {
 			if (data.status === true) {
 				browserHistory.push('/matcha/my_profile');

@@ -2,7 +2,7 @@ import React			from 'react';
 
 import './bioInput.sass';
 
-const BioInput = ({children, bio, editComp}) => {
+const BioInput = ({ children, bio, editComp }) => {
 	return (
 		<div className="bioInput">
 			<div className="beforeInput">

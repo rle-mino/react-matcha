@@ -25,7 +25,7 @@ class ForgotForm extends React.Component {
 			url: `${apiConnect}user/forgot_password`,
 			data: {
 				mail: e.target.mail.value,
-			}
+			},
 		}).then(({ data }) => {
 			if (data.status === false) {
 				if (data.details === 'invalid request') {
