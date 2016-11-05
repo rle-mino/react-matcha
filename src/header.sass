@@ -14,16 +14,22 @@
 	z-index: 2
 
 .links
+	height: 100%
 	display: flex
 	justify-content: center
+	align-items: center
 
-.headerLink
-	padding: 15.5px
-	color: white
-	transition: background-color .3s, color .3s
-	&:hover
-		background-color: $darkDotFour
+	& > a
+		padding: 0 15px
+		height: 100%
+		line-height: 50px
+		vertical-align: middle
 		color: white
+		transition: background-color .3s, color .3s
+		&:hover
+			background-color: $darkDotFour
+			color: white
+	
 
 .routeIsActive
 	background-color: $darkDotOne

@@ -38,7 +38,7 @@
 .micro
 	position: relative
 	display: flex
-	flex-direction: column
+	flex-direction: row
 	align-items: center
 	justify-content: center
 	&:hover > .microList
@@ -48,18 +48,32 @@
 
 .microList
 	position: absolute
+	top: 50px
 	z-index: 4
 	list-style: none
 	max-height: 200px
-	top: 100%
 	overflow: auto
 	background-color: $darkDotHeight
 	opacity: 0
-	transform: translateY(-20px)
 	transition: all .2s
 	pointer-events: none
 	&::-webkit-scrollbar
 		display: none
+
+@-moz-document url-prefix()
+	.microList
+		right: 0%
+		margin-top: 1px
+	
+	.microBlock
+		&:hover
+			&:before
+				min-width: calc(100% - 20px)
+				text-align: center
+				left: 0
+			&:after
+				margin-left: -66%
+				top: -10px
 
 .listEl
 	padding: 15px

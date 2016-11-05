@@ -111,7 +111,7 @@ export default class Chat extends React.Component {
 				<div
 					className={`thumbChat ${selected === key ? 'selected' : ''}`}
 					style={{ backgroundImage: `url('${apiConnect}user/get_img_src/${el.user.image}')` }}
-				></div>
+				/>
 				<span>{el.user.username}</span>
 			</li>
 		);
@@ -135,6 +135,7 @@ export default class Chat extends React.Component {
 				});
 				if (!this.context.socket) return (false);
 				this.context.socket.on('receive message', (messageData) => {
+					console.log('coucou')
 					const newData = this.state.data.map((room) => {
 
 						if (room.user.username === messageData.author) {

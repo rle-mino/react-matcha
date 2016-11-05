@@ -44,24 +44,23 @@ export default class UserFast extends React.Component {
 			popularity,
 			images,
 		} = this.props.data;
-		// const { oriIcon, genderIcon } = this.state;
 		return (
 			<li className="userFast">
+				<div className="fastTop">
+					<div title="popularity" className="popDist"><FontAwesome name="fire"/>{popularity}</div>
+					<div title="distance(km)" className="popDist">{distance}<FontAwesome name="map-marker"/></div>
+				</div>
 				<div className="fastIMG" style={{
 					backgroundImage: `url('${apiConnect}user/get_img_src/${images.length ? images[0] : 'undef.jpg' }')`,
 				}} />
 				<div className="fastBottom">
-					<div className="fastTop">
-						<div title="popularity" className="popDist"><FontAwesome name="fire"/>{popularity}</div>
-						<div title="distance(km)" className="popDist">{distance}<FontAwesome name="map-marker"/></div>
-					</div>
 					<div className="names">
 						<span className="firstname">{firstname}</span>
 						<span className="lastname">{lastname}</span>
 					</div>
 					<span className="age">{age}</span>
 					<div className="bottom">
-						<span className="commonTags">{commonTags}</span>
+						<span title="tags in common" className="commonTags">{commonTags}</span>
 						<span>{gender}</span>
 						<span>{orientation}</span>
 					</div>

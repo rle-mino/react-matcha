@@ -2,48 +2,25 @@
 
 .userFast
 	list-style: none
+	position: relative
 	background-color: $darkDotTwo
 	width: 250px
 	color: black
 	height: 275px
 	margin-top: 10px
 	margin-left: 2px
+	transition: all .2s
 
-	& .fastBottom
-		width: 100%
+	&:hover
+		background-color: $darkDotSix
+		color: white
 
-		& .names
-			position: relative
-			width: 100%
-			font-size: 16px
-			display: flex
-			flex-direction: row
-			justify-content: center
-
-		& .firstname
-			width: 50%
-			margin: 0 5px
-			text-align: right
-
-		& .lastname
-			width: 50%
-			margin: 0 5px
-			text-align: left
-
-		& .age
-			width: 100%
-			display: block
-			text-align: center
-		
-		& .bottom
-			position: absolute
-			bottom: calc(0% + 20px)
-			width: calc(230px)
-			padding: 10px
-			display: flex
-			flex-direction: row
-			justify-content: space-around
-
+	& .fastTop
+		margin-bottom: -30px
+		display: flex
+		flex-direction: row
+		justify-content: space-between
+		padding: 10px
 
 	& .fastIMG
 		position: relative
@@ -51,7 +28,6 @@
 		top: 10px
 		z-index: 2
 		margin:
-			bottom: -22px
 			left: auto
 			right: auto
 		height: 150px
@@ -62,58 +38,18 @@
 			repeat: no-repeat
 			position: center
 
-/*.userFast
-	list-style: none
-	position: relative
-	width: 250px
-	height: 275px
-	color: black
-	margin-top: 10px
-	margin-left: 2px
-	transition: all .2s
-
-	&:hover
-		color: white
-
-		& .fastBottom
-			background-color: $darkDotHeight
-
-	& .fastTop
-		position: absolute
-		top: 0
-		width: 100%
-		display: flex
-		flex-direction: row
-		justify-content: space-between
-		& .popDist > span
-			margin: 5px
-
-
 	& .fastBottom
-		position: relative
-		z-index: 1
-		height: calc(150px - 35px)
-		background-color: white
-		display: flex
-		flex-direction: column
-		padding-top: 30px
-		transition: background-color .2s
+		width: 100%
 
 		& .names
 			position: relative
+			display: block
+			margin-top: 20px
 			width: 100%
 			font-size: 16px
 			display: flex
 			flex-direction: row
 			justify-content: center
-
-		& .age
-			width: 100%
-			margin-top: 10px
-			text-align: center
-
-		& .commonTags
-			margin: 5px auto
 
 		& .firstname
 			width: 50%
@@ -125,11 +61,21 @@
 			margin: 0 5px
 			text-align: left
 
-		& .popOriGender
+		& .age
+			width: 100%
+			margin-top: 10px
+			display: block
+			text-align: center
+		
+		& .bottom
 			position: absolute
-			bottom: 0
-			width: calc(100% - 10px)
+			bottom: 0%
+			width: 100%
+			padding: 10px
 			display: flex
 			flex-direction: row
-			justify-content: space-between
-			margin: 5px*/
+			justify-content: space-around
+
+@media screen and (max-width: 1080px)
+	.userFast
+		width: 100%

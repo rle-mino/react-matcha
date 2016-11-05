@@ -52,7 +52,7 @@ class MatchHeader extends React.Component {
 			this.socket.removeListener('receive message');
 			this.socket.on('receive message', this.notifMessage);
 		}
-		this.setState({ notifications: newProps.notifications });
+		this.setState({ notifications: newProps.notifications, headVis: 'header' });
 	}
 
 	componentWillMount() {
@@ -116,7 +116,7 @@ class MatchHeader extends React.Component {
 	}
 }
 
-// const MatchFooter = () => <footer className="footer">rle-mino 2016</footer>
+const MatchFooter = () => <footer className="footer">rle-mino 2016</footer>
 
 export default class AppHeader extends React.Component {
 	state = {
@@ -151,6 +151,7 @@ export default class AppHeader extends React.Component {
 			<div className="AppHeader">
 				<MatchHeader notifications={this.state.notifications} ref="header" location={this.props.location} />
 	    		{this.props.children}
+				<MatchFooter />
 	        </div>
 		);
 	}
