@@ -1,5 +1,4 @@
 import React                    from 'react';
-import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
 import { browserHistory }		from 'react-router';
@@ -39,18 +38,10 @@ export default class ProfileExt extends React.Component {
 		const { data } = this.state;
 		if (!data) return (<div></div>);
 		return (
-			<ReactCssTransitionGroup
-				className="matcha"
-				component="div"
-				transitionName="route"
-				transitionAppear={true}
-				transitionEnterTimeout={500}
-				transitionLeaveTimeout={500}
-				transitionAppearTimeout={500}
-			>
+			<div className="matcha">
 				<h1 className="mainTitle">PROFILE</h1>
 				<Profile editable={false} data={data} />
-			</ReactCssTransitionGroup>
+			</div>
 		);
 	}
 }

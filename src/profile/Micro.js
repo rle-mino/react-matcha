@@ -1,14 +1,13 @@
 import React					from 'react';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
-import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 
 import MicroBlock				from '../components/MicroBlock';
 import FontAwesome				from 'react-fontawesome';
 import ErrorMessage				from '../components/ErrorMessage';
 import ThreeSelector			from '../components/ThreeSelector';
 import MatchInput				from '../components/MatchInput';
-import RippledButton				from '../components/RippledButton';
+import RippledButton			from '../components/RippledButton';
 
 import './css/micro.sass';
 
@@ -79,14 +78,7 @@ class MicroEdit extends React.Component {
 		const { props } = this;
 		const { subVal, subDis, gender, orientation, location } = this.state;
 		return (
-			<ReactCssTransitionGroup
-				className="editComp comp"
-				transitionName="route"
-				transitionAppear={true}
-				transitionEnterTimeout={500}
-				transitionLeaveTimeout={500}
-				transitionAppearTimeout={500}
-			>
+			<div className="editComp comp">
 				<form onSubmit={this.send}>
 					<ThreeSelector name="gender" label="GENDER"
 								   value1="male" label1="MALE"
@@ -112,7 +104,7 @@ class MicroEdit extends React.Component {
 					<RippledButton butType="submit" value={subVal} disabled={subDis}/>
 					<RippledButton butType="button" value="CANCEL" event={this.cancel} />
 				</form>
-			</ReactCssTransitionGroup>
+			</div>
 		);
 	}
 }

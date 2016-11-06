@@ -1,7 +1,6 @@
 import React						from 'react';
 import { Link, browserHistory }		from 'react-router';
 import axios						from 'axios';
-import ReactCssTransitionGroup		from 'react-addons-css-transition-group';
 import apiConnect					from '../apiConnect';
 
 
@@ -117,15 +116,7 @@ export default class Login extends React.Component {
 		const { auth } = this.state;
 		if (auth) return (<div></div>)
         return (
-            <ReactCssTransitionGroup
-				component="div"
-				transitionName="route"
-				className="comp"
-				transitionAppear={true}
-				transitionEnterTimeout={500}
-				transitionAppearTimeout={500}
-				transitionLeaveTimeout={500}
-			>
+            <div className="comp">
                 <h1 className="mainTitle">LOGIN</h1>
                 <LoginForm/>
                 <div className="otherOptions">
@@ -136,7 +127,7 @@ export default class Login extends React.Component {
                         <div className="forgot otherOption">FORGOT PASSWORD?</div>
                     </Link>
                 </div>
-            </ReactCssTransitionGroup>
+            </div>
         );
     }
 }

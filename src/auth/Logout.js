@@ -1,6 +1,5 @@
 import React						from 'react';
 import { browserHistory }			from 'react-router';
-import ReactCssTransitionGroup		from 'react-addons-css-transition-group';
 import axios						from 'axios';
 import apiConnect					from '../apiConnect';
 
@@ -19,7 +18,7 @@ export default class Logout extends React.Component {
 		}).then(({ data }) => {
 			if (data.status === true) {
 				this.setState({ message: 'YOU ARE NOW LOGGED OUT' })
-				// localStorage.removeItem('logToken');
+				localStorage.removeItem('logToken');
 				setTimeout(() => browserHistory.push('/'), 1000);
 			} else browserHistory.push('/');
 		}).catch(() => browserHistory.push('/'));
@@ -27,19 +26,11 @@ export default class Logout extends React.Component {
 
 	render() {
 		const { message } = this.state;
-		if (!message) return (<div></div>);
+		if (!message) return (<div className="comp"></div>);
 		return (
-			<ReactCssTransitionGroup
-				component="div"
-				transitionName="route"
-				className="comp"
-				transitionAppear={true}
-				transitionEnterTimeout={500}
-				transitionAppearTimeout={500}
-				transitionLeaveTimeout={500}
-			>
+			<div className="comp">
 				<h1 className="mainTitle">{message}</h1>
-			</ReactCssTransitionGroup>
+			</div>
 		)
 	}
 }

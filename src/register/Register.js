@@ -1,7 +1,6 @@
 import React					from 'react';
 import axios					from 'axios';
 import { Link, browserHistory }	from 'react-router';
-import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import apiConnect				from '../apiConnect.js';
 
 import MatchInput				from '../components/MatchInput';
@@ -183,18 +182,10 @@ class FormRegister extends React.Component {
 }
 
 export default () =>
-	<ReactCssTransitionGroup
-		component="div"
-		transitionName="route"
-		className="comp"
-		transitionAppear={true}
-		transitionEnterTimeout={500}
-		transitionAppearTimeout={500}
-		transitionLeaveTimeout={500}
-	>
+	<div className="comp">
 		<h1 className="mainTitle">REGISTER</h1>
 		<FormRegister />
 		<div className="otherOptions">
 			<Link to="/"><div className="otherOption centered">ALREADY REGISTERED</div></Link>
 		</div>
-	</ReactCssTransitionGroup>
+	</div>

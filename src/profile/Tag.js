@@ -1,5 +1,4 @@
 import React					from 'react';
-import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
 
@@ -70,21 +69,14 @@ class EditTags extends React.Component{
 	render() {
 		const { serverResponse, savedTags, subVal, subDis, addedTags } = this.state;
 		return (
-			<ReactCssTransitionGroup
-				className="editComp comp"
-				transitionName="route"
-				transitionAppear={true}
-				transitionEnterTimeout={500}
-				transitionLeaveTimeout={500}
-				transitionAppearTimeout={500}
-			>
+			<div className="editComp comp">
 				<div className="errorMessageMain">{serverResponse}</div>
 				<form onSubmit={this.sendTags}>
 					<TagInput addedTags={addedTags} savedTags={savedTags} ref="tagInput" />
 					<RippledButton butType="submit" value={subVal} disabled={subDis} />
 					<RippledButton butType="button" value="CANCEL" event={this.finish} />
 				</form>
-			</ReactCssTransitionGroup>
+			</div>
 		);
 	}
 }

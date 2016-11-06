@@ -1,7 +1,6 @@
 import React						from 'react';
 import axios						from 'axios';
 import apiConnect					from '../apiConnect';
-import ReactCssTransitionGroup		from 'react-addons-css-transition-group';
 
 import FontAwesome					from 'react-fontawesome';
 import MatchInput					from '../components/MatchInput';
@@ -72,14 +71,7 @@ class NameEdit extends React.Component {
 			subDis,
 		} = this.state
 		return (
-			<ReactCssTransitionGroup
-				className="editComp comp"
-				transitionName="route"
-				transitionAppear={true}
-				transitionEnterTimeout={500}
-				transitionAppearTimeout={500}
-				transitionLeaveTimeout={500}
-			>
+			<div className="editComp comp">
 				<div className="errorMessageMain">{serverResponse}</div>
 				<form onSubmit={this.sendNames}>
 					<MatchInput label="FISTNAME" inputName="firstname"
@@ -93,7 +85,7 @@ class NameEdit extends React.Component {
 					<RippledButton butType="submit" value={subVal} disabled={subDis} />
 					<RippledButton butType="button" value="CANCEL" event={this.props.finish} />
 				</form>
-			</ReactCssTransitionGroup>
+			</div>
 		);
 	}
 }

@@ -1,5 +1,4 @@
 import React					from 'react';
-import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import axios					from 'axios'
 import { Link, browserHistory }	from 'react-router';
 import apiConnect				from './../apiConnect';
@@ -169,17 +168,9 @@ class AddPhotosForm extends React.Component {
 
 export default ({ isEditComp, setEditComp }) => {
 	return (
-		<ReactCssTransitionGroup
-			component="div"
-			transitionName="route"
-			className={`comp ${isEditComp ? 'editComp' : '' }`}
-			transitionAppear={true}
-			transitionEnterTimeout={500}
-			transitionAppearTimeout={500}
-			transitionLeaveTimeout={500}
-		>
+		<div className={`comp ${isEditComp ? 'editComp' : '' }`}>
 			{!isEditComp && <h1 className="mainTitle">ADD PHOTOS</h1>}
 			<AddPhotosForm isEditComp={isEditComp} setEditComp={setEditComp} />
-		</ReactCssTransitionGroup>
+		</div>
 	);
 }

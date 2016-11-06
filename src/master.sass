@@ -13,6 +13,12 @@ html
 	font-family: Montserrat !important
 	overflow-y: scroll
 
+#root
+	position: relative
+	margin-top: 0 !important
+	top: 0 !important
+	height: 100%
+
 .background
 	width: 150%
 	height: 150%
@@ -22,32 +28,39 @@ html
 	top: 0
 	background-image: url('back.jpg')
 	background-size: cover
-	background-position: center 
+	background-position: center
 	border-radius: 5px
 	filter: blur(30px)
 
 footer
+	position: relative
 	font-size: 12px
+	top: 100px
+	margin-top: 10px
 	text-align: center
 
 .comp
-	position: fixed
-	top: 50%
-	left: 50%
-	transform: translate(-50%, -50%)
+	position: relative
+	margin: 0 auto
+	top: 25vh
 	width: 500px
 	padding: 40px
+	min-height: calc(75vh - 125px)
 	color: black
+	overflow: hidden
+	animation: routeUpComp .5s cubic-bezier(.69,.13,.1,.88)
 
 .matcha
 	position: relative
 	display: block
+	top: 100px
 	width: 80%
+	min-height: calc(100vh - 125px)
 	left: 50%
-	margin-top: 100px
 	transform: translate(-50%, 0)
 	color: white
-	padding-bottom: 20px
+	overflow: hidden
+	animation: routeUp .5s cubic-bezier(.69,.13,.1,.88)
 
 .mainTitle
 	font-size: 30px
@@ -107,12 +120,12 @@ footer
 .editComp
 	position: fixed !important
 	display: block
+	top: 100px
+	left: 50%
+	transform: translateX(-50%)
+	animation: routeUp .5s ease-out
 
-.route-appear
-	overflow: hidden
-	animation: routeUp .5s cubic-bezier(.69,.13,.1,.88)
-
-@keyframes routeUp
+@keyframes routeUpComp
 	0%
 		transform: translateY(100px)
 		opacity: 0
@@ -122,6 +135,18 @@ footer
 
 	100%
 		transform: translateY(0)
+		opacity: 1
+
+@keyframes routeUp
+	0%
+		transform: translate(-50%, 100px)
+		opacity: 0
+
+	30%
+		opacity: 0
+
+	100%
+		transform: translate(-50%, 0px)
 		opacity: 1
 
 @keyframes suggIn

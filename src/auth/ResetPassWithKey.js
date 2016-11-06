@@ -1,7 +1,6 @@
 import React					from 'react';
 import { browserHistory }		from 'react-router';
 import axios					from 'axios';
-import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import apiConnect				from '../apiConnect';
 
 import RippledButton			from '../components/RippledButton';
@@ -97,20 +96,8 @@ class ResetPassWithKeyForm extends React.Component {
 	}
 }
 
-export default class ResetPassWithKey extends React.Component {
-	render() {
-		return (
-			<ReactCssTransitionGroup
-				transitionName="route"
-				className="comp"
-				transitionAppear={true}
-				transitionEnterTimeout={500}
-				transitionLeaveTimeout={500}
-				transitionAppearTimeout={500}
-			>
-				<h1 className="mainTitle">RESET YOUR PASSWORD</h1>
-				<ResetPassWithKeyForm/>
-			</ReactCssTransitionGroup>
-		);
-	}
-}
+export default () =>
+	<div className="comp">
+		<h1 className="mainTitle">RESET YOUR PASSWORD</h1>
+		<ResetPassWithKeyForm/>
+	</div>

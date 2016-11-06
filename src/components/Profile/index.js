@@ -1,7 +1,6 @@
 import React						from 'react';
 import axios						from 'axios';
 import apiConnect					from '../../apiConnect';
-import ReactCssTransitionGroup		from 'react-addons-css-transition-group';
 import { browserHistory, Link }		from 'react-router';
 
 import NameAgeProf					from '../../profile/NameAge';
@@ -14,20 +13,13 @@ import InterestButton				from '../../profile/InterestButton';
 import './profile.sass';
 
 const Confirm = ({ next, cancel }) =>
-	<ReactCssTransitionGroup
-				className="editComp comp"
-				transitionName="route"
-				transitionAppear={true}
-				transitionEnterTimeout={500}
-				transitionLeaveTimeout={500}
-				transitionAppearTimeout={500}
-			>
+	<div className="editComp comp">
 		<h1 className="mainTitle">ARE YOU SURE?</h1>
 		<div className="sureButton">
 			<span onClick={next}>YES</span>
 		<span onClick={() => cancel(null)}>NO</span>
 		</div>
-	</ReactCssTransitionGroup>
+	</div>
 
 export default class Profile extends React.Component {
 	state = {

@@ -1,6 +1,5 @@
 import React					from 'react';
 import { browserHistory }		from 'react-router';
-import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
 
@@ -60,14 +59,7 @@ class ForgotForm extends React.Component {
 }
 
 export default () =>
-	<ReactCssTransitionGroup
-		className="comp"
-		transitionName="route"
-		transitionAppear={true}
-		transitionEnterTimeout={500}
-		transitionLeaveTimeout={500}
-		transitionAppearTimeout={500}
-	>
+	<div className="comp">
 		<h1 className="mainTitle">FORGOT PASSWORD</h1>
 		<ForgotForm />
-		</ReactCssTransitionGroup>
+	</div>

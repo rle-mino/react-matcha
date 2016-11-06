@@ -1,7 +1,7 @@
 import React					from 'react';
 import _						from 'lodash';
 import { Link, browserHistory }	from 'react-router';
-import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
+import FlipMove					from 'react-flip-move';
 import InputRange				from 'react-input-range';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
@@ -159,7 +159,7 @@ export default class Search extends React.Component {
 	}
 
 	setResults = (results) => {
-		const users = results.map((el, key) => <Link to={`/matcha/profile/${el.username}`} key={key}><UserFast data={el} /></Link>);
+		const users = results.map((el) => <Link to={`/matcha/profile/${el.username}`} key={el._id}><UserFast data={el} /></Link>);
 		this.setState({ users });
 	}
 
@@ -200,29 +200,15 @@ export default class Search extends React.Component {
 
 	render() {
 		const { users, auth } = this.state;
-		if (!auth) return (<div></div>);
+		if (!auth) return (<div className="matcha"></div>);
 		return (
-			<ReactCssTransitionGroup
-				className="matcha"
-				component="div"
-				transitionName="route"
-				transitionAppear={true}
-				transitionEnterTimeout={500}
-				transitionLeaveTimeout={500}
-				transitionAppearTimeout={500}
-			>
+			<div className="matcha">
 				<div className="mainTitle">SEARCH</div>
 				<SearchForm setResults={this.setResults} />
-				<ReactCssTransitionGroup
-					className="results"
-					component="ul"
-					transitionName="card"
-					transitionEnterTimeout={300}
-					transitionLeaveTimeout={300}
-				>
+				<FlipMove typeName="ul" className="results">
 					{users}
-				</ReactCssTransitionGroup>
-			</ReactCssTransitionGroup>
+				</FlipMove>
+			</div>
 		);
 	}
 }

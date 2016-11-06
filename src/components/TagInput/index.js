@@ -20,6 +20,7 @@ export default class TagInput extends React.Component {
 		addedTags: [],
 		suggBlock: '',
 		tip: 'tip invisible',
+		ts: 0,
 	}
 
 	focus = () => this.setState({ suggBlock: 'suggBlock', tip: 'tip' });
@@ -36,7 +37,7 @@ export default class TagInput extends React.Component {
 			const actualTags = this.state.addedTags;
 			actualTags.push(escape(e.target.value.substring(0, e.target.value.length - 1)));
 			e.target.value = '';
-			this.setState({ addedTags: actualTags });
+			this.setState({ addedTags: actualTags, tagSugg: [] });
 			return true;
 		}
 		if (e.target.value.length === 1 && e.target.value.slice(-1) === ' ') e.target.value = '';
@@ -77,6 +78,21 @@ export default class TagInput extends React.Component {
 		this.setState({ addedTags: this.props.addedTags || [] });
 	}
 
+	selectSuggest = (e) => {
+		if (e.keyCode === 38 || e.keyCode === 40) {
+			e.preventDefault();
+			if (this.state.tagSugg.length > 0) {
+				const ts = e.keyCode === 40 ?
+					(this.state.ts + 1) % (this.state.tagSugg.length) :
+					(this.state.ts - 1) >= 0 ? (this.state.ts - 1) : (this.state.tagSugg.length - 1);
+				if (this.state.tagSugg[ts]) {
+					e.target.value = this.state.tagSugg[ts].string;
+				}
+				this.setState({ ts });
+			}
+		}
+	}
+
 	render() {
 		const { tagSugg, suggBlock, addedTags, tip } = this.state;
 		const suggTags = tagSugg.map((tag, index) => <li key={index} onMouseDown={this.addTag} className="sugg">{tag.string}</li>);
@@ -98,7 +114,15 @@ export default class TagInput extends React.Component {
 					>
 						{activTags}
 					</ReactCssTransitionGroup>
-				<input type="text" ref="tagInput" className={`textInp ${this.state.isFocused}`} onFocus={this.focus} onBlur={this.blur} onChange={this.handleEntry}/>
+				<input
+					type="text"
+					ref="tagInput"
+					className={`textInp ${this.state.isFocused}`}
+					onFocus={this.focus}
+					onBlur={this.blur}
+					onChange={this.handleEntry}
+					onKeyDown={this.selectSuggest}
+				/>
 				<ul className={`tagSuggs ${suggBlock}`}>
 					<ReactCssTransitionGroup
 						transitionName="sugg"

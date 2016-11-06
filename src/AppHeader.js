@@ -21,6 +21,7 @@ class MatchHeader extends React.Component {
 
 	componentDidMount() {
 		this.socket = io('http://localhost:8080');
+		global.socket = this.socket;
 		this.setState({ socket: this.socket });
 		this.socket.emit('auth', localStorage.getItem('logToken'));
 
@@ -139,24 +140,16 @@ export default class AppHeader extends React.Component {
 		}
 	}
 
-	getChildContext() {
-		if (this.refs && this.refs.header && this.refs.header.state) {
-			return ({ socket: this.refs.header.state.socket });
-		}
-		return ({ socket: null });
-	}
-
 	render() {
 		return (
 			<div className="AppHeader">
-				<MatchHeader notifications={this.state.notifications} ref="header" location={this.props.location} />
-	    		{this.props.children}
+				<MatchHeader
+					notifications={this.state.notifications}
+					location={this.props.location}
+				/>
+					{this.props.children}
 				<MatchFooter />
 	        </div>
 		);
 	}
 }
-
-AppHeader.childContextTypes = {
-	socket: React.PropTypes.object,
-};

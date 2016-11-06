@@ -1,5 +1,4 @@
 import React					from 'react'
-import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import { browserHistory }		from 'react-router';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
@@ -82,20 +81,12 @@ export default class UpdateMail extends React.Component {
 
 	render() {
 		const { auth } = this.state;
-		if (!auth) return (<div></div>);
+		if (!auth) return (<div className="comp"></div>);
 		return (
-			<ReactCssTransitionGroup
-				component="div"
-				transitionName="route"
-				className="comp"
-				transitionAppear={true}
-				transitionEnterTimeout={500}
-				transitionAppearTimeout={500}
-				transitionLeaveTimeout={500}
-			>
+			<div className="comp">
 				<h1 className="mainTitle">UPDATE YOUR MAIL</h1>
 				<UpdateMailForm />
-			</ReactCssTransitionGroup>
+			</div>
 		);
 	}
 }

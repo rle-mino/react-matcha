@@ -21,7 +21,7 @@ import UpdatePassword									from './auth/UpdatePassword';
 import UpdateMail										from './auth/UpdateMail';
 import Chat												from './chat/Chats';
 
-import 'normalize-css';
+// import 'normalize-css';
 import './master.sass';
 
 render((

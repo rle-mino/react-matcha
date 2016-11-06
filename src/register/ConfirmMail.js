@@ -1,5 +1,4 @@
 import React						from 'react';
-import ReactCssTransitionGroup		from 'react-addons-css-transition-group';
 import axios						from 'axios';
 import { browserHistory, Link }		from 'react-router';
 import apiConnect					from '../apiConnect';
@@ -80,24 +79,12 @@ class ConfirmMailForm extends React.Component {
 	}
 }
 
-export default class ConfirmMail extends React.Component {
-	render() {
-		return (
-			<ReactCssTransitionGroup
-			component="div"
-			transitionName="route"
-			className="comp"
-			transitionAppear={true}
-			transitionEnterTimeout={500}
-			transitionAppearTimeout={500}
-			transitionLeaveTimeout={500}>
-				<h1 className="mainTitle">CONFIRM YOUR MAIL</h1>
-				<ConfirmMailForm />
-				<div className="otherOptions">
-					<Link to="/"><div className="forgot otherOption">SIGN IN</div></Link>
-					<Link to="register"><div className="register otherOption">NOT REGISTERED YET?</div></Link>
-				</div>
-			</ReactCssTransitionGroup>
-		)
-	}
-}
+export default () =>
+	<div className="comp">
+		<h1 className="mainTitle">CONFIRM YOUR MAIL</h1>
+		<ConfirmMailForm />
+		<div className="otherOptions">
+			<Link to="/"><div className="forgot otherOption">SIGN IN</div></Link>
+			<Link to="register"><div className="register otherOption">NOT REGISTERED YET?</div></Link>
+		</div>
+	</div>

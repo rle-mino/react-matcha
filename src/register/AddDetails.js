@@ -1,6 +1,5 @@
 import _						from 'lodash';
 import React					from 'react';
-import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
 import { browserHistory }		from 'react-router';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
@@ -204,18 +203,10 @@ export default class AddDetails extends React.Component {
 		return (
 			<div>
 				{!_.isEmpty(tags) && !_.isNil(tags) && (
-					<ReactCssTransitionGroup
-						component="div"
-						transitionName="route"
-						className="comp"
-						transitionAppear={true}
-						transitionEnterTimeout={500}
-						transitionAppearTimeout={500}
-						transitionLeaveTimeout={500}
-					>
+					<div className="comp">
 						<h1 className="mainTitle">ADD DETAILS TO YOUR PROFIL</h1>
 						<AddDetailsForm tags={tags} />
-					</ReactCssTransitionGroup>
+					</div>
 				)}
 			</div>
 		);

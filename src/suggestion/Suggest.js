@@ -1,6 +1,6 @@
 import React					from 'react'
 import { browserHistory, Link }	from 'react-router';
-import ReactCssTransitionGroup	from 'react-addons-css-transition-group';
+import FlipMove					from 'react-flip-move';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
 
@@ -22,8 +22,8 @@ export default class Suggest extends React.Component {
 			}
 			return (-a[e.target.value] - -b[e.target.value]);
 		});
-		const newUserFasts = sortedUser.map((el, key) =>
-			<Link to={`/matcha/profile/${el.username}`} key={key}>
+		const newUserFasts = sortedUser.map((el) =>
+			<Link to={`/matcha/profile/${el.username}`} key={el._id}>
 				<UserFast data={el} />
 			</Link>
 		);
@@ -38,8 +38,8 @@ export default class Suggest extends React.Component {
 		}).then(({ data }) => {
 			if (!this._mounted) return (false);
 			if (data.status === true) {
-				this.setState({ users: data.more, results: data.more.map((el, key) =>
-					<Link to={`/matcha/profile/${el.username}`} key={key}>
+				this.setState({ users: data.more, results: data.more.map((el) =>
+					<Link to={`/matcha/profile/${el.username}`} key={el._id}>
 						<UserFast data={el} />
 					</Link>
 				) });
@@ -62,28 +62,14 @@ export default class Suggest extends React.Component {
 		let { results } = this.state;
 		if (!results.length) results = (<div className="errorMessageMain">NOTHING TO SUGGEST</div>);
 		return (
-			<ReactCssTransitionGroup
-				className="matcha"
-				component="div"
-				transitionName="route"
-				transitionAppear={true}
-				transitionEnterTimeout={500}
-				transitionLeaveTimeout={500}
-				transitionAppearTimeout={500}
-			>
+			<div className="matcha">
 				<form onChange={this.sortResults}>
 					<SortBar defaultSort="popularity" />
 				</form>
-				<ReactCssTransitionGroup
-					className="results"
-					component="ul"
-					transitionName="card"
-					transitionEnterTimeout={300}
-					transitionLeaveTimeout={300}
-				>
+				<FlipMove typeName="ul" className="results">
 					{results}
-				</ReactCssTransitionGroup>
-			</ReactCssTransitionGroup>
+				</FlipMove>
+			</div>
 		);
 	}
 }
