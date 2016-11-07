@@ -27,7 +27,7 @@ class GeolocInput extends React.Component {
 		e.preventDefault();
 		this.setState({ geolocButtonVal: 'WAIT', geolocButtonDis: true });
 		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(async(position) => {
+			navigator.geolocation.getCurrentPosition(async (position) => {
 				let lat = position.coords.latitude;
 				let lng = position.coords.longitude;
 				const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}`);

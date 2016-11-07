@@ -43,10 +43,7 @@ class UpdateMailForm extends React.Component {
 				this.setState({ subVal: 'SUCCESS' });
 				setTimeout(() => browserHistory.push('/confirm_mail'), 1000);
 			}
-		}).catch((err) => {
-			console.log(err);
-			this.setState({ serverResponse: 'AN ERROR OCCURRRED', subVal: 'ERROR' })
-		});
+		}).catch((err) => this.setState({ serverResponse: 'AN ERROR OCCURRRED', subVal: 'ERROR' }));
 	}
 
 	render() {

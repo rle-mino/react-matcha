@@ -20,7 +20,7 @@ export default class TagInput extends React.Component {
 		addedTags: [],
 		suggBlock: '',
 		tip: 'tip invisible',
-		ts: 0,
+		ts: null,
 	}
 
 	focus = () => this.setState({ suggBlock: 'suggBlock', tip: 'tip' });
@@ -37,7 +37,7 @@ export default class TagInput extends React.Component {
 			const actualTags = this.state.addedTags;
 			actualTags.push(escape(e.target.value.substring(0, e.target.value.length - 1)));
 			e.target.value = '';
-			this.setState({ addedTags: actualTags, tagSugg: [] });
+			this.setState({ addedTags: actualTags, tagSugg: [], ts: null });
 			return true;
 		}
 		if (e.target.value.length === 1 && e.target.value.slice(-1) === ' ') e.target.value = '';
@@ -47,16 +47,14 @@ export default class TagInput extends React.Component {
 				extract: el => el.value,
 			});
 			const matches = results.filter((element, index) => index < 5);
-			this.setState({ tagSugg: matches });
+			this.setState({ tagSugg: matches, ts: null });
 		} else {
-			this.setState({ tagSugg: [] });
+			this.setState({ tagSugg: [], ts: null });
 		}
 	}
 
-	removeTag = (e) => {
-		e.preventDefault();
+	removeTag = (index) => {
 		const allTags = this.state.addedTags;
-		const index = allTags.indexOf(e.target.innerHTML);
 		allTags.splice(index, 1);
 		this.setState({ addedTags: allTags });
 	}
@@ -82,9 +80,22 @@ export default class TagInput extends React.Component {
 		if (e.keyCode === 38 || e.keyCode === 40) {
 			e.preventDefault();
 			if (this.state.tagSugg.length > 0) {
-				const ts = e.keyCode === 40 ?
-					(this.state.ts + 1) % (this.state.tagSugg.length) :
-					(this.state.ts - 1) >= 0 ? (this.state.ts - 1) : (this.state.tagSugg.length - 1);
+				let ts;
+				if (this.state.ts === null) {
+					if (e.keyCode === 40) {
+						ts = 0;
+					} else {
+						ts = this.state.tagSugg.length - 1;
+					}
+				} else {
+					if (e.keyCode === 40) {
+						ts = (this.state.ts + 1) % (this.state.tagSugg.length);
+					} else {
+						ts = (this.state.ts - 1) >= 0 ?
+							(this.state.ts - 1) :
+							(this.state.tagSugg.length - 1);
+					}
+				}
 				if (this.state.tagSugg[ts]) {
 					e.target.value = this.state.tagSugg[ts].string;
 				}
@@ -96,7 +107,7 @@ export default class TagInput extends React.Component {
 	render() {
 		const { tagSugg, suggBlock, addedTags, tip } = this.state;
 		const suggTags = tagSugg.map((tag, index) => <li key={index} onMouseDown={this.addTag} className="sugg">{tag.string}</li>);
-		const activTags = addedTags.map((tag, index) => <ActivTag key={index} remove={this.removeTag} tag={tag} editable={true}/>);
+		const activTags = addedTags.map((tag, index) => <ActivTag key={index} remove={() => this.removeTag(index)} tag={tag} editable={true} />);
 		return (
 			<div className="tagInput">
 				<div className="beforeInput">
@@ -105,15 +116,9 @@ export default class TagInput extends React.Component {
 					{this.props.children}
 				</div>
 				<br/>
-					<ReactCssTransitionGroup
-						component="div"
-						transitionName="validTag"
-						className="validTags"
-						transitionEnterTimeout={200}
-						transitionLeaveTimeout={200}
-					>
-						{activTags}
-					</ReactCssTransitionGroup>
+				<ul className="validTags">
+					{activTags}
+				</ul>
 				<input
 					type="text"
 					ref="tagInput"

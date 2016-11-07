@@ -89,6 +89,7 @@ class MatchHeader extends React.Component {
 			<div className="headAndButton">
 				<FontAwesome name="bars" className="headerToggler" onClick={this.showHeader}/>
 				<div className={headVis}>
+				<h1 className="title">MATCHA</h1>
 					<div className="links">
 						<Link to="/matcha/my_profile" activeClassName="routeIsActive">
 							<div className="headerLink">MY PROFILE</div>

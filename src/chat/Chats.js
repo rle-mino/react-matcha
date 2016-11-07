@@ -34,7 +34,6 @@ class ChatRoom extends React.Component {
 	}
 
 	handleChange = (e) => {
-		console.log('coucou')
 		const { value } = e.target;
 		const lastChar = e.target.value.slice(-1);
 		if (checkLastChar(lastChar)) {
