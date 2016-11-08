@@ -1,8 +1,10 @@
 import React						from 'react';
+import _							from 'lodash';
 import fuzzy						from 'fuzzy';
 import ReactCssTransitionGroup		from 'react-addons-css-transition-group';
 import ReactDOM						from 'react-dom';
 
+import FlipMove						from 'react-flip-move';
 import ActivTag						from '../ActivTag';
 
 import './tagInput.sass';
@@ -35,7 +37,7 @@ export default class TagInput extends React.Component {
 		}
 		if (e.target.value.slice(-1) === ' ' && e.target.value.length > 1) {
 			const actualTags = this.state.addedTags;
-			actualTags.push(escape(e.target.value.substring(0, e.target.value.length - 1)));
+			actualTags.push(_.camelCase(e.target.value.substring(0, e.target.value.length - 1)));
 			e.target.value = '';
 			this.setState({ addedTags: actualTags, tagSugg: [], ts: null });
 			return true;
@@ -116,9 +118,9 @@ export default class TagInput extends React.Component {
 					{this.props.children}
 				</div>
 				<br/>
-				<ul className="validTags">
+				<FlipMove typeName="ul" className="validTags">
 					{activTags}
-				</ul>
+				</FlipMove>
 				<input
 					type="text"
 					ref="tagInput"

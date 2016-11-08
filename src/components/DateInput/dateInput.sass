@@ -3,10 +3,12 @@
 .date
 	display: flex
 	flex-direction: column
+	width: 100%
 
 .dateInputs
 	display: flex
 	flex-direction: row
+	width: 100%
 
 select
 	appearance: none
@@ -16,8 +18,13 @@ select
 	padding: 10px 30px
 	border-radius: 0px
 
+@-moz-document url-prefix()
+	select
+		padding: 0
+
 .dateInp
 	text-align: center
+	width: 33%
 
 .beforeDate
 	margin-bottom: 0px

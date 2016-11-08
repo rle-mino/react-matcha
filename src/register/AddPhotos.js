@@ -168,7 +168,7 @@ class AddPhotosForm extends React.Component {
 
 export default ({ isEditComp, setEditComp }) => {
 	return (
-		<div className={`comp ${isEditComp ? 'editComp' : '' }`}>
+		<div className={`comp photoComp ${isEditComp ? 'editComp' : '' }`}>
 			{!isEditComp && <h1 className="mainTitle">ADD PHOTOS</h1>}
 			<AddPhotosForm isEditComp={isEditComp} setEditComp={setEditComp} />
 		</div>

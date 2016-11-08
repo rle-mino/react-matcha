@@ -182,7 +182,7 @@ class FormRegister extends React.Component {
 }
 
 export default () =>
-	<div className="comp">
+	<div className="registerComp comp">
 		<h1 className="mainTitle">REGISTER</h1>
 		<FormRegister />
 		<div className="otherOptions">
