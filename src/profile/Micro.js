@@ -12,6 +12,7 @@ import RippledButton			from '../components/RippledButton';
 import './css/micro.sass';
 
 class MicroEdit extends React.Component {
+	_mounted = false;
 
 	state = {
 		subVal: 'SAVE',
@@ -38,7 +39,7 @@ class MicroEdit extends React.Component {
 		e.preventDefault();
 		e.persist()
 		const location = await this.checkAddress(e.target.location.value)
-		if (location === false) {
+		if (location === false || location === null) {
 			this.setState({ location: 'INVALID ADDRESS', subVal: 'SAVE', subDis: false });
 			return (false);
 		}
@@ -55,6 +56,7 @@ class MicroEdit extends React.Component {
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
 			},
 		}).then(({ data }) => {
+			if (!this._mounted) return (false);
 			if (data.status === false) {
 				if (data.details === 'invalid request') {
 					const error = {};
@@ -72,6 +74,14 @@ class MicroEdit extends React.Component {
 	cancel = (e) => {
 		e.preventDefault();
 		this.props.setEditComp(null);
+	}
+
+	componentDidMount() {
+		this._mounted = true;
+	}
+
+	componentWillUnmount() {
+		this._mounted = false;
 	}
 
 	render() {

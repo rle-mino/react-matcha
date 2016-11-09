@@ -9,6 +9,8 @@ import FontAwesome					from 'react-fontawesome';
 import './header.sass';
 
 class MatchHeader extends React.Component {
+	_mounted = false;
+
 	state = {
 		notifications: [],
 		lastNotif: null,
@@ -20,12 +22,13 @@ class MatchHeader extends React.Component {
 	}
 
 	componentDidMount() {
+		this._mounted = true
 		this.socket = io('http://localhost:8080');
 		global.socket = this.socket;
 		this.setState({ socket: this.socket });
 		this.socket.emit('auth', localStorage.getItem('logToken'));
-
 		this.socket.on('new notification', (notification) => {
+			if (!this._mounted) return (false);
 			const { notifications } = this.state;
 			const newNotifList = notifications ? [notification, ...notifications] : [notification];
 			this.setState({ lastNotif: notification, notifications: newNotifList });
@@ -36,6 +39,7 @@ class MatchHeader extends React.Component {
 	}
 
 	notifMessage = ({ author }) => {
+		if (!this._mounted) return (false);
 		const { notifications } = this.state;
 		const notification = `${author} sent you a message`;
 		const newNotifList = notifications ? [notification, ...notifications] : [notification];
@@ -43,6 +47,7 @@ class MatchHeader extends React.Component {
 	}
 
 	componentWillUnmount() {
+		this._mounted = false;
 		this.socket.disconnect();
 	}
 
@@ -121,8 +126,18 @@ class MatchHeader extends React.Component {
 const MatchFooter = () => <footer className="footer">rle-mino 2016</footer>
 
 export default class AppHeader extends React.Component {
+	_mounted = false;
+
 	state = {
 		notifications: [],
+	}
+
+	componentDidMount() {
+		this._mounted = true;
+	}
+
+	componentWillUnmount() {
+		this._mounted = false;
 	}
 
 	componentWillMount() {
@@ -136,6 +151,7 @@ export default class AppHeader extends React.Component {
 					Authorization: `Bearer ${localStorage.getItem('logToken')}`,
 				},
 			}).then(({ data }) => {
+				if (!this._mounted) return (false);
 				if (data.status === true) this.setState({ notifications: data.more });
 			})
 		}

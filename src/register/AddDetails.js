@@ -10,64 +10,13 @@ import ErrorMessage				from '../components/ErrorMessage';
 import BioInput					from '../components/BioInput';
 import ThreeSelector			from '../components/ThreeSelector';
 import RippledButton			from '../components/RippledButton';
+import MatchInput				from '../components/MatchInput';
 
 import './css/addDetails.sass';
 
-class GeolocInput extends React.Component {
-	state = {
-		isFocused: '',
-		localInval: null,
-		geolocButtonVal: 'LOCATE ME',
-		geolocButtonDis: false,
-		lat: null,
-		lng: null,
-	}
-
-	geoLoc = async (e) => {
-		e.preventDefault();
-		this.setState({ geolocButtonVal: 'WAIT', geolocButtonDis: true });
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(async (position) => {
-				let lat = position.coords.latitude;
-				let lng = position.coords.longitude;
-				const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}`);
-				if (response.data.status === 'OK') {
-					this.setState({
-						geolocButtonVal: response.data.results[3].formatted_address.toUpperCase(),
-						lat,
-						lng,
-					});
-				} else {
-					this.setState({ geolocButtonVal: 'FAILED TO LOCATE YOU' });
-				}
-			}, (error) => {
-				this.setState({ geolocButtonVal: error.message.toUpperCase() });
-			});
-		}
-	}
-
-	render() {
-		const { geolocButtonVal, geolocButtonDis } = this.state;
-		return (
-			<div className="geolocInput">
-				<div className="beforeInput">
-					<div className="label">LOCATION</div>
-					{this.props.children}
-				</div>
-				<input
-					type="button"
-					className="geolocButton"
-					value={geolocButtonVal}
-					name="geoloc"
-					onClick={this.geoLoc}
-					disabled={geolocButtonDis}
-				/>
-			</div>
-		);
-	}
-}
-
 class AddDetailsForm extends React.Component {
+	_mounted = false;
+
 	state = {
 		serverResponse: null,
 		addedTags: [],
@@ -80,8 +29,23 @@ class AddDetailsForm extends React.Component {
 		tags: null,
 	}
 
+	checkAddress = async (value) => {
+		if (!value) return (null);
+		const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${value}`);
+		if (response.data.status === 'OK') {
+			const result = response.data.results[0];
+			return ({
+				address: result.formatted_address.toUpperCase(),
+				lat: result.geometry.location.lat,
+				lng: result.geometry.location.lng,
+			});
+		}
+		return (false);
+	}
+
 	sendDetails = async (e) => {
 		e.preventDefault();
+		e.persist();
 		this.setState({
 			subVal: 'WAIT',
 			location: null,
@@ -92,14 +56,10 @@ class AddDetailsForm extends React.Component {
 			subDis: true,
 			serverResponse: null,
 		});
-		const { lat, lng } = this.refs.geolocInput.state;
 		const addedTags = this.refs.tagInput.state.addedTags;
+		const location = await this.checkAddress(e.target.geoloc.value);
 		const data = {
-			location: {
-				lat,
-				lng,
-				address: e.target.geoloc.value,
-			},
+			location,
 			gender: e.target.gender.value,
 			orientation: e.target.orientation.value,
 			bio: e.target.bio.value,
@@ -113,6 +73,7 @@ class AddDetailsForm extends React.Component {
 				Authorization: `Bearer ${localStorage.getItem('logToken')}`,
 			},
 		}).then(({ data }) => {
+			if (!this._mounted) return (false);
 			if (data.status === false) {
 				if (data.details === 'invalid request') {
 					const error = {};
@@ -127,6 +88,14 @@ class AddDetailsForm extends React.Component {
 				}, 2000);
 			}
 		}).catch(() => this.setState({ subVal: 'ERROR', serverResponse: 'AN ERROR OCCURRED' }));
+	}
+
+	componentDidMount() {
+		this._mounted = true;
+	}
+
+	componentWillUnmount() {
+		this._mounted = false;
 	}
 
 	render() {
@@ -145,9 +114,9 @@ class AddDetailsForm extends React.Component {
 			<div className="addDetailsForm">
 				<div className="errorMessageMain">{serverResponse}</div>
 				<form onSubmit={this.sendDetails}>
-					<GeolocInput ref="geolocInput">
+					<MatchInput inputType="text" inputName="geoloc" label="LOCATION">
 						<ErrorMessage message={location} />
-					</GeolocInput>
+					</MatchInput>
 					<ThreeSelector name="gender" label="GENDER"
 						value1="male" label1="MALE"
 						value2="other" label2="OTHER"
@@ -165,10 +134,10 @@ class AddDetailsForm extends React.Component {
 						<ErrorMessage message={orientation} />
 					</ThreeSelector>
 					<BioInput>
-						<ErrorMessage message={bio}/>
+						<ErrorMessage message={bio} />
 					</BioInput>
 					<TagInput savedTags={this.props.tags} addedTags={addedTags} ref="tagInput" >
-						<ErrorMessage message={tags}/>
+						<ErrorMessage message={tags} />
 					</TagInput>
 					<RippledButton butType="submit" value={subVal} disabled={subDis} />
 				</form>
@@ -178,6 +147,8 @@ class AddDetailsForm extends React.Component {
 }
 
 export default class AddDetails extends React.Component {
+	_mounted = false;
+
 	state = {
 		auth: true,
 		tags: [],
@@ -193,8 +164,17 @@ export default class AddDetails extends React.Component {
 			},
 		})
 		.then(({ data }) => {
+			if (!this._mounted) return (false);
 			this.setState({ tags: data });
 		});
+	}
+
+	componentDidMount() {
+		this._mounted = true;
+	}
+
+	componentWillUnmount() {
+		this._mounted = false;
 	}
 
 	render() {

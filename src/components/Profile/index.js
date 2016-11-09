@@ -22,10 +22,20 @@ const Confirm = ({ next, cancel }) =>
 	</div>
 
 export default class Profile extends React.Component {
+	_mounted = false;
+
 	state = {
 		profileClass: 'profile',
 		editComp: null,
 		data: null,
+	}
+
+	componentDidMount() {
+		this._mounted = true;
+	}
+
+	componentWillUnmount() {
+		this._mounted = false;
 	}
 
 	componentWillMount() {
@@ -66,6 +76,7 @@ export default class Profile extends React.Component {
 			data: { username: this.state.data.username },
 			headers: { Authorization: `Bearer ${localStorage.getItem('logToken')}` },
 		}).then(({ data }) => {
+			if (!this._mounted) return (false);
 			if (data.status === true) {
 				browserHistory.push('/matcha/my_profile');
 			}
@@ -79,6 +90,7 @@ export default class Profile extends React.Component {
 			data: { username: this.state.data.username },
 			headers: { Authorization: `Bearer ${localStorage.getItem('logToken')}` },
 		}).then(({ data }) => {
+			if (!this._mounted) return (false);
 			if (data.status === true) {
 				browserHistory.push('/matcha/my_profile');
 			}
@@ -114,6 +126,7 @@ export default class Profile extends React.Component {
 			liked,
 			alreadyReportAsFake,
 			lastConnection,
+			selfReq,
 		} = this.state.data;
 		const { editable } = this.props;
 		const { profileClass, editComp } = this.state;
@@ -142,7 +155,7 @@ export default class Profile extends React.Component {
 					/>
 					<BioProf bio={bio} editable={editable} setEditComp={this.setEditComp} />
 					<TagProf tags={tags} editable={editable} setEditComp={this.setEditComp} />
-					{!editable && <div className="blockReport">
+					{!editable && !selfReq && <div className="blockReport">
 						{!alreadyReportAsFake &&
 							<span className="fake" onClick={this.confirm}>REPORT AS FAKE</span>}
 							<span className="block" onClick={this.confirm}>BLOCK THIS USER</span>
