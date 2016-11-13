@@ -2,6 +2,7 @@ import React					from 'react';
 import axios					from 'axios';
 import { Link, browserHistory }	from 'react-router';
 import apiConnect				from '../apiConnect.js';
+import parser					from '../parser';
 
 import MatchInput				from '../components/MatchInput';
 import ErrorMessage				from '../components/ErrorMessage';
@@ -68,38 +69,45 @@ class FormRegister extends React.Component {
 		if (!!this.state.passVInval || !!this.state.mailVInval || !!this.state.birthInval) {
 			this.setState({ mainButtonDis: false, mainButtonValue: 'REGISTER' });
 			return false;
-		} else {
-			const day = e.target.day.value < 10 ? `0${e.target.day.value}` : e.target.day.value;
-			const birthdate = `${e.target.month.value}-${day}-${e.target.year.value}`;
-			axios({
-				method: 'post',
-				url: `${apiConnect}user/register`,
-				data: {
-					username: e.target.username.value,
-					firstname: e.target.firstname.value,
-					lastname: e.target.lastname.value,
-					password: e.target.password.value,
-					birthdate: birthdate,
-					mail: e.target.mail.value,
-					location,
-				},
-			}).then(({ data }) => {
-				if (data.status === false) {
-					if (data.details === 'invalid request') {
-						const error = {};
-						data.error.forEach((err) => {
-							error[err.path] = err.error.toUpperCase();
-						});
-						this.setState({ mainButtonValue: 'REGISTER', mainButtonDis: false, ...error });
-					} else {
-						this.setState({ serverResponse: data.details, mainButtonValue: 'REGISTER', mainButtonDis: false });
-					}
-				} else {
-					this.setState({ mainButtonValue: 'SUCCESS' });
-					setTimeout(() => browserHistory.push('confirm_mail'), 1000);
-				}
-			}).catch(() => this.setState({ mainButtonValue: 'ERROR', serverResponse: 'AN ERROR OCCURRED' }));
 		}
+		const day = e.target.day.value < 10 ? `0${e.target.day.value}` : e.target.day.value;
+		const birthdate = `${e.target.month.value}-${day}-${e.target.year.value}`;
+		const error = parser(e.target);
+		if (error) {
+			this.setState({
+				mainButtonDis: false,
+				mainButtonValue: 'REGISTER',
+				...error,
+			});
+		}
+		axios({
+			method: 'post',
+			url: `${apiConnect}user/register`,
+			data: {
+				username: e.target.username.value,
+				firstname: e.target.firstname.value,
+				lastname: e.target.lastname.value,
+				password: e.target.password.value,
+				birthdate: birthdate,
+				mail: e.target.mail.value,
+				location,
+			},
+		}).then(({ data }) => {
+			if (data.status === false) {
+				if (data.details === 'invalid request') {
+					const error = {};
+					data.error.forEach((err) => {
+						error[err.path] = err.error.toUpperCase();
+					});
+					this.setState({ mainButtonValue: 'REGISTER', mainButtonDis: false, ...error });
+				} else {
+					this.setState({ serverResponse: data.details, mainButtonValue: 'REGISTER', mainButtonDis: false });
+				}
+			} else {
+				this.setState({ mainButtonValue: 'SUCCESS' });
+				setTimeout(() => browserHistory.push('confirm_mail'), 1000);
+			}
+		}).catch(() => this.setState({ mainButtonValue: 'ERROR', serverResponse: 'AN ERROR OCCURRED' }));
 	};
 
 	render() {

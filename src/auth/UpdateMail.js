@@ -23,6 +23,10 @@ class UpdateMailForm extends React.Component {
 			subVal: 'WAIT',
 			mail: null,
 		});
+		if (e.target.mail && e.target.mail.value.length > 100) {
+			this.setState({ mail: '100 CHARACTERS MAX', subDis: false, subVal: 'SAVE' });
+			return (false);
+		}
 		axios({
 			url: `${apiConnect}user/update_mail`,
 			method: 'put',

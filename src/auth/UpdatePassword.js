@@ -2,6 +2,7 @@ import React					from 'react'
 import { browserHistory }		from 'react-router';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
+import parser					from '../parser';
 
 import MatchInput				from '../components/MatchInput';
 import ErrorMessage				from '../components/ErrorMessage';
@@ -29,6 +30,11 @@ class UpdatePasswordForm extends React.Component {
 		});
 		if (newPassword.value !== newPassConfirm.value) {
 			this.setState({ newPassConfirm: 'INVALID', subDis: false, subVal: 'SAVE' });
+			return (false);
+		}
+		const error = parser(e.target);
+		if (error) {
+			this.setState({ subDis: false, subVal: 'SAVE', ...error });
 			return (false);
 		}
 		axios({

@@ -51,7 +51,7 @@ export default class UserFast extends React.Component {
 					<div title="distance(km)" className="popDist">{distance}<FontAwesome name="map-marker"/></div>
 				</div>
 				<div className="fastIMG" style={{
-					backgroundImage: `url('${apiConnect}user/get_img_src/${images.length ? images[0] : 'undef.jpg' }')`,
+					backgroundImage: `url('${apiConnect}user/get_img_src/min/${images.length ? images[0] : 'undef.jpg' }')`,
 				}} />
 				<div className="fastBottom">
 					<div className="names">

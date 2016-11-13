@@ -38,6 +38,10 @@ class MicroEdit extends React.Component {
 	send = async (e) => {
 		e.preventDefault();
 		e.persist()
+		if (e.target.location.value && e.target.location.value.length > 100) {
+			this.setState({ location: '100 CHARACTERS MAX' });
+			return (false);
+		}
 		const location = await this.checkAddress(e.target.location.value)
 		if (location === false || location === null) {
 			this.setState({ location: 'INVALID ADDRESS', subVal: 'SAVE', subDis: false });

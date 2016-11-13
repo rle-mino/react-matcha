@@ -1,6 +1,7 @@
 import React						from 'react';
 import axios						from 'axios';
 import apiConnect					from '../apiConnect';
+import parser						from '../parser';
 
 import FontAwesome					from 'react-fontawesome';
 import MatchInput					from '../components/MatchInput';
@@ -28,6 +29,11 @@ class NameEdit extends React.Component {
 			serverResponse: null,
 			subDis: true,
 		});
+		const error = parser(e.target);
+		if (error) {
+			this.setState({ subVal: 'SAVE', subDis: false, ...error });
+			return (false);
+		}
 		axios({
 			method: 'put',
 			url: `${apiConnect}user/update_profile`,
@@ -42,9 +48,7 @@ class NameEdit extends React.Component {
 			if (data.status === false) {
 				if (data.details === 'invalid request') {
 					const error = {}
-					data.error.forEach((el) => {
-						error[el.path] = el.error;
-					});
+					data.error.forEach((el) => error[el.path] = el.error);
 					this.setState({ ...error, subVal: 'SAVE', subDis: false });
 				} else {
 					this.setState({

@@ -2,6 +2,7 @@ import React					from 'react';
 import { browserHistory }		from 'react-router';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
+import parser					from '../parser';
 
 import RippledButton			from '../components/RippledButton';
 import MatchInput				from '../components/MatchInput';
@@ -18,7 +19,21 @@ class ForgotForm extends React.Component {
 
 	forgot = async (e) => {
 		e.preventDefault();
-		this.setState({ subVal: 'WAIT', mail: null, serverResponse: null, subDis: true });
+		this.setState({
+			subVal: 'WAIT',
+			mail: null,
+			serverResponse: null,
+			subDis: true,
+		});
+		const error = parser(e.target);
+		if (error) {
+			this.setState({
+				...error,
+				subVal: 'SEND ME AN EMAIL',
+				subDis: false,
+			});
+			return (false);
+		}
 		axios({
 			method: 'put',
 			url: `${apiConnect}user/forgot_password`,

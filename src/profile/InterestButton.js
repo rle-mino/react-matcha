@@ -19,7 +19,6 @@ export default class InterestButton extends React.Component {
 	}
 
 	like = (e) => {
-		e.preventDefault();
 		this.setState({ popup: null });
 		axios({
 			url: `${apiConnect}user/update_interest`,

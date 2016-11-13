@@ -20,6 +20,10 @@ class BioEdit extends React.Component {
 	saveBio = async (e) => {
 		e.preventDefault();
 		this.setState({ bio: null, subVal: 'WAIT', subDis: true })
+		if (e.target.bio.value.length > 1000) {
+			this.setState({ bio: '1000 LETTERS MAX', subVal: 'SAVE', subDis: false });
+			return (false);
+		}
 		axios({
 			method: 'put',
 			url: `${apiConnect}user/update_profile`,

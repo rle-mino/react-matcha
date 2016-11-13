@@ -33,6 +33,9 @@ class MatchHeader extends React.Component {
 			const newNotifList = notifications ? [notification, ...notifications] : [notification];
 			this.setState({ lastNotif: notification, notifications: newNotifList });
 		});
+		this.socket.on('reconnect', () => {
+			this.socket.emit('auth', localStorage.getItem('logToken'));
+		})
 		if (this.props.location.pathname === '/matcha/chats') {
 			this.socket.on('receive message', this.notifMessage);
 		}

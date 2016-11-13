@@ -3,6 +3,7 @@ import React					from 'react';
 import { browserHistory }		from 'react-router';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
+import parser					from '../parser';
 
 import TagInput					from '../components/TagInput';
 import Unauthorized				from '../Unauthorized';
@@ -23,7 +24,7 @@ class AddDetailsForm extends React.Component {
 		subVal: 'ADD DETAILS',
 		subDis: false,
 		bio: null,
-		location: null,
+		geoloc: null,
 		gender: null,
 		orientation: null,
 		tags: null,
@@ -48,6 +49,7 @@ class AddDetailsForm extends React.Component {
 		e.persist();
 		this.setState({
 			subVal: 'WAIT',
+			geoloc: null,
 			location: null,
 			gender: null,
 			orientation: null,
@@ -58,6 +60,16 @@ class AddDetailsForm extends React.Component {
 		});
 		const addedTags = this.refs.tagInput.state.addedTags;
 		const location = await this.checkAddress(e.target.geoloc.value);
+		const error = parser(e.target);
+		if (error) {
+			this.setState({
+				...error,
+				subDis: false,
+				subVal: 'ADD DETAILS',
+				addedTags,
+			});
+			return (false);
+		}
 		const data = {
 			location,
 			gender: e.target.gender.value,
@@ -101,7 +113,7 @@ class AddDetailsForm extends React.Component {
 	render() {
 		const {
 			serverResponse,
-			location,
+			geoloc,
 			bio,
 			gender,
 			orientation,
@@ -115,7 +127,7 @@ class AddDetailsForm extends React.Component {
 				<div className="errorMessageMain">{serverResponse}</div>
 				<form onSubmit={this.sendDetails}>
 					<MatchInput inputType="text" inputName="geoloc" label="LOCATION">
-						<ErrorMessage message={location} />
+						<ErrorMessage message={geoloc} />
 					</MatchInput>
 					<ThreeSelector name="gender" label="GENDER"
 						value1="male" label1="MALE"

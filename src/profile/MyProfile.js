@@ -33,10 +33,12 @@ export default class MyProfile extends React.Component {
 	}
 
 	render() {
+		const { data } = this.state;
+		if (!data) return (<div className="matcha"></div>);
 		return (
 			<div className="matcha">
 				<h1 className="mainTitle">PROFILE</h1>
-				<Profile editable={true} data={this.state.data} />
+				<Profile editable={true} data={data} />
 			</div>
 		);
 	}

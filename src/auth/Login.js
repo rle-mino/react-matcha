@@ -24,6 +24,7 @@ class LoginForm extends React.Component {
 
     login = async(e) => {
         e.preventDefault();
+		const { username, password } = e.target;
         this.setState({
             isPending: true,
             buttonValue: 'WAIT',
@@ -32,12 +33,28 @@ class LoginForm extends React.Component {
             mainErr: 'errorMessageMain',
             serverResponse: null,
         });
+		if (username.value && username.value.length > 30) {
+			this.setState({
+				username: '30 CHARACTERS MAX',
+				isPending: false,
+				buttonValue: 'SIGN IN',
+			});
+			return (false);
+		}
+		if (password.value && password.value.length > 30) {
+			this.setState({
+				password: '30 CHARACTERS MAX',
+				isPending: false,
+				buttonValue: 'SIGN IN',
+			});
+			return (false);
+		}
         axios({
             method: 'put',
             url: `${apiConnect}user/login`,
             data: {
-                username: e.target.username.value,
-                password: e.target.password.value,
+                username: username.value,
+                password: password.value,
             },
         }).then(({ data, headers }) => {
             this.setState({

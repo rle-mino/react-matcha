@@ -2,6 +2,7 @@ import React					from 'react';
 import { browserHistory }		from 'react-router';
 import axios					from 'axios';
 import apiConnect				from '../apiConnect';
+import parser					from '../parser';
 
 import RippledButton			from '../components/RippledButton';
 import ErrorMessage             from '../components/ErrorMessage';
@@ -31,6 +32,15 @@ class ResetPassWithKeyForm extends React.Component {
 		});
 		if (e.target.password.value !== e.target.passVerif.value) {
 			this.setState({ passVerif: 'INVALID', subVal: 'SET NEW PASSWORD' });
+			return (false);
+		}
+		const error = parser(e.target);
+		if (error) {
+			this.setState({
+				...error,
+				subVal: 'SET NEW PASSWORD',
+				subDis: false,
+			});
 			return (false);
 		}
 		axios({

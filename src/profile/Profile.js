@@ -36,7 +36,7 @@ export default class ProfileExt extends React.Component {
 
 	render() {
 		const { data } = this.state;
-		if (!data) return (<div></div>);
+		if (!data) return (<div className="matcha"></div>);
 		return (
 			<div className="matcha">
 				<h1 className="mainTitle">PROFILE</h1>
