@@ -14,7 +14,7 @@ import ForgotPassword									from './auth/ForgotPassword';
 import ResetPassWithKey									from './auth/ResetPassWithKey';
 import Logout											from './auth/Logout';
 import MyProfile										from './profile/MyProfile';
-import Search											from './search/search';
+import Search											from './Search/search';
 import Suggest											from './suggestion/Suggest';
 import ProfileExt										from './profile/Profile';
 import UpdatePassword									from './auth/UpdatePassword';
